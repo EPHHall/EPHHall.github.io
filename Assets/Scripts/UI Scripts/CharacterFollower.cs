@@ -9,6 +9,8 @@ namespace SS.UI
 {
     public class CharacterFollower : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
     {
+        static StatsCard card;
+
         [Space(5)]
         [Header("Don't Touch")]
         public StatsCard statsCard;
@@ -19,6 +21,15 @@ namespace SS.UI
         private void Start()
         {
             statsCard = FindObjectOfType<StatsCard>();
+
+            if (card == null)
+            {
+                card = statsCard;
+            }
+            if (statsCard == null)
+            {
+                statsCard = card;
+            }
 
             following = GetComponent<Follow>().toFollow;
 

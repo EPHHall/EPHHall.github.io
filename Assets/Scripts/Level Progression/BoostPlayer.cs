@@ -12,7 +12,7 @@ namespace SS.LevelProgression
         {
             if (collision.tag == "Player")
             {
-                Debug.Log("Buh");
+                //Debug.Log("Buh");
 
                 if (vertical)
                 {

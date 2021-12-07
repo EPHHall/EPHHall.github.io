@@ -14,6 +14,12 @@ namespace SS.GameController
         public virtual void StartTurn()
         {
             SS.Util.SpawnRange.DespawnRange();
+
+            SS.Spells.Target target = null;
+            if (TryGetComponent<SS.Spells.Target>(out target))
+            {
+                //target.TurnChange(false);
+            }
         }
 
         public virtual void OnDestroy()

@@ -15,10 +15,13 @@ namespace SS.Util
             spawnDespawnEvent.AddListener(SS.Spells.Target.ClearSelectedTargets);
         }
 
-        public static void SpawnTargetingRange(Vector2 initialPosition, int range,
+        //TODO: make the rest of these functions return the tiles they spawn
+        public static List<T> SpawnTargetingRange<T>(Vector2 initialPosition, int range,
             GameObject mainTile, GameObject lastTile)
         {
             Start();
+
+            List<T> spawned = new List<T>();
 
             SS.Spells.SpellManager.activeSpell = null;
 
@@ -35,7 +38,7 @@ namespace SS.Util
             {
                 foreach (Vector2 position in tilePositions)
                 {
-                    SpawnTile(position, mainTile);
+                    spawned.Add(SpawnTile(position, mainTile).GetComponent<T>());
                     takenPositions.Add(position);
                 }
 
@@ -51,10 +54,12 @@ namespace SS.Util
 
             foreach (Vector2 position in tilePositions)
             {
-                SpawnTile(position, lastTile);
+                spawned.Add(SpawnTile(position, lastTile).GetComponent<T>());
             }
 
             spawnDespawnEvent.Invoke();
+
+            return spawned;
         }
         public static void SpawnTargetingRange(List<Vector2> initialPositions, List<Vector2> takenPositions, int range,
             GameObject mainTile, GameObject lastTile)
@@ -90,6 +95,7 @@ namespace SS.Util
 
             foreach (Vector2 position in tilePositions)
             {
+                //Debug.Log("In Thing");
                 if (lastTile != null)
                 {
                     SpawnTile(position, lastTile);
@@ -147,11 +153,14 @@ namespace SS.Util
             return lists;
         }
 
-        static void SpawnTile(Vector2 position, GameObject tile)
+        static GameObject SpawnTile(Vector2 position, GameObject tile)
         {
             //SetActive is necessary because currently the ControlledObject needs tiles that are actually in
             //the scene, and those get set to inactive.
-            MonoBehaviour.Instantiate(tile, position, Quaternion.identity).SetActive(true);
+            GameObject newTile = MonoBehaviour.Instantiate(tile, position, Quaternion.identity);
+            newTile.SetActive(true);
+
+            return newTile;
         }
 
         public static void DespawnRange()

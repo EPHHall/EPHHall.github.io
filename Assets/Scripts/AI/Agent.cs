@@ -22,6 +22,10 @@ namespace SS.AI
         public TargetType filter;
 
         public Target mainTarget;
+        public Faction.FactionName targetFaction;
+        public Faction.FactionName previousTargetFaction;
+        private Faction.FactionName defaultFaction;
+        private Target defaultTarget;
 
         public List<Spell> spells;
         public Spell spellToCast;
@@ -33,6 +37,9 @@ namespace SS.AI
             InitializePackagesAndBehaviors();
 
             characterStats = GetComponent<SS.Character.CharacterStats>();
+
+            defaultFaction = targetFaction;
+            defaultTarget = mainTarget;
         }
 
         private void Update()
@@ -40,6 +47,12 @@ namespace SS.AI
             if (activate)
             {
             }
+        }
+
+        public void ResetFactionsAndTargets()
+        {
+            targetFaction = defaultFaction;
+            mainTarget = defaultTarget;
         }
 
         public void InitializePackagesAndBehaviors()

@@ -26,6 +26,7 @@ namespace SS.Spells
         public List<Modifier> modifiers;
         public Vector2 spellOrigin;
         public GameObject targetableTile;
+        public List<Item.Weapon> activeWeapons;
 
         [Space(5)]
         [Header("For stats screen")]
@@ -44,7 +45,7 @@ namespace SS.Spells
 
         public virtual void Update()
         {
-            if (Application.isEditor)
+            if (!Application.isPlaying)
             {
                 //if (previousMain != main || previousMain == null)
                 {
@@ -74,7 +75,7 @@ namespace SS.Spells
             if (main != null)
             {
                 range = main.range;
-                damage = main.damage;
+                damage = main.GetTotalDamage();
                 castSpeed = main.speed;
                 manaCost = main.manaCost;
                 apCost = main.actionPointCost;
@@ -124,26 +125,35 @@ namespace SS.Spells
                 SS.Util.CharacterStatsInterface.DamageMana(character, manaCost);
                 SS.Util.CharacterStatsInterface.DamageActionPoints(character, apCost);
 
-                //modifies the effect, so foreach isn't appropriate. Clears out the previous effects 
-                //delivered by main, then adds the current effects that need to be delivered.
-                for (int i = 0; i < main.deliveredEffects.Count; i++)
+                main.deliveredEffects.Clear();
+                foreach (Effect de in deliveredByMain)
                 {
-                    main.deliveredEffects[i].EndEffect();
-                }
-                for (int i = 0; i < deliveredByMain.Count; i++)
-                {
-                    main.deliveredEffects.Add(deliveredByMain[i]);
+                    main.deliveredEffects.Add(de);
                 }
 
-                if (main.targetable)
+                main.targetMeEffects.Clear();
+                foreach (Effect te in targetMain)
                 {
-                    foreach (Effect effect in targetMain)
-                    {
-                        effect.TargetGivenEffect(main);
-                    }
+                    main.targetMeEffects.Add(te);
                 }
 
                 main.InvokeEffect(Target.selectedTargets, main.normallyValid);
+
+                //Not sure yet if this should be handled in the Effect script(s) or here.
+                //foreach (Effect delivered in deliveredByMain)
+                //{
+                //    if (main.CanDeliverThisEffect(delivered))
+                //    {
+                //        delivered.InvokeEffect(Target.selectedTargets, delivered.normallyValid);
+                //    }
+                //}
+                //foreach (Effect tm in targetMain)
+                //{
+                //    if (main.CanBeTargetedBy(tm))
+                //    {
+                //        main.ModifyViaEffect(tm);
+                //    }
+                //}
             }
         }
 
@@ -157,7 +167,7 @@ namespace SS.Spells
 
             if (main != null)
             {
-                SS.Util.SpawnRange.SpawnTargetingRange(transform.position, range, targetableTile, targetableTile);
+                SS.Util.SpawnRange.SpawnTargetingRange<GameObject>(transform.position, range, targetableTile, targetableTile);
 
                 SpellManager.activeSpell = this;
             }
@@ -174,6 +184,8 @@ namespace SS.Spells
 
             SetAllStats();
             ApplyModifiers();
+
+            main.spellAttachedTo = this;
         }
         public void UnsetMain(Effect newEffect)
         {
@@ -181,6 +193,37 @@ namespace SS.Spells
 
             SetAllStats();
             ApplyModifiers();
+        }
+
+        public void SetDelivered(Effect newEffect, int index)
+        {
+            while (deliveredByMain.Count < index + 1)
+            {
+                deliveredByMain.Add(null);
+            }
+
+            deliveredByMain[index] = newEffect;
+
+            SetAllStats();
+            ApplyModifiers();
+
+            if(newEffect != null)
+                newEffect.spellAttachedTo = this;
+        }
+
+        public void SetTargetsMain(Effect newEffect, int index)
+        {
+            while (targetMain.Count < index + 1)
+            {
+                targetMain.Add(null);
+            }
+
+            targetMain[index] = newEffect;
+
+            SetAllStats();
+            ApplyModifiers();
+
+            newEffect.spellAttachedTo = this;
         }
 
         public void AddModifier(Modifier modifier)

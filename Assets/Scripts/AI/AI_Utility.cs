@@ -72,7 +72,7 @@ namespace SS.AI
         }
         public static Target FindTarget(List<Target> targets, Target toFind)
         {
-            if (targets.Contains(toFind))
+            if (toFind != null && targets.Contains(toFind))
             {
                 return toFind;
             }

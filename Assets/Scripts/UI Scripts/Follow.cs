@@ -39,7 +39,10 @@ namespace SS.UI
                 Destroy(gameObject);
             }
 
-            transform.position = toFollow.transform.position;
+            if (toFollow != null)
+            {
+                transform.position = toFollow.transform.position;
+            }
         }
     }
 }

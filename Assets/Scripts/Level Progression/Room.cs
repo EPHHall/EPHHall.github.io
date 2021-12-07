@@ -103,7 +103,7 @@ namespace SS.LevelProgression
         {
             if (collision.tag == "Player")
             {
-                Debug.Log("Here", gameObject);
+                //Debug.Log("Here", gameObject);
 
                 MoveToThisRoom();
             }

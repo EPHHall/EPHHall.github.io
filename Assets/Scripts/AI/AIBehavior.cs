@@ -13,6 +13,10 @@ namespace SS.AI
         {
 
         }
+        public virtual void InvokeBehavior(List<Spell> spells, Target toTarget)
+        {
+
+        }
 
         public virtual bool WasBehaviorFulfilled()
         {

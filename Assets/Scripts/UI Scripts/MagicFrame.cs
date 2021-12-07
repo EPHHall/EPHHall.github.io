@@ -62,7 +62,7 @@ namespace SS.UI
 
             ResetDisplay();
 
-            Debug.Log(spellInventory);
+            //Debug.Log(spellInventory);
             spellInventory.SpellChanged(this, temp);
         }
 

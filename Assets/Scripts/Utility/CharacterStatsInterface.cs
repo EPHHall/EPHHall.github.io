@@ -7,11 +7,11 @@ namespace SS.Util
 {
     public class CharacterStatsInterface
     {
-        public static void DamageHP(CharacterStats character, int damage)
+        public static void DamageHP(CharacterStats character, Damage damage)
         {
             if (character != null)
             {
-                character.hp -= damage;
+                character.hp -= damage.amount;
                 if (character.textTemp != null)
                 {
                     character.DisplayText("Took " + damage + " damage.");

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1103078107984049862}
   - component: {fileID: 1006899961716268670}
   - component: {fileID: -4074867516565930382}
+  - component: {fileID: -3215740299404414258}
   m_Layer: 0
   m_Name: Target Tile
   m_TagString: Untagged
@@ -129,3 +130,26 @@ MonoBehaviour:
   mouseIsOver: 0
   maxSelections: 1
   targets: []
+--- !u!114 &-3215740299404414258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1103078107984049863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 425c3c1c56439f341a5387918a11f94b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetType:
+    toggleNone: 0
+    toggleAll: 0
+    creature: 0
+    obj: 0
+    weapon: 0
+    tile: 1
+  hp: 0
+  targetName: 
+  statuses: []
+  displaySelectedTargets: 0

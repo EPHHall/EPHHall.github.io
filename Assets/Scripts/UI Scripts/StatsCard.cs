@@ -9,12 +9,22 @@ namespace SS.UI
 {
     public class StatsCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
+        [System.Serializable]
+        public struct StatsCardLayout
+        {
+            public Sprite background;
+            public GameObject content;
+            public Vector2 contentPos;
+        }
+
         public Vector2 leftPos;
         public Vector2 rightPos;
 
         public RectTransform rectTransform;
 
         public bool setInStart;
+
+        public Transform tabsParent;
 
         [Space(5)]
         [Header("Info to Fill In")]
@@ -37,11 +47,15 @@ namespace SS.UI
         public CharacterStats statsToDisplay;
         private bool deactivateOnFirstFrame = false;
         private bool pointerIsOver = false;
+        private Image image;
+        public GameObject[] contents;
         //public Dictionary<string, string> evaluateOn;
 
         private void Start()
         {
             rectTransform = GetComponent<RectTransform>();
+
+            image = GetComponent<Image>();
         }
 
         private void Update()
@@ -71,6 +85,18 @@ namespace SS.UI
             canDeactivate = true;
         }
 
+        public void ChangeLayout(StatsCardLayout layout)
+        {
+            image.sprite = layout.background;
+            foreach (GameObject content in contents)
+            {
+                content.SetActive(false);
+            }
+
+            layout.content.SetActive(true);
+            layout.content.GetComponent<RectTransform>().anchoredPosition = layout.contentPos;
+        }
+
         public void SetPosition(bool right)
         {
             firstActivation = false;
@@ -78,10 +104,12 @@ namespace SS.UI
             if (right)
             {
                 rectTransform.anchoredPosition = rightPos;
+                tabsParent.localScale = new Vector3(1, 1, 1);
             }
             else
             {
                 rectTransform.anchoredPosition = leftPos;
+                tabsParent.localScale = new Vector3(-1, 1, 1);
             }
         }
 

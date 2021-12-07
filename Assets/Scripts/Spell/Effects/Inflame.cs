@@ -1,118 +1,155 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SS.StatusSpace;
 
 namespace SS.Spells
 {
     [ExecuteAlways]
     public class Inflame : Effect
     {
-        public GameObject fireDamageEffect;
-        public GameObject fireDamage;
-
         public override void Awake()
         {
             base.Awake();
 
+
             speed = 1;
             manaCost = 5;
             spellPointCost = 4;
+            baseDamage = 6;
 
-            damage = 2;
             range = 1;
+            radius = 1;
 
             actionPointCost = 1;
 
             duration = 1;
-            toInstantiate = fireDamageEffect;
 
-            normallyValid = new TargetType(true, true, true, true, false, true, true, true);
+            normallyValid = new TargetType(true, true, true, true);
+
+            mainDamage = new Character.Damage(Character.Damage.DamageType.Inflame, baseDamage);
+            mainStatus = new Status(Status.StatusName.FireDamage, baseDamage, duration, SS.GameController.TurnManager.currentTurnTaker, radius);
+
+            originalDamageList.Clear();
+            originalDamageList.Add(mainDamage);
+            ResetMainDamageList();
+
+            originalStatusList.Clear();
+            originalStatusList.Add(mainStatus);
+            ResetMainStatusList();
+
+            style = Style.DamageOverTime;
         }
 
         public override void InvokeEffect(List<Target> targets)
         {
             base.InvokeEffect(targets);
 
-            fireDamage = Instantiate(toInstantiate);
+            int fullDamage = 0;
+            foreach (SS.Character.Damage damage in damageList)
+            {
+                if (damage.type == Character.Damage.DamageType.Inflame)
+                    fullDamage += damage.amount;
+            }
+
+            //just looking at the first target for testing purposes, in the final cut this should apply to every target
+            List<Status> statusesMainStatusShouldApply = new List<Status>();
+            HandleDeliveredEffects(targets[0], statusesMainStatusShouldApply);
 
             foreach (Target target in targets)
             {
-                TargetType targetType = target.targetType;
+                foreach (Status status in statusList)
+                {
+                    if (status.unarmedOnly && spellAttachedTo.activeWeapons.Count > 0)
+                        continue;
 
-                AllTargets(targetType, target);
+                    Status newStatus = new Status(status);
+                    foreach (Status s in statusesMainStatusShouldApply)
+                    {
+                        newStatus.AddStatusToApply(s);
+                    }
+                    target.ApplyStatus(newStatus, this);
+                }
+
+                if (target.targetType.weapon)
+                {
+                    target.HandleStatuses(false, true);
+                }
+            }
+        }
+
+        public override void HandleDeliveredEffects(Target target, List<Status> statusesMainStatusShouldApply)
+        {
+            Item.Weapon weapon = null;
+            Character.CharacterStats creature = null;
+
+            if (target.targetType.weapon)
+            {
+                //If the target is a weapon it should have the weapon script
+                weapon = target.GetComponent<Item.Weapon>();
+            }
+            //currently multiple target types is not supported
+            else if (target.targetType.creature)
+            {
+                creature = target.GetComponent<Character.CharacterStats>();
             }
 
             foreach (Effect effect in deliveredEffects)
             {
-                effect.InvokeEffect(targets);
+                if (effect == null) continue;
+
+                if (weapon != null)
+                {
+                    //RemoveStatusesFromList(weapon.statusesToInflict, effect);
+
+                    foreach (Status status in effect.statusList)
+                    {
+                        weapon.AddStatusToInflict(status);
+                    }
+                }
+                else if (creature != null)
+                {
+                    //RemoveStatusesFromList(target.statuses, effect);
+                    Effect melee = null;
+                    if (creature.transform.Find("Melee Attack") != null && creature.transform.Find("Melee Attack").GetComponent<Spell>() != null)
+                    {
+                        melee = creature.transform.Find("Melee Attack").GetComponent<Spell>().main;
+                    }
+
+                    foreach (Status status in effect.statusList)
+                    {
+                        Status newStatus = new Status(status);
+                        newStatus.unarmedOnly = true;
+
+                        if (melee != null)
+                            melee.AddToMainStatusList(newStatus);
+                    }
+                }
+                else if (target.targetType.obj)
+                {
+                    foreach (Status status in effect.statusList)
+                    {
+                        statusesMainStatusShouldApply.Add(status);
+                    }
+                }
             }
         }
 
-        public override void IfTargetIsWeapon(Target target)
+        public override void HandleTargetingEffects(Target target)
         {
-            base.IfTargetIsWeapon(target);
-
-            target.GetComponent<SS.Item.Weapon>().attack.deliveredByMain.Add(fireDamage.GetComponent<FireDamage>());
-            fireDamage.GetComponent<FireDamage>().attachedSpell = target.GetComponent<SS.Item.Weapon>().attack;
-
-            if (target.GetComponent<SS.GameController.TurnCounter>() == null)
+            foreach (Effect effect in targetMeEffects)
             {
-                target.gameObject.AddComponent<SS.GameController.TurnCounter>();
+                if (effect == null) continue;
+
+                if (effect.style == Style.InstantDamage)
+                {
+                    AddToMainDamageList(effect.mainDamage);
+                }
+                else if (effect.style == Style.DamageOverTime)
+                {
+                    AddToMainStatusList(effect.mainStatus);
+                }
             }
-
-            SS.GameController.TurnCounter.CountdownAndEffect cAndE = new GameController.TurnCounter.CountdownAndEffect
-                (duration, fireDamage.GetComponent<Effect>());
-
-            target.GetComponent<SS.GameController.TurnCounter>().countDowns.Add(cAndE);
         }
-
-        public override void IfTargetIsAlly(Target target)
-        {
-            base.IfTargetIsAlly(target);
-            target.ApplyStatus("Damage: Fire", damage);
-        }
-
-        public override void IfTargetIsEnemy(Target target)
-        {
-            base.IfTargetIsEnemy(target);
-            target.ApplyStatus("Damage: Fire", damage);
-        }
-
-        public override void IfTargetIsStructure(Target target)
-        {
-            base.IfTargetIsStructure(target);
-            target.ApplyStatus("Damage: Fire", damage);
-        }
-
-        public override void IfTargetIsTile(Target target)
-        {
-            base.IfTargetIsTile(target);
-            target.ApplyStatus("Damage: Fire", damage);
-        }
-
-        public override void TargetGivenEffect(Effect target)
-        {
-            base.TargetGivenEffect(target);
-
-            fireDamage = Instantiate(toInstantiate);
-
-            target.deliveredEffects.Add(fireDamage.GetComponent<FireDamage>());
-            fireDamage.GetComponent<FireDamage>().attachedEffect = target;
-
-            if (target.GetComponent<SS.GameController.TurnCounter>() == null)
-            {
-                target.gameObject.AddComponent<SS.GameController.TurnCounter>();
-            }
-
-            SS.GameController.TurnCounter.CountdownAndEffect cAndE = new GameController.TurnCounter.CountdownAndEffect
-                (duration, fireDamage.GetComponent<Effect>());
-
-            target.GetComponent<SS.GameController.TurnCounter>().countDowns.Add(cAndE);
-        }
-
-        //public override void IfTargetIsEffect(Target target)
-        //{
-        //    base.IfTargetIsEffect(target);
-        //}
     }
 }

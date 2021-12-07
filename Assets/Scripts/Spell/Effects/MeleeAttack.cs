@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SS.StatusSpace;
 
 namespace SS.Spells
 {
@@ -17,15 +18,23 @@ namespace SS.Spells
         {
             speed = 1;
 
-            damage = 2;
-            range = 1;
+            range = range;
 
             actionPointCost = 1;
 
-            duration = -1;
+            duration = 0;
             toInstantiate = null;
 
-            normallyValid = new TargetType(true, true, true, true, true, true, false, false);
+            normallyValid = new TargetType(true, true, false, false);
+
+            originalDamageList.Clear();
+            originalDamageList.Add(new Character.Damage(Character.Damage.DamageType.Physical, 2));
+            ResetMainDamageList();
+
+            originalStatusList.Clear();
+            ResetMainDamageList();
+
+            style = Style.InstantDamage;
         }
 
         public override void InvokeEffect(List<Target> targets)
@@ -34,7 +43,12 @@ namespace SS.Spells
 
             foreach (Target target in targets)
             {
-                DamageTarget(target, damage);
+                DamageTarget(target, damageList);
+
+                foreach (Status s in statusList)
+                {
+                    target.ApplyStatus(s, this);
+                }
             }
 
             //Debug.Log(deliveredEffects.Count);

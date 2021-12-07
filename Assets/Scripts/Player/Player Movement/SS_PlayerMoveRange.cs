@@ -50,6 +50,7 @@ namespace SS.PlayerMovement
 
         public void SpawnRange()
         {
+            Util.SpawnRange.DespawnRange();
             SS.Util.SpawnRange.SpawnMovementRange(player.position, moveRange, moveTile, wallTile);
         }
 

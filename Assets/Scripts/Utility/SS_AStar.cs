@@ -27,10 +27,6 @@ namespace SS.Util
                     if (ray.collider == null || ray.collider.GetComponent<NotObstacle>())
                     {
                         nextPositions.Add(potentialPosition);
-                        Debug.DrawLine(position, position + (Vector2.up * .1f), Color.red, 10);
-                        Debug.DrawLine(position, position + (Vector2.down * .1f), Color.red, 10);
-                        Debug.DrawLine(position, position + (Vector2.left * .1f), Color.red, 10);
-                        Debug.DrawLine(position, position + (Vector2.right * .1f), Color.red, 10);
                     }
                 }
             }
@@ -60,10 +56,6 @@ namespace SS.Util
                     if (ray.collider == null)
                     {
                         nextPositions.Add(potentialPosition);
-                        Debug.DrawLine(position, position + (Vector2.up * .1f), Color.green, 10);
-                        Debug.DrawLine(position, position + (Vector2.down * .1f), Color.green, 10);
-                        Debug.DrawLine(position, position + (Vector2.left * .1f), Color.green, 10);
-                        Debug.DrawLine(position, position + (Vector2.right * .1f), Color.green, 10);
                     }
                     else
                     {
@@ -74,5 +66,55 @@ namespace SS.Util
 
             return nextPositions;
         }
+
+        public static List<Vector2> GetPositionsWithinRadius(List<Vector2> positionsToCheck, int radius)
+        {
+            List<Vector2> takenPositions = new List<Vector2>();
+            List<Vector2> nextPositions = new List<Vector2>();
+
+            //<= because we want to check the initaial position as well as 1 out from there.
+            for (int i = 0; i <= radius; i++)
+            {
+                Debug.Log("in Thing");
+
+                while (positionsToCheck.Count > 0)
+                {
+                    Vector2[] directions = { Vector2.left, Vector2.right, Vector2.up, Vector2.down };
+
+                    Vector2 position = positionsToCheck[0];
+                    if (!takenPositions.Contains(position)) takenPositions.Add(position);
+
+                    for (int j = 0; j < directions.Length; j++)
+                    {
+                        Vector2 potentialPosition = position + directions[j];
+
+                        if (takenPositions.Contains(potentialPosition) || nextPositions.Contains(potentialPosition))
+                        {
+                            continue;
+                        }
+
+                        //This if statement is the main bit that's different between the 2 AStar methods
+                        RaycastHit2D ray = Physics2D.Linecast(position, potentialPosition);
+                        if (ray.collider == null || ray.collider.GetComponent<NotObstacle>())
+                        {
+                            nextPositions.Add(potentialPosition);
+
+                            Debug.DrawLine(position, position + (Vector2.up * .1f), Color.red, 10);
+                            Debug.DrawLine(position, position + (Vector2.down * .1f), Color.red, 10);
+                            Debug.DrawLine(position, position + (Vector2.left * .1f), Color.red, 10);
+                            Debug.DrawLine(position, position + (Vector2.right * .1f), Color.red, 10);
+                        }
+                    }
+
+                    positionsToCheck.RemoveAt(0);
+                }
+
+                positionsToCheck = new List<Vector2>(nextPositions);
+                nextPositions.Clear();
+            }
+
+            return takenPositions;
+        }
     }
+
 }

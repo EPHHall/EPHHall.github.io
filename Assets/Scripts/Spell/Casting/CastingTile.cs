@@ -60,13 +60,13 @@ namespace SS.Spells
                         SelectTile();
                     }
 
-                    SS.UI.TargetMenuRadial targetMenuRadial = FindObjectOfType<SS.UI.TargetMenuRadial>();
-                    targetMenuRadial.ActivateAndPlaceMenu();
+                    //SS.UI.TargetMenuRadial targetMenuRadial = FindObjectOfType<SS.UI.TargetMenuRadial>();
+                    //targetMenuRadial.ActivateAndPlaceMenu();
                 }
             }
         }
 
-        public void SelectTile()
+        public virtual void SelectTile()
         {
             while (selectedTiles.Count >= maxSelections)
             {
@@ -79,7 +79,7 @@ namespace SS.Spells
             selectedTilesChange.Invoke();
         }
 
-        public void DeselectTile()
+        public virtual void DeselectTile()
         {
             selectedTiles.Remove(this);
             GetComponent<SpriteRenderer>().color = defaultColor;

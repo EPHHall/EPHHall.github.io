@@ -16,13 +16,14 @@ namespace SS.Spells
             spellPointCost = 6;
 
             range = 1;
-            damage = 0;
+            originalDamageList.Clear();
+            ResetMainDamageList();
 
             actionPointCost = 2;
 
             duration = 2;
 
-            normallyValid = new TargetType(false, false, true, true, false, false, true, false);
+            normallyValid = new TargetType(false, true, true, false);
         }
 
         public override void InvokeEffect(List<Target> targets)
@@ -35,26 +36,11 @@ namespace SS.Spells
             }
         }
 
-        public override void IfTargetIsStructure(Target target)
-        {
-            base.IfTargetIsStructure(target);
-
-            target.gameObject.AddComponent<ControllableByPlayer>();
-            target.GetComponent<ControllableByPlayer>().Initialize(duration);
-        }
-
-        public override void IfTargetIsItem(Target target)
-        {
-            base.IfTargetIsItem(target);
-
-            target.ApplyStatus("Controlled by Player", -1);
-        }
-
         public override void IfTargetIsWeapon(Target target)
         {
-            base.IfTargetIsStructure(target);
+            base.IfTargetIsWeapon(target);
 
-            target.ApplyStatus("Controlled by Player", -1);
+            target.ApplyStatus(StatusSpace.Status.StatusName.Controlled, 1, duration, SS.GameController.TurnManager.currentTurnTaker, this);
         }
     }
 }

@@ -21,8 +21,8 @@ namespace SS.UI
         public ModifierFrame[] modifierInventoryFrames = new ModifierFrame[18];
         public EffectFrame[] effectInventoryFrames = new EffectFrame[9];
         public EffectFrame mainFrame;
-        public EffectFrame[] deliveredFrames = new EffectFrame[3];
-        public EffectFrame[] targetFrames = new EffectFrame[3];
+        public List<EffectFrame> deliveredFrames = new List<EffectFrame>();
+        public List<EffectFrame> targetFrames = new List<EffectFrame>();
 
         public GameObject[] inventoryLists = new GameObject[3];
         public int currentInvList = 0;
@@ -79,6 +79,14 @@ namespace SS.UI
             else if (frame == mainFrame)
             {
                 currentSpell.SetMain(effectFrame.effect);
+            }
+            else if (effectFrame != null && deliveredFrames.Contains(effectFrame))
+            {
+                currentSpell.SetDelivered(effectFrame.effect, deliveredFrames.IndexOf(effectFrame));
+            }
+            else if (effectFrame != null && targetFrames.Contains(effectFrame))
+            {
+                currentSpell.SetTargetsMain(effectFrame.effect, targetFrames.IndexOf(effectFrame));
             }
             else if (ArrayContains.Contains(modifierFrames, modifierFrame))
             {

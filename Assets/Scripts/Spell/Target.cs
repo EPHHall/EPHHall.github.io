@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SS.StatusSpace;
+using SS.GameController;
 
 namespace SS.Spells
 {
@@ -48,26 +50,72 @@ namespace SS.Spells
             hp -= damage;
         }
 
-        public virtual void ApplyStatus(string status, int magnitude)
+        public void HandleStatuses(bool newRound, bool preventDecrement)
         {
-            statuses.Add(new Status(status, magnitude));
+            if (preventDecrement)
+            {
+                StatusInterpreter.InterpretStatuses(this, StatusInterpreter.DecrementBehavior.Dont);
+                return;
+            }
+
+            StatusInterpreter.DecrementBehavior behavior;
+
+            if (targetType.creature)
+            {
+                if (TurnManager.currentTurnTaker == GetComponent<TurnTaker>())
+                    behavior = StatusInterpreter.DecrementBehavior.Do;
+                else
+                    behavior = StatusInterpreter.DecrementBehavior.Dont;
+
+                StatusInterpreter.InterpretStatuses(this, behavior);
+            }
+            else if (targetType.obj)
+            {
+                if (newRound)
+                    behavior = StatusInterpreter.DecrementBehavior.Do;
+                else
+                    behavior = StatusInterpreter.DecrementBehavior.Dont;
+
+                StatusInterpreter.InterpretStatuses(this, StatusInterpreter.DecrementBehavior.CheckApplier);
+            }
+            else if (targetType.weapon)
+            {
+                StatusInterpreter.InterpretStatuses(this, StatusInterpreter.DecrementBehavior.CheckApplier);
+            }
+            else if (targetType.tile)
+            {
+                if (newRound)
+                    behavior = StatusInterpreter.DecrementBehavior.Do;
+                else
+                    behavior = StatusInterpreter.DecrementBehavior.Dont;
+
+                StatusInterpreter.InterpretStatuses(this, behavior);
+            }
         }
 
-        public virtual void ApplyStatus(Status status)
+        public virtual void ApplyStatus(Status.StatusName statusName, int magnitude, int duration, TurnTaker applier, Effect applyingEffect)
+        {
+            Status newStatus = new Status(statusName, magnitude, duration, applier);
+            newStatus.applyingEffect = applyingEffect;
+            statuses.Add(newStatus);
+        }
+
+        public virtual void ApplyStatus(Status status, Effect applyingEffect)
         {
             statuses.Add(status);
+            status.applyingEffect = applyingEffect;
         }
 
         public void SelectThisButton()
         {
             if (!selectedTargets.Contains(this))
             {
-            Debug.Log("Should Select buitton");
+                //Debug.Log("Should Select buitton");
                 selectedTargets.Add(this);
             }
             else
             {
-            Debug.Log("Should Deselect buitton");
+                //Debug.Log("Should Deselect buitton");
                 selectedTargets.Remove(this);
             }
         }
@@ -82,7 +130,7 @@ namespace SS.Spells
 
         public static void ClearSelectedTargets()
         {
-            Debug.Log("In Clear");
+            //Debug.Log("In Clear");
 
             selectedTargets.Clear();
         }

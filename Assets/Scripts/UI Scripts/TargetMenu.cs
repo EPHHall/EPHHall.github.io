@@ -14,7 +14,7 @@ namespace SS.UI
 
         public enum ActiveType
         {
-            All, Enemy, Ally, Struct, Item, Spell, Tile, Weapon
+            All, Creature, Object, Weapon, Tile
         }
         public ActiveType activeType;
         public int activeTypeIndex = 0;
@@ -63,20 +63,11 @@ namespace SS.UI
                 case ActiveType.All:
                     toDisplay = new TargetType(true);
                     break;
-                case ActiveType.Enemy:
-                    toDisplay.enemy = true;
+                case ActiveType.Creature:
+                    toDisplay.creature = true;
                     break;
-                case ActiveType.Ally:
-                    toDisplay.ally = true;
-                    break;
-                case ActiveType.Struct:
-                    toDisplay.structure = true;
-                    break;
-                case ActiveType.Item:
-                    toDisplay.item = true;
-                    break;
-                case ActiveType.Spell:
-                    toDisplay.spell = true;
+                case ActiveType.Object:
+                    toDisplay.obj = true;
                     break;
                 case ActiveType.Tile:
                     toDisplay.tile = true;
@@ -114,6 +105,9 @@ namespace SS.UI
                 {
                     targets.Add(target);
                 }
+
+                if(tile != null && tile.GetComponent<Target>() != null)
+                    targets.Add(tile.GetComponent<Target>());
             }
 
             SpawnTargetButtons();

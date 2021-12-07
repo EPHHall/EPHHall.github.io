@@ -49,6 +49,11 @@ namespace SS.Character
 
         private void Start()
         {
+            if (followerParent == null)
+            {
+                followerParent = GameObject.Find("Character Followers").transform;
+            }
+
             characterFollower = Instantiate(follower, followerParent).GetComponent<CharacterFollower>();
             characterFollower.GetComponent<Follow>().toFollow = transform;
         }
@@ -105,7 +110,7 @@ namespace SS.Character
 
                 //List<Vector2> initialPositions = new List<Vector2>();
                 //List<Vector2> takenPositions = new List<Vector2>();
-
+                Debug.Log("In Thing");
                 Util.SpawnRange.SpawnTargetingRange(initialPositions, takenPositions, spell.range, abilityTile, null);
             }
             else
