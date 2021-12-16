@@ -6,12 +6,11 @@ using SS.StatusSpace;
 namespace SS.Spells
 {
     [ExecuteAlways]
-    public class Inflame : Effect
+    public class Inflame : Effect_Enchanting
     {
         public override void Awake()
         {
             base.Awake();
-
 
             speed = 1;
             manaCost = 5;
@@ -31,7 +30,7 @@ namespace SS.Spells
             mainStatus = new Status(Status.StatusName.FireDamage, baseDamage, duration, SS.GameController.TurnManager.currentTurnTaker, radius);
 
             originalDamageList.Clear();
-            originalDamageList.Add(mainDamage);
+            //originalDamageList.Add(mainDamage);
             ResetMainDamageList();
 
             originalStatusList.Clear();
@@ -39,117 +38,33 @@ namespace SS.Spells
             ResetMainStatusList();
 
             style = Style.DamageOverTime;
+
+            base.Awake();
         }
 
         public override void InvokeEffect(List<Target> targets)
         {
             base.InvokeEffect(targets);
 
-            int fullDamage = 0;
-            foreach (SS.Character.Damage damage in damageList)
+            Target target = targets[0];
+
+            HandleDeliveredAndTargeting(targets);
+
+            foreach (Status status in statusList)
             {
-                if (damage.type == Character.Damage.DamageType.Inflame)
-                    fullDamage += damage.amount;
+                target.ApplyStatus(status, this);
             }
-
-            //just looking at the first target for testing purposes, in the final cut this should apply to every target
-            List<Status> statusesMainStatusShouldApply = new List<Status>();
-            HandleDeliveredEffects(targets[0], statusesMainStatusShouldApply);
-
-            foreach (Target target in targets)
+            foreach (Character.Damage damage in damageList)
             {
-                foreach (Status status in statusList)
-                {
-                    if (status.unarmedOnly && spellAttachedTo.activeWeapons.Count > 0)
-                        continue;
-
-                    Status newStatus = new Status(status);
-                    foreach (Status s in statusesMainStatusShouldApply)
-                    {
-                        newStatus.AddStatusToApply(s);
-                    }
-                    target.ApplyStatus(newStatus, this);
-                }
-
-                if (target.targetType.weapon)
-                {
-                    target.HandleStatuses(false, true);
-                }
+                DamageTarget(target, damage);
             }
-        }
-
-        public override void HandleDeliveredEffects(Target target, List<Status> statusesMainStatusShouldApply)
-        {
-            Item.Weapon weapon = null;
-            Character.CharacterStats creature = null;
 
             if (target.targetType.weapon)
             {
-                //If the target is a weapon it should have the weapon script
-                weapon = target.GetComponent<Item.Weapon>();
-            }
-            //currently multiple target types is not supported
-            else if (target.targetType.creature)
-            {
-                creature = target.GetComponent<Character.CharacterStats>();
+                target.HandleStatuses(false, true);
             }
 
-            foreach (Effect effect in deliveredEffects)
-            {
-                if (effect == null) continue;
-
-                if (weapon != null)
-                {
-                    //RemoveStatusesFromList(weapon.statusesToInflict, effect);
-
-                    foreach (Status status in effect.statusList)
-                    {
-                        weapon.AddStatusToInflict(status);
-                    }
-                }
-                else if (creature != null)
-                {
-                    //RemoveStatusesFromList(target.statuses, effect);
-                    Effect melee = null;
-                    if (creature.transform.Find("Melee Attack") != null && creature.transform.Find("Melee Attack").GetComponent<Spell>() != null)
-                    {
-                        melee = creature.transform.Find("Melee Attack").GetComponent<Spell>().main;
-                    }
-
-                    foreach (Status status in effect.statusList)
-                    {
-                        Status newStatus = new Status(status);
-                        newStatus.unarmedOnly = true;
-
-                        if (melee != null)
-                            melee.AddToMainStatusList(newStatus);
-                    }
-                }
-                else if (target.targetType.obj)
-                {
-                    foreach (Status status in effect.statusList)
-                    {
-                        statusesMainStatusShouldApply.Add(status);
-                    }
-                }
-            }
-        }
-
-        public override void HandleTargetingEffects(Target target)
-        {
-            foreach (Effect effect in targetMeEffects)
-            {
-                if (effect == null) continue;
-
-                if (effect.style == Style.InstantDamage)
-                {
-                    AddToMainDamageList(effect.mainDamage);
-                }
-                else if (effect.style == Style.DamageOverTime)
-                {
-                    AddToMainStatusList(effect.mainStatus);
-                }
-            }
+            EndInvoke();
         }
     }
 }

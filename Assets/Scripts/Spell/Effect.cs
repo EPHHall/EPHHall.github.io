@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SS.StatusSpace;
+using SS.Character;
 
 namespace SS.Spells
 {
@@ -9,11 +10,28 @@ namespace SS.Spells
     {
         public static EffectResources resources;
 
+        public enum EffectType
+        {
+            Mutation,
+            Summoning,
+            Enchanting,
+            Projection,
+            Possession
+        }
+
         public enum Style
         {
             InstantDamage,
             DamageOverTime,
             Utility
+        }
+
+        public class BehaviorPackage
+        {
+            public Effect effect;
+            public Damage damage;
+            public Status status;
+            public List<Target> targets;
         }
 
         [Space(5)]
@@ -28,8 +46,10 @@ namespace SS.Spells
         public int actionPointCost;
 
         public int baseDamage;
+        public Character.Damage mainDamage;
         public List<SS.Character.Damage> damageList;
         public List<SS.Character.Damage> originalDamageList;
+        public Status mainStatus;
         public List<SS.StatusSpace.Status> statusList;
         public List<SS.StatusSpace.Status> originalStatusList;
 
@@ -39,6 +59,8 @@ namespace SS.Spells
         public List<string> keywords;
 
         public Spell spellAttachedTo;
+
+        public string effectName;
 
         [Space(5)]
         [Header("Casting Vars")]
@@ -56,8 +78,7 @@ namespace SS.Spells
         [Header("Misc")]
         public Sprite icon;
         public Style style;
-        public Status mainStatus;
-        public Character.Damage mainDamage;
+        public EffectType type;
 
         public virtual void Awake()
         {
@@ -98,6 +119,11 @@ namespace SS.Spells
         public void ResetMainStatusList()
         {
             statusList = new List<StatusSpace.Status>(originalStatusList);
+
+            foreach (Status status in originalStatusList)
+            {
+                status.ResetStatus();
+            }
         }
 
         public int GetTotalDamage()
@@ -118,6 +144,12 @@ namespace SS.Spells
 
         public virtual void InvokeEffect(List<Target> targets)
         {
+        }
+
+        public void EndInvoke()
+        {
+            ResetMainStatusList();
+            ResetMainDamageList();
         }
 
         public virtual bool CanDeliverThisEffect(Effect otherEffect)
@@ -198,11 +230,18 @@ namespace SS.Spells
 
         public void AddToMainDamageList(Character.Damage damage)
         {
+            if (damage.type == Damage.DamageType.None) return;
+
             damageList.Add(damage);
         }
-        public void AddToOriginalDamageList(Character.Damage damage)
+        public void AddToOriginalDamageList(Character.Damage damage, Item.Weapon weapon)
         {
+            damage.weapon = weapon;
             originalDamageList.Add(damage);
+        }
+        public void RemoveFromOriginalDamageList(Character.Damage damage)
+        {
+            originalDamageList.Remove(damage);
         }
 
         public void AddToMainStatusList(StatusSpace.Status status)
@@ -232,10 +271,65 @@ namespace SS.Spells
             }
         }
 
-        public virtual void BehaviorWhenTargeting(Effect e) {}
+        public virtual void BehaviorWhenTargeting(BehaviorPackage package)
+        {
+            Effect.EffectType eType = package.effect.type;
+            switch(eType)
+            {
+                case EffectType.Enchanting:
+                    BehaviorWhenTargeting_Enchanting(package);
+                    break;
+                case EffectType.Mutation:
+                    BehaviorWhenTargeting_Mutation(package);
+                    break;
+                case EffectType.Possession:
+                    BehaviorWhenTargeting_Possession(package);
+                    break;
+                case EffectType.Projection:
+                    BehaviorWhenTargeting_Projection(package);
+                    break;
+                case EffectType.Summoning:
+                    BehaviorWhenTargeting_Summoning(package);
+                    break;
+            }
+        }
+        public virtual void BehaviorWhenDelivered(BehaviorPackage package)
+        {
+            Effect.EffectType eType = package.effect.type;
+            switch (eType)
+            {
+                case EffectType.Enchanting:
+                    BehaviorWhenDelivered_Enchanting(package);
+                    break;
+                case EffectType.Mutation:
+                    BehaviorWhenDelivered_Mutation(package);
+                    break;
+                case EffectType.Possession:
+                    BehaviorWhenDelivered_Possession(package);
+                    break;
+                case EffectType.Projection:
+                    BehaviorWhenDelivered_Projection(package);
+                    break;
+                case EffectType.Summoning:
+                    BehaviorWhenDelivered_Summoning(package);
+                    break;
+            }
+        }
 
-        public virtual void HandleDeliveredEffects(Target target, List<Status> statusesMainStatusShouldApply) {}
+        public virtual void BehaviorWhenTargeting_Enchanting(BehaviorPackage package){}
+        public virtual void BehaviorWhenTargeting_Mutation(BehaviorPackage package){}
+        public virtual void BehaviorWhenTargeting_Possession(BehaviorPackage package){}
+        public virtual void BehaviorWhenTargeting_Projection(BehaviorPackage package){}
+        public virtual void BehaviorWhenTargeting_Summoning(BehaviorPackage package){}
 
-        public virtual void HandleTargetingEffects(Target target) {}
+        public virtual void BehaviorWhenDelivered_Enchanting(BehaviorPackage package) { }
+        public virtual void BehaviorWhenDelivered_Mutation(BehaviorPackage package) { }
+        public virtual void BehaviorWhenDelivered_Possession(BehaviorPackage package) { }
+        public virtual void BehaviorWhenDelivered_Projection(BehaviorPackage package) { }
+        public virtual void BehaviorWhenDelivered_Summoning(BehaviorPackage package) { }
+
+        //public virtual void HandleDeliveredEffects(Target target, List<Status> statusesMainStatusShouldApply) {}
+
+        //public virtual void HandleTargetingEffects(Target target) {}
     }
 }

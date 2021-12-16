@@ -6,6 +6,10 @@ namespace SS.GameController
 {
     public class TurnTaker : MonoBehaviour
     {
+        public void Start()
+        {
+        }
+
         public virtual void EndTurn()
         {
             SS.Util.SpawnRange.DespawnRange();
@@ -29,7 +33,7 @@ namespace SS.GameController
                 transform.Find("Turn Marker").parent = null;
             }
 
-            FindObjectOfType<TurnManager>().turnTakers.Remove(this);
+            TurnManager.tm.turnTakers.Remove(this);
         }
     }
 }

@@ -9,6 +9,7 @@ namespace SS.GameController
         public static TurnTaker currentTurnTaker;
         public static TurnTaker previousTurnTaker;
         public static bool staticPrintTurnTaker;
+        public static TurnManager tm;
 
         public List<TurnTaker> turnTakers = new List<TurnTaker>();
         public int turnTakersIndex = 0;
@@ -24,6 +25,11 @@ namespace SS.GameController
 
         public void Start()
         {
+            if (tm == null)
+            {
+                tm = this;
+            }
+
             turnTakers.Add(GameObject.Find("Player").GetComponent<TurnTaker>());
 
             SetTurnTakerList();
@@ -47,7 +53,7 @@ namespace SS.GameController
         {
             foreach (TurnTaker turnTaker in GameObject.FindObjectsOfType<TurnTaker>())
             {
-                if (!turnTakers.Contains(turnTaker))
+                if (!turnTakers.Contains(turnTaker) && (turnTaker as TurnTakerControlledObject) == null)
                 {
                     turnTakers.Add(turnTaker);
                 }

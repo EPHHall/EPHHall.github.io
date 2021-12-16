@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using SS.Character;
+using SS.Spells;
 
 namespace SS.UI
 {
@@ -91,11 +92,21 @@ namespace SS.UI
                 {
                     statsCard.gameObject.SetActive(true);
                     statsCard.SetPosition(following.position.x < Camera.main.transform.position.x);
+                    statsCard.targets = GetTargets();
                     statsCard.SetStatsToDisplay(stats);
                     statsCard.canDeactivate = false;
                 }
             }
         }
+
+        public List<Target> GetTargets()
+        {
+            List<Target> targets = SS.Util.GetOnlyTargets.GetTargets(Physics2D.OverlapBoxAll(transform.position, new Vector2(.5f, .5f), 0));
+
+            return targets;
+        }
+
+
 
         public void OnPointerEnter(PointerEventData eventData)
         {

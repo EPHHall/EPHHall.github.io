@@ -35,6 +35,10 @@ namespace SS.Character
         public GameObject abilityTile;
 
         [Space(5)]
+        [Header("For Melee")]
+        public Spells.Spell_Attack meleeAttack;
+
+        [Space(5)]
         [Header("Dont Touch")]
         public List<Vector2> initialPositions;
         public List<Vector2> takenPositions;
@@ -110,7 +114,7 @@ namespace SS.Character
 
                 //List<Vector2> initialPositions = new List<Vector2>();
                 //List<Vector2> takenPositions = new List<Vector2>();
-                Debug.Log("In Thing");
+
                 Util.SpawnRange.SpawnTargetingRange(initialPositions, takenPositions, spell.range, abilityTile, null);
             }
             else

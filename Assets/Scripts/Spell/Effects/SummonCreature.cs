@@ -6,7 +6,7 @@ using SS.StatusSpace;
 namespace SS.Spells
 {
     [ExecuteAlways]
-    public class SummonCreature : Effect
+    public class SummonCreature : Effect_Summoning
     {
         public override void Awake()
         {
@@ -38,25 +38,77 @@ namespace SS.Spells
 
             Target target = targets[0];
             CastingTile tile = null;
-            if (target.TryGetComponent<CastingTile>(out tile) && tile.targets.Count <= 0)
-            {
-                GameController.TurnManager turnManager = FindObjectOfType<GameController.TurnManager>();
 
-                GameObject newDude = Instantiate(toInstantiate, target.transform.position, Quaternion.identity);
+            GameController.TurnManager turnManager = FindObjectOfType<GameController.TurnManager>();
+
+            if (useOverridePosition)
+            {
+                GameObject newDude = Instantiate(toInstantiate, overridePosition, Quaternion.identity);
+
+                HandleDeliveredAndTargeting(targets, newDude);
 
                 int index = turnManager.turnTakers.IndexOf(GameController.TurnManager.currentTurnTaker) + 1;
                 turnManager.turnTakers.Insert(index, newDude.GetComponent<GameController.TurnTaker>());
 
-                HandleDeliveredEffects(newDude.GetComponent<Target>(), null);
-                HandleTargetingEffects(newDude.GetComponent<Target>());
+                EndInvoke();
+                return;
+            }
+
+            if (target.TryGetComponent<CastingTile>(out tile) && tile.targets.Count <= 0)
+            {
+
+                GameObject newDude = Instantiate(toInstantiate, target.transform.position, Quaternion.identity);
+
+                HandleDeliveredAndTargeting(targets, newDude);
+
+                int index = turnManager.turnTakers.IndexOf(GameController.TurnManager.currentTurnTaker) + 1;
+                turnManager.turnTakers.Insert(index, newDude.GetComponent<GameController.TurnTaker>());
+
+                //HandleDeliveredEffects(newDude.GetComponent<Target>(), null);
+                //HandleTargetingEffects(newDude.GetComponent<Target>());
             }
             else
             {
-                GameObject.FindObjectOfType<UI.UpdateText>().SetMessage("Summon on empty space!", Color.red);
+                List<Vector2> toCheck = new List<Vector2>();
+                toCheck.Add(target.transform.position);
+                List<Vector2> emptySpaces = SS.Util.CheckPositionsForTargets.CheckForEmptySpaces(toCheck, 1);
+
+                Vector2 closestSpace = new Vector2(int.MaxValue, int.MaxValue);
+                if (emptySpaces.Count > 0)
+                {
+                    if (spellAttachedTo.caster != null)
+                    {
+                        foreach (Vector2 space in emptySpaces)
+                        {
+                            if (Vector2.Distance(space, spellAttachedTo.caster.transform.position) <
+                               Vector2.Distance(closestSpace, spellAttachedTo.caster.transform.position))
+                            {
+                                closestSpace = space;
+                            }
+                        }
+                    }
+                    else 
+                    {
+                        closestSpace = emptySpaces[0];
+                    }
+
+                    GameObject newDude = Instantiate(toInstantiate, closestSpace, Quaternion.identity);
+
+                    HandleDeliveredAndTargeting(targets, newDude);
+
+                    int index = turnManager.turnTakers.IndexOf(GameController.TurnManager.currentTurnTaker) + 1;
+                    turnManager.turnTakers.Insert(index, newDude.GetComponent<GameController.TurnTaker>());
+                }
+                else
+                {
+                    GameObject.FindObjectOfType<UI.UpdateText>().SetMessage("No empty space nearby!", Color.red);
+                }
             }
+
+            EndInvoke();
         }
 
-        public override void HandleDeliveredEffects(Target target, List<Status> statusesMainStatusShouldApply)
+        /*public override void HandleDeliveredEffects(Target target, List<Status> statusesMainStatusShouldApply)
         {
             foreach (Effect effect in deliveredEffects)
             {
@@ -94,6 +146,6 @@ namespace SS.Spells
                     target.ApplyStatus(newStatus, this);
                 }
             }
-        }
+        }*/
     }
 }

@@ -10,6 +10,7 @@ namespace SS.Character
     {
         public enum DamageType
         {
+            None,
             Inflame,
             Fire,
             Enchantment,
@@ -21,6 +22,8 @@ namespace SS.Character
         public int amount;
 
         public List<Status> statusesToInflict = new List<Status>();
+
+        public Item.Weapon weapon;
 
         public Damage(DamageType type, int amount)
         {

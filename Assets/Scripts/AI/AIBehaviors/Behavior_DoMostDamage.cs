@@ -7,10 +7,13 @@ namespace SS.AI
 {
     public class Behavior_DoMostDamage : AIBehavior
     {
+        public Behavior_DoMostDamage(Agent agent) : base(agent)
+        {
+            
+        }
+
         public override void InvokeBehavior(List<Spell> spells)
         {
-            Debug.Log("In Do most damage");
-
             agent.spellToCast = null;
 
             base.InvokeBehavior(spells);
@@ -28,7 +31,6 @@ namespace SS.AI
                 //If the main target was not in range or is just null, find a target of the right faction
                 if (agent.currentTarget == null)
                 {
-
                     foreach (Target target in agent.targets)
                     {
                         if (target != agent.GetComponent<Target>() && target.GetComponent<Faction>() != null && target.GetComponent<Faction>().factionName == agent.targetFaction)

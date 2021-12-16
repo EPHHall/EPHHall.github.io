@@ -10,8 +10,8 @@ namespace SS.AI
         {
             base.Awake();
 
-            behaviors.Add(new Behavior_MoveCloserToTarget());
-            behaviors.Add(new Behavior_DoMostDamage());
+            behaviors.Add(new Behavior_MoveCloserToTarget(attachedAgent));
+            behaviors.Add(new Behavior_DoMostDamage(attachedAgent));
         }
     }
 }

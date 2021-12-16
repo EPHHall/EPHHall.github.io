@@ -9,6 +9,11 @@ namespace SS.AI
     {
         public Agent agent;
 
+        public AIBehavior(Agent agent)
+        {
+            this.agent = agent;
+        }
+
         public virtual void InvokeBehavior(List<Spell> spells)
         {
 

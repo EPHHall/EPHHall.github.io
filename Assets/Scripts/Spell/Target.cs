@@ -102,8 +102,11 @@ namespace SS.Spells
 
         public virtual void ApplyStatus(Status status, Effect applyingEffect)
         {
-            statuses.Add(status);
-            status.applyingEffect = applyingEffect;
+            //make a copy so that the original status isn't affected
+            Status newStatus = new Status(status);
+
+            statuses.Add(newStatus);
+            newStatus.applyingEffect = applyingEffect;
         }
 
         public void SelectThisButton()
@@ -125,6 +128,15 @@ namespace SS.Spells
             if (!selectedTargets.Contains(this))
             {
                 selectedTargets.Add(this);
+            }
+        }
+        public void SelectTarget(Target justThis)
+        {
+            ClearSelectedTargets();
+
+            if (!selectedTargets.Contains(justThis))
+            {
+                selectedTargets.Add(justThis);
             }
         }
 

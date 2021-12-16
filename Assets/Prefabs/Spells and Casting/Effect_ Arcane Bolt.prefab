@@ -48,23 +48,47 @@ MonoBehaviour:
   manaCost: 2
   spellPointCost: 2
   actionPointCost: 1
-  damage: 1
+  baseDamage: 0
+  mainDamage:
+    type: 0
+    amount: 0
+    statusesToInflict: []
+    weapon: {fileID: 0}
+  damageList: []
+  originalDamageList: []
+  mainStatus:
+    statusName: 0
+    magnitude: 0
+    duration: 0
+    applier: {fileID: 0}
+    radius: 0
+    controller: {fileID: 0}
+    statusesToApply: []
+    unarmedOnly: 0
+    applyingEffect: {fileID: 0}
+    explanation_DealsDamage: 
+    explanation_Main: 
+    explanation_Main_Base: 
+    explanation_Main_Name: 
+  statusList: []
+  originalStatusList: []
   range: 8
+  radius: 0
   duration: 0
   keywords: []
+  spellAttachedTo: {fileID: 0}
+  effectName: Arcane Bolt
   toInstantiate: {fileID: 0}
   normallyValid:
     toggleNone: 0
     toggleAll: 0
-    enemy: 1
-    ally: 1
-    structure: 1
-    item: 0
-    spell: 0
-    tile: 0
+    creature: 1
+    obj: 1
     weapon: 0
-    effect: 0
+    tile: 0
   deliveredEffects: []
-  attachedSpell: {fileID: 0}
+  targetMeEffects: []
   attachedEffect: {fileID: 0}
   icon: {fileID: 5811675278147054703, guid: 90a2e7a07b31a8c478db8064de21d317, type: 3}
+  style: 0
+  type: 3

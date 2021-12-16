@@ -15,11 +15,13 @@ namespace SS.Item
         public int speedMod;
         public int rangeMod;
 
-        public Spell attack;
+        public Spell_Attack attack;
 
         public List<Status> statusesToInflict;
 
         public Damage toInflict;
+
+        public bool unarmed;
 
         public void Awake()
         {
@@ -34,19 +36,68 @@ namespace SS.Item
             ApplyWeapon();
         }
 
+        public static void CreateWeapon(int damageMod, int speedMod, int rangeMod, 
+            List<Status> statusesToInflict, Damage toInflict, bool unarmed, Spell_Attack parent,
+            string name)
+        {
+            GameObject instantiated = new GameObject(name);
+            instantiated.transform.parent = parent.transform;
+            instantiated.transform.localPosition = Vector2.zero;
+            instantiated.transform.rotation = Quaternion.identity;
+            
+            Weapon newWeapon = instantiated.AddComponent<Weapon>();
+            newWeapon.damageMod = damageMod;
+            newWeapon.speedMod = speedMod;
+            newWeapon.rangeMod = rangeMod;
+
+            newWeapon.statusesToInflict = new List<Status>();
+            if (statusesToInflict != null)
+            {
+                newWeapon.statusesToInflict = new List<Status>(statusesToInflict);
+            }
+
+            newWeapon.toInflict = toInflict;
+
+            newWeapon.unarmed = unarmed;
+
+            newWeapon.attack = parent;
+
+            parent.AddWeapon(newWeapon);
+
+            //return ;
+        }
+
         public void ApplyWeapon()
         {
+            if (name == "Channel Bolt")
+            {
+                Debug.Log("In thing");
+            }
+
+            if (attack == null) return;
+            if (attack.main == null) return;
+
+            if (name == "Channel Bolt")
+            {
+                Debug.Log("past beginnning");
+                Debug.Log(rangeMod);
+            }
+
             attack.main.ResetStats();
 
-            if (attack.activeWeapons.Contains(this))
+            if (attack.activeWeapons.Contains(this) &&
+                (attack.weaponBeingUsed == attack.activeWeapons.IndexOf(this) || 
+                (attack.weaponBeingUsed == -1 && attack.activeWeapons.IndexOf(this) == 0)))
             {
-
-                Debug.Log("Buh");
-
-                if (!attack.main.originalDamageList.Contains(toInflict))
+                foreach (Damage damage in attack.main.originalDamageList)
                 {
-                    attack.main.originalDamageList.Add(toInflict);
+                    if (damage.weapon != null)
+                    {
+                        attack.main.RemoveFromOriginalDamageList(damage);
+                    }
                 }
+                
+                attack.main.AddToOriginalDamageList(toInflict, this);
 
                 attack.main.ResetMainDamageList();
 
@@ -71,8 +122,10 @@ namespace SS.Item
 
         public void AddStatusToInflict(Status status)
         {
-            statusesToInflict.Add(status);
-            status.applyingEffect = attack.main;
+            Status newStatus = new Status(status);
+
+            statusesToInflict.Add(newStatus);
+            newStatus.applyingEffect = attack.main;
 
             ApplyWeapon();
         }
@@ -81,7 +134,7 @@ namespace SS.Item
         {
             if (!Application.isPlaying)
             {
-                ApplyWeapon();
+                //ApplyWeapon();
             }
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using SS.Character;
+using SS.Spells;
 using UnityEngine.EventSystems;
 
 namespace SS.UI
@@ -49,6 +50,8 @@ namespace SS.UI
         private bool pointerIsOver = false;
         private Image image;
         public GameObject[] contents;
+        public List<Target> targets;
+        public int targetIndex = 0;
         //public Dictionary<string, string> evaluateOn;
 
         private void Start()
@@ -77,9 +80,13 @@ namespace SS.UI
                 gameObject.SetActive(false);
             }
 
-            if (statsToDisplay != null)
+            if (targets.Count > 0)
             {
-                statsToDisplay.GetComponent<Spells.Target>().SelectTarget();
+                if (targetIndex >= targets.Count)
+                {
+                    targetIndex = targets.Count - 1;
+                }
+                targets[targetIndex].SelectTarget(targets[targetIndex]);
             }
 
             canDeactivate = true;
@@ -117,12 +124,64 @@ namespace SS.UI
         {
             statsToDisplay = stats;
 
-            characterName.text = stats.name;
-            characterHealthMeter.SetStats(statsToDisplay);
+            if(statsToDisplay != null)
+                targetIndex = targets.IndexOf(stats.GetComponent<Target>());
 
-            HandleDescription(stats);
+            BuildCard();
             //characterIcon = stats.icon;
         }
+
+        public void BuildCard()
+        {
+            if (targetIndex >= targets.Count)
+            {
+                targetIndex = targets.Count - 1;
+            }
+
+            if (statsToDisplay != null)
+            {
+                characterName.text = statsToDisplay.name;
+                characterHealthMeter.SetStats(statsToDisplay);
+
+                HandleDescription(statsToDisplay);
+            }
+            else
+            {
+                if (targets[targetIndex].targetName != "")
+                    characterName.text = targets[targetIndex].targetName;
+                else
+                {
+                    characterName.text = targets[targetIndex].name;
+                }
+
+                characterHealthMeter.SetStats(null);
+
+                HandleDescription(targets[targetIndex]);
+            }
+        }
+
+        //public void ActivateStatsCard()
+        //{
+        //    if (statsCard.gameObject.activeInHierarchy && !statsCard.firstActivation)
+        //    {
+        //        if (statsCard.statsToDisplay != following.GetComponent<CharacterStats>())
+        //        {
+        //            statsCard.statsToDisplay = following.GetComponent<CharacterStats>();
+        //        }
+        //        else
+        //        {
+        //            statsCard.gameObject.SetActive(false);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        statsCard.gameObject.SetActive(true);
+        //        statsCard.SetPosition(following.position.x < Camera.main.transform.position.x);
+        //        statsCard.targets = GetTargets();
+        //        statsCard.SetStatsToDisplay(stats);
+        //        statsCard.canDeactivate = false;
+        //    }
+        //}
 
         public void HandleDescription(CharacterStats stats)
         {
@@ -146,36 +205,47 @@ namespace SS.UI
                     }
                 }
             }
-            else
+        }
+        public void HandleDescription(Target target)
+        {
+            characterDescription.text = "Buh";
+
+            //if (/*stats.characterFollower == null || stats.characterFollower.showing*/ true)
+            //{
+            //    characterDescription.text += stats.description;
+
+            //    if (Spells.SpellManager.activeSpell != null)
+            //    {
+            //        Spells.Spell spell = Spells.SpellManager.activeSpell;
+
+            //        characterDescription.text += "\n";
+            //        characterDescription.text += "You are about to cast " + spell.name + ". " +
+            //            stats.name + " will take " + spell.damage + " damage.";
+
+            //        if (spell.statusesDescription != "")
+            //        {
+            //            characterDescription.text += " They also suffer: " + spell.statusesDescription + ".";
+            //        }
+            //    }
+            //}
+        }
+
+        public void ChangeTarget(int by)
+        {
+            targetIndex += by;
+
+            if (targetIndex < 0)
             {
-                //characterDescription.text += stats.name + "'s Potential Actions:";
-
-                //RectTransform charDescriptionTransform = characterDescription.GetComponent<RectTransform>();
-                ////the position needs to be relative, so that is set later
-                //Button moveButton = Instantiate(abilityButtonPrefab, Vector2.zero, Quaternion.identity, characterDescription.transform.parent);
-
-                //RectTransform moveButtonTransform = moveButton.GetComponent<RectTransform>();
-                //moveButtonTransform.anchoredPosition = charDescriptionTransform.anchoredPosition;
-                //Debug.Log(charDescriptionTransform.rect.height);
-                //moveButtonTransform.anchoredPosition -= new Vector2(0, charDescriptionTransform.rect.height);
-                //moveButton.GetComponentInChildren<Text>().text = "Move";
-
-                //AI.Agent agent = stats.GetComponent<AI.Agent>();
-                //RectTransform previousButton = moveButtonTransform;
-                //if (agent != null)
-                //{
-                //    //foreach (Spells.Spell s in agent.spells)
-                //    //{
-                //    //    Button button = Instantiate(abilityButtonPrefab, Vector2.zero, Quaternion.identity, characterDescription.transform.parent);
-
-                //    //    RectTransform buttonTrans = button.GetComponent<RectTransform>();
-                //    //    buttonTrans.anchoredPosition = previousButton.anchoredPosition;
-                //    //    buttonTrans.anchoredPosition -= new Vector2(0, previousButton.rect.height);
-                //    //    moveButton.GetComponentInChildren<Text>().text = s.name;
-                //    //    previousButton = buttonTrans;
-                //    //}
-                //}
+                targetIndex = targets.Count - 1;
             }
+            else if (targetIndex >= targets.Count)
+            {
+                targetIndex = 0;
+            }
+
+            statsToDisplay = targets[targetIndex].GetComponent<CharacterStats>();
+
+            BuildCard();
         }
 
         public void OnPointerEnter(PointerEventData eventData)

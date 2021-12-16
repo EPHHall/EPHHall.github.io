@@ -7,6 +7,11 @@ namespace SS.AI
 {
     public class Behavior_MoveCloserToTarget : AIBehavior
     {
+        public Behavior_MoveCloserToTarget(Agent agent) : base(agent)
+        {
+
+        }
+
         public override void InvokeBehavior(List<Spell> spells)
         {
             base.InvokeBehavior(spells);
@@ -38,7 +43,7 @@ namespace SS.AI
 
                 foreach (Faction faction in allTargets)
                 {
-                    if (faction.factionName == agent.targetFaction)
+                    if (faction.factionName == agent.targetFaction && faction.gameObject != agent.gameObject)
                     {
                         if (closest == null)
                         {

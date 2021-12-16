@@ -16,6 +16,15 @@ namespace SS.UI
 
         public override void SetStats(CharacterStats newStats)
         {
+            if (newStats == null)
+            {
+                stats = null;
+                SetSliderValue(0);
+                SetSliderMax(0);
+
+                return;
+            }
+
             base.SetStats(newStats);
 
             SetSliderMax(stats.hpMax);
@@ -25,7 +34,15 @@ namespace SS.UI
         {
             base.Update();
 
-            SetSliderValue(stats.hp);
+            if (stats == null)
+            {
+                SetSliderValue(0);
+            }
+            else
+            {
+                SetSliderValue(stats.hp);
+            }
+
             SetText();
         }
 

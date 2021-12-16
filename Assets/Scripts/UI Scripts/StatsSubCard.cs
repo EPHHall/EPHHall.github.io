@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using SS.StatusSpace;
 using SS.Spells;
+using SS.Item;
 
 namespace SS.UI
 {
@@ -23,6 +24,8 @@ namespace SS.UI
 
         public Status statusBuiltFrom;
         public Spell spellBuiltFrom;
+        public Weapon weaponBuiltFrom;
+
         public Target currentTarget;
 
         private void Start()
@@ -48,6 +51,7 @@ namespace SS.UI
             currentTarget = target;
             spellBuiltFrom = null;
             statusBuiltFrom = status;
+            weaponBuiltFrom = null;
         }
 
         public void BuildFromSpell(Spell spell, Target target)
@@ -61,6 +65,21 @@ namespace SS.UI
             currentTarget = target;
             spellBuiltFrom = spell;
             statusBuiltFrom = null;
+            weaponBuiltFrom = null;
+        }
+
+        public void BuildFromWeapon(Weapon weapon, Target target)
+        {
+            if (weapon == null || target == null) return;
+
+            Start();
+            text.text = weapon.name + "\n" + weapon.toInflict.amount + " dmg";
+            text.text += " +" + weapon.rangeMod + " range.";
+
+            currentTarget = target;
+            weaponBuiltFrom = weapon;
+            statusBuiltFrom = null;
+            spellBuiltFrom = null;
         }
 
         private void OnDisable()
@@ -84,9 +103,13 @@ namespace SS.UI
             {    
                 bigInfoBox.BuildFromStatus(statusBuiltFrom, currentTarget);
             }
-            else
+            else if(spellBuiltFrom != null)
             {
                 bigInfoBox.BuildFromSpell(spellBuiltFrom, currentTarget);
+            }
+            else if(weaponBuiltFrom != null)
+            {
+                bigInfoBox.BuildFromWeapon(weaponBuiltFrom, currentTarget);
             }
 
             bigInfoBox.DisplayBox();

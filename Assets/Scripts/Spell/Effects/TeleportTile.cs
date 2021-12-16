@@ -12,6 +12,8 @@ namespace SS.Spells
 
         public override void SelectTile()
         {
+            if (toTeleport == null) return;
+
             toTeleport.position = transform.position;
 
             teleport.reset = true;

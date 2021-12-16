@@ -53,7 +53,7 @@ namespace SS.Util
 
                     //This if statement is the main bit that's different between the 2 AStar methods
                     RaycastHit2D ray = Physics2D.Linecast(position, potentialPosition);
-                    if (ray.collider == null)
+                    if (ray.collider == null /*|| ray.collider.GetComponent<PickupCollider>()*/)
                     {
                         nextPositions.Add(potentialPosition);
                     }
@@ -75,7 +75,6 @@ namespace SS.Util
             //<= because we want to check the initaial position as well as 1 out from there.
             for (int i = 0; i <= radius; i++)
             {
-                Debug.Log("in Thing");
 
                 while (positionsToCheck.Count > 0)
                 {

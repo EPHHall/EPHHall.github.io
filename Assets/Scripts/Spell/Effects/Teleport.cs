@@ -6,7 +6,7 @@ using SS.StatusSpace;
 namespace SS.Spells
 {
     [ExecuteAlways]
-    public class Teleport : Effect
+    public class Teleport : Effect_Summoning
     {
         public bool reset;
         public int resetCounter = 0;
@@ -71,7 +71,11 @@ namespace SS.Spells
             Target toTeleport;
             toTeleport = GetTeleportee(targets);
 
+            HandleDeliveredAndTargeting(targets, toTeleport.gameObject);
+
             ChooseWhereToTeleport(toTeleport);
+
+            EndInvoke();
         }
 
         public Target GetTeleportee(List<Target> targets)
@@ -81,10 +85,15 @@ namespace SS.Spells
 
         public void ChooseWhereToTeleport(Target toTeleport)
         {
-            resources.GetPlayerUpdateText().SetMessage("Choose where to teleport target");
+            ChooseWhereToTeleport(toTeleport, transform.position);
+        }
+
+        public void ChooseWhereToTeleport(Target toTeleport, Vector2 origin)
+        {
+            resources.GetPlayerUpdateText().SetMessage("Choose new location");
 
             Util.SpawnRange.DespawnRange();
-            List<TeleportTile> teleportTiles = Util.SpawnRange.SpawnTargetingRange<TeleportTile>(transform.position, range, resources.GetTeleportTile(), resources.GetTeleportTile());
+            List<TeleportTile> teleportTiles = Util.SpawnRange.SpawnTargetingRange<TeleportTile>(origin, spellAttachedTo.range, resources.GetTeleportTile(), resources.GetTeleportTile());
             foreach (TeleportTile teleportTile in teleportTiles)
             {
                 teleportTile.toTeleport = toTeleport.transform;

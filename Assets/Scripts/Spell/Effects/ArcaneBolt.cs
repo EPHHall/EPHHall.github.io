@@ -7,7 +7,7 @@ using SS.Character;
 namespace SS.Spells
 {
     [ExecuteAlways]
-    public class ArcaneBolt : Effect
+    public class ArcaneBolt : Effect_Projection
     {
         public override void Awake()
         {
@@ -48,42 +48,25 @@ namespace SS.Spells
         {
             base.InvokeEffect(targets);
 
-            List<Damage> toRemove = new List<Damage>();
+            HandleDeliveredAndTargeting(targets);
 
-            foreach (Effect effect in deliveredEffects)
-            {
-                if (effect == null) continue;
-                effect.InvokeEffect(targets);
-            }
-            foreach (Effect effect in targetMeEffects)
-            {
-                if (effect == null) continue;
-
-                if (effect.style == Style.DamageOverTime)
-                {
-                    Damage damage = new Damage(effect.mainDamage.type, effect.mainStatus.magnitude);
-                    AddToMainDamageList(damage);
-                    toRemove.Add(damage);
-                }
-                else if (effect.style == Style.InstantDamage)
-                {
-                    AddToMainDamageList(effect.mainDamage);
-                    toRemove.Add(effect.mainDamage);
-                }
-            }
+            //foreach (Effect effect in deliveredEffects)
+            //{
+            //    if (effect == null) continue;
+            //    effect.InvokeEffect(targets);
+            //}
 
             foreach (Target target in targets)
             {
                 DamageTarget(target, damageList);
-            }
 
-            foreach (Damage d in toRemove)
-            {
-                if (damageList.Contains(d))
+                foreach (Status status in statusList)
                 {
-                    damageList.Remove(d);
+                    target.ApplyStatus(status, this);
                 }
             }
+
+            EndInvoke();
         }
     }
 }

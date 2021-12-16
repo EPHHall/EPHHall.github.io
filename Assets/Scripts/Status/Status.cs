@@ -11,6 +11,7 @@ namespace SS.StatusSpace
     {
         public enum StatusName
         {
+            None,
             FireDamage,
             ArcaneDamage,
             Controlled,
@@ -32,9 +33,15 @@ namespace SS.StatusSpace
         public int radius;
         public GameObject controller;
         public List<Status> statusesToApply = new List<Status>();
+        private List<Status> statusesToApply_Original = new List<Status>();
         public bool unarmedOnly;
         public Spells.Effect applyingEffect;
         public string explanation_DealsDamage;
+
+        [Space(5)]
+        public string explanation_Main;
+        public string explanation_Main_Base;
+        public string explanation_Main_Name;
 
         
         public Status(Status status)
@@ -44,6 +51,8 @@ namespace SS.StatusSpace
             this.duration = status.duration;
             this.applier = status.applier;
             this.radius = status.radius;
+            this.statusesToApply = new List<Status>(status.statusesToApply);
+            this.statusesToApply_Original = new List<Status>(statusesToApply);
 
             SetExplanations();
         }
@@ -53,6 +62,8 @@ namespace SS.StatusSpace
             this.magnitude = magnitude;
             this.duration = duration;
             this.applier = applier;
+            this.statusesToApply = new List<Status>();
+            this.statusesToApply_Original = new List<Status>(statusesToApply);
 
             SetExplanations();
         }
@@ -63,8 +74,41 @@ namespace SS.StatusSpace
             this.duration = duration;
             this.applier = applier;
             this.radius = radius;
+            this.statusesToApply = new List<Status>();
+            this.statusesToApply_Original = new List<Status>(statusesToApply);
 
             SetExplanations();
+        }
+
+        public void ResetStatus()
+        {
+            statusesToApply = new List<Status>(statusesToApply_Original);
+        }
+
+        public Character.Damage.DamageType GetDamageType()
+        {
+            Character.Damage.DamageType toReturn;
+
+            switch (statusName)
+            {
+                case StatusName.ArcaneDamage:
+                    toReturn = Character.Damage.DamageType.Arcane;
+                    break;
+                case StatusName.Controlled:
+                    toReturn = Character.Damage.DamageType.None;
+                    break;
+                case StatusName.FireDamage:
+                    toReturn = Character.Damage.DamageType.Fire;
+                    break;
+                case StatusName.Possessed:
+                    toReturn = Character.Damage.DamageType.None;
+                    break;
+                default:
+                    toReturn = Character.Damage.DamageType.None;
+                    break;
+            }
+
+            return toReturn;
         }
 
         public void SetExplanations()
@@ -76,8 +120,10 @@ namespace SS.StatusSpace
             }
             else
             {
-                explanation_DealsDamage += magnitude + " " + GetDamageExplanation() + " damage at the end of the target's turn.";
+                explanation_DealsDamage += magnitude + " " + GetDamageExplanation() + " at the end of the target's turn.";
             }
+
+            explanation_Main = GetName() + " " + GetMainExplanation();
         }
 
         public void AddStatusToApply(Status status)
@@ -130,6 +176,31 @@ namespace SS.StatusSpace
                     break;
                 case StatusName.Possessed:
                     toReturn = "no";
+                    break;
+                default:
+                    toReturn = "No Name";
+                    break;
+            }
+
+            return toReturn;
+        }
+        public string GetMainExplanation()
+        {
+            string toReturn;
+
+            switch (statusName)
+            {
+                case StatusName.ArcaneDamage:
+                    toReturn = "infuses the target with arcane energy. The target takes damage, and its unarmed attacks deal additional arcane damage.";
+                    break;
+                case StatusName.Controlled:
+                    toReturn = "allows you to control the target's movements.";
+                    break;
+                case StatusName.FireDamage:
+                    toReturn = "sets the target on fire. The target takes damage, and its unarmed attacks deal additional fire damage.";
+                    break;
+                case StatusName.Possessed:
+                    toReturn = "makes the target fight for you.";
                     break;
                 default:
                     toReturn = "No Name";

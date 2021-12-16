@@ -5,7 +5,7 @@ using UnityEngine;
 namespace SS.Spells
 {
     [ExecuteAlways]
-    public class ControlObject : Effect
+    public class ControlObject : Effect_Possession
     {
         public override void Awake()
         {
@@ -30,10 +30,17 @@ namespace SS.Spells
         {
             base.InvokeEffect(targets);
 
+            HandleDeliveredAndTargeting(targets);
+
             foreach (Target target in targets)
             {
-                AllTargets(target.targetType, target);
+                if (target.targetType.obj)
+                {
+                    target.ApplyStatus(StatusSpace.Status.StatusName.Controlled, 1, duration, SS.GameController.TurnManager.currentTurnTaker, this);
+                }
             }
+
+            EndInvoke();
         }
 
         public override void IfTargetIsWeapon(Target target)

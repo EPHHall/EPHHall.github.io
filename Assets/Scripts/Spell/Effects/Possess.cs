@@ -6,7 +6,7 @@ using SS.StatusSpace;
 namespace SS.Spells
 {
     [ExecuteAlways]
-    public class Possess : Effect
+    public class Possess : Effect_Possession
     {
         public override void Awake()
         {
@@ -22,7 +22,7 @@ namespace SS.Spells
 
             actionPointCost = 1;
 
-            duration = 2;
+            duration = 1;
 
             normallyValid = new TargetType(true, true, true, true);
 
@@ -30,7 +30,7 @@ namespace SS.Spells
             mainStatus = new Status(Status.StatusName.Possessed, 1, duration, SS.GameController.TurnManager.currentTurnTaker, radius);
 
             originalDamageList.Clear();
-            AddToOriginalDamageList(mainDamage);
+            AddToOriginalDamageList(mainDamage, null);
             ResetMainDamageList();
 
             originalStatusList.Clear();
@@ -44,23 +44,13 @@ namespace SS.Spells
         {
             base.InvokeEffect(targets);
 
-            //just looking at the first target for testing purposes, in the final cut this should apply to every target
-            List<Status> statusesMainStatusShouldApply = new List<Status>();
-            HandleDeliveredEffects(targets[0], statusesMainStatusShouldApply);
+            HandleDeliveredAndTargeting(targets);
 
             foreach (Target target in targets)
             {
                 foreach (Status status in statusList)
                 {
-                    if (status.unarmedOnly && spellAttachedTo.activeWeapons.Count > 0)
-                        continue;
-
-                    Status newStatus = new Status(status);
-                    foreach (Status s in statusesMainStatusShouldApply)
-                    {
-                        newStatus.AddStatusToApply(s);
-                    }
-                    target.ApplyStatus(newStatus, this);
+                    target.ApplyStatus(mainStatus, this);
                 }
 
                 if (target.targetType.weapon)
@@ -68,9 +58,11 @@ namespace SS.Spells
                     target.HandleStatuses(false, true);
                 }
             }
+
+            EndInvoke();
         }
 
-        public override void HandleDeliveredEffects(Target target, List<Status> statusesMainStatusShouldApply)
+        /*public override void HandleDeliveredEffects(Target target, List<Status> statusesMainStatusShouldApply)
         {
             Item.Weapon weapon = null;
             Character.CharacterStats creature = null;
@@ -116,6 +108,6 @@ namespace SS.Spells
                     target.ApplyStatus(status, this);
                 }
             }
-        }
+        }*/
     }
 }

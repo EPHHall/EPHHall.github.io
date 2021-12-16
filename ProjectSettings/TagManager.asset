@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Player Wall
   - Player Move
+  - Effect Resources
   layers:
   - Default
   - TransparentFX

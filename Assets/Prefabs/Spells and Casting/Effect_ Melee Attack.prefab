@@ -43,21 +43,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05c2fedda754cd742a5894cefa227a55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetable: 0
   speed: 1
   manaCost: 0
   spellPointCost: 0
-  damage: 4
+  actionPointCost: 0
+  baseDamage: 0
+  mainDamage:
+    type: 0
+    amount: 0
+    statusesToInflict: []
+    weapon: {fileID: 0}
+  damageList: []
+  originalDamageList: []
+  mainStatus:
+    statusName: 0
+    magnitude: 0
+    duration: 0
+    applier: {fileID: 0}
+    radius: 0
+    controller: {fileID: 0}
+    statusesToApply: []
+    unarmedOnly: 0
+    applyingEffect: {fileID: 0}
+    explanation_DealsDamage: 
+    explanation_Main: 
+    explanation_Main_Base: 
+    explanation_Main_Name: 
+  statusList: []
+  originalStatusList: []
   range: 1
+  radius: 0
   duration: -1
+  keywords: []
+  spellAttachedTo: {fileID: 0}
+  effectName: Melee Attack
   toInstantiate: {fileID: 0}
   normallyValid:
     toggleNone: 0
     toggleAll: 0
-    enemy: 1
-    ally: 1
-    structure: 1
-    item: 1
-    spell: 1
+    creature: 1
+    obj: 1
+    weapon: 1
     tile: 1
   deliveredEffects: []
-  keywords: []
+  targetMeEffects: []
+  attachedEffect: {fileID: 0}
+  icon: {fileID: 0}
+  style: 0
+  type: 3

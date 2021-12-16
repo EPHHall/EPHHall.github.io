@@ -18,7 +18,7 @@ namespace SS.Spells
         {
             speed = 1;
 
-            range = range;
+            range = 1;
 
             actionPointCost = 1;
 
@@ -28,7 +28,7 @@ namespace SS.Spells
             normallyValid = new TargetType(true, true, false, false);
 
             originalDamageList.Clear();
-            originalDamageList.Add(new Character.Damage(Character.Damage.DamageType.Physical, 2));
+            originalDamageList.Add(new Character.Damage(Character.Damage.DamageType.Physical, 0));
             ResetMainDamageList();
 
             originalStatusList.Clear();

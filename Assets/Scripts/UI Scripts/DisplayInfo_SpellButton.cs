@@ -17,28 +17,30 @@ namespace SS.UI
         {
             base.SetInfoString();
 
-            int placeToReturnTo = 0;
-            int prevPlace = placeToReturnTo;
-            int counter = 0;
-            string specialString = GetFirstSpecialString(infoString, ref placeToReturnTo);
-            string temp = infoString;
-            while (specialString != null)
-            {
-                if (counter > 99999)
-                {
-                    infoString = "Oops";
-                    return;
-                }
+            infoString = spell.spellName;
 
-                EvaluateSpecialString(ref specialString);
-                temp = ReplaceFirstSpecialString(temp, specialString);
+            //int placeToReturnTo = 0;
+            //int prevPlace = placeToReturnTo;
+            //int counter = 0;
+            //string specialString = GetFirstSpecialString(infoString, ref placeToReturnTo);
+            //string temp = infoString;
+            //while (specialString != null)
+            //{
+            //    if (counter > 99999)
+            //    {
+            //        infoString = "Oops";
+            //        return;
+            //    }
 
-                specialString = GetFirstSpecialString(infoString, ref placeToReturnTo);
+            //    EvaluateSpecialString(ref specialString);
+            //    temp = ReplaceFirstSpecialString(temp, specialString);
 
-                counter++;
-            }
+            //    specialString = GetFirstSpecialString(infoString, ref placeToReturnTo);
 
-            infoString = temp;
+            //    counter++;
+            //}
+
+            //infoString = temp;
         }
 
         public string GetFirstSpecialString(string og, ref int placeToReturnTo)

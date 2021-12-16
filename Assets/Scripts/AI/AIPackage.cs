@@ -6,7 +6,7 @@ namespace SS.AI
 {
     public class AIPackage : MonoBehaviour
     {
-        Agent attachedAgent;
+        public Agent attachedAgent;
         public List<AIBehavior> behaviors = new List<AIBehavior>();
 
         public virtual void Awake()

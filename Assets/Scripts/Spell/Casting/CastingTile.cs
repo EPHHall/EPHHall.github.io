@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using SS.UI;
 
 namespace SS.Spells
 {
@@ -13,6 +14,7 @@ namespace SS.Spells
         public Color selectedColor;
 
         public bool mouseIsOver;
+        public bool underFollower;
         public static List<CastingTile> selectedTiles = new List<CastingTile>();
         public int maxSelections = 1;
 
@@ -20,10 +22,16 @@ namespace SS.Spells
 
         UnityEvent selectedTilesChange;
 
+        public StatsCard statsCard;
+
+        public TileResources resources;
+
         // Start is called before the first frame update
         void Start()
         {
             selectedTilesChange = new UnityEvent();
+
+            resources = GameObject.FindObjectOfType<TileResources>();
 
             SS.UI.TargetMenu targetMenu = GameObject.FindObjectOfType<SS.UI.TargetMenu>();
             if (targetMenu != null)
@@ -32,6 +40,8 @@ namespace SS.Spells
             }
 
             selectedTilesChange.AddListener(Target.ClearSelectedTargets);
+
+            statsCard = resources.statsCard;
         }
 
         // Update is called once per frame
@@ -77,6 +87,33 @@ namespace SS.Spells
             GetComponent<SpriteRenderer>().color = selectedColor;
 
             selectedTilesChange.Invoke();
+
+            if (!underFollower)
+            {
+                if (statsCard.gameObject.activeInHierarchy && !statsCard.firstActivation)
+                {
+                    statsCard.statsToDisplay = null;
+                }
+                else
+                {
+                    statsCard.gameObject.SetActive(true);
+                    statsCard.SetPosition(transform.position.x < Camera.main.transform.position.x);
+                    statsCard.targets = GetTargets();
+                    statsCard.SetStatsToDisplay(null);
+                    statsCard.canDeactivate = false;
+                }
+            }
+        }
+
+        public List<Target> GetTargets()
+        {
+            List<Target> targets = SS.Util.GetOnlyTargets.GetTargets(Physics2D.OverlapBoxAll(transform.position, new Vector2(.5f, .5f), 0));
+
+            return targets;
+        }
+        public bool GetFollowers()
+        {
+            return SS.Util.GetFollowers.TargetsPresent(Physics2D.OverlapBoxAll(transform.position, new Vector2(.5f, .5f), 0));
         }
 
         public virtual void DeselectTile()
@@ -135,6 +172,13 @@ namespace SS.Spells
             {
                 GetComponent<SpriteRenderer>().color = highlightColor;
             }
+
+            underFollower = false;
+            if (GetFollowers())
+            {
+                underFollower = true;
+            }
+
             mouseIsOver = true;
         }
 

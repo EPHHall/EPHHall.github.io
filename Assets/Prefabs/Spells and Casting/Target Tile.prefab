@@ -150,6 +150,6 @@ MonoBehaviour:
     weapon: 0
     tile: 1
   hp: 0
-  targetName: 
+  targetName: Tile
   statuses: []
   displaySelectedTargets: 0

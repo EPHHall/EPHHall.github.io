@@ -4,6 +4,7 @@ using UnityEngine;
 using SS.StatusSpace;
 using SS.Spells;
 using SS.Character;
+using SS.Item;
 
 namespace SS.UI
 {
@@ -49,7 +50,7 @@ namespace SS.UI
                 prevStatusNumber = character.statuses.Count;
             }
 
-            character = statsCard.statsToDisplay.GetComponent<Target>();
+            character = statsCard.targets[statsCard.targetIndex];
             int statusNumber = 0;
             if (character != null)
             {
@@ -86,7 +87,7 @@ namespace SS.UI
         public void HandleActionContent()
         {
             prevCharacter = character;
-            character = statsCard.statsToDisplay.GetComponent<Target>();
+            character = statsCard.targets[statsCard.targetIndex];
 
             if (character != null)
             {
@@ -101,18 +102,19 @@ namespace SS.UI
                     }
                     subCards.Clear();
 
-                    Spell[] spellChildren = character.transform.GetComponentsInChildren<Spell>();
-                    for (int i = 0; i < spellChildren.Length; i++)
+                    if (character.targetType.creature)
                     {
-                        Spell currentSpell = spellChildren[i];
-
-                        if (currentSpell.name == "Melee Attack")
+                        Spell meleeAttack = character.transform.Find("Melee Attack").GetComponent<Spell_Attack>();
+                        Weapon[] weaponChildren = meleeAttack.transform.GetComponentsInChildren<Weapon>();
+                        for (int i = 0; i < weaponChildren.Length; i++)
                         {
+                            Weapon currentWeapon = weaponChildren[i];
+
                             StatsSubCard card = Instantiate(subCardPrefab, transform).GetComponent<StatsSubCard>();
                             card.transform.localPosition = new Vector2(0, defaultPos + (i * verticalDelta));
                             card.transform.rotation = Quaternion.identity;
 
-                            card.BuildFromSpell(currentSpell, character);
+                            card.BuildFromWeapon(currentWeapon, character);
 
                             subCards.Add(card);
                         }
@@ -125,7 +127,7 @@ namespace SS.UI
         public void HandleSpellContent()
         {
             prevCharacter = character;
-            character = statsCard.statsToDisplay.GetComponent<Target>();
+            character = statsCard.targets[statsCard.targetIndex];
 
             if (character != null)
             {

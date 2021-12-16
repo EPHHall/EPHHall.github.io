@@ -15,7 +15,8 @@ namespace SS.Spells
             {
                 activeSpell.CastSpell(false);
 
-                GameObject.FindObjectOfType<SS.UI.TargetMenu>().DeactivateMenu();
+                if(GameObject.FindObjectOfType<SS.UI.TargetMenu>() != null)
+                    GameObject.FindObjectOfType<SS.UI.TargetMenu>().DeactivateMenu();
             }
         }
 

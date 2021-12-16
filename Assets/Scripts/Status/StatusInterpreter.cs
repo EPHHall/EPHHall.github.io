@@ -20,6 +20,11 @@ namespace SS.StatusSpace
 
         public static void InterpretStatuses(Target target, DecrementBehavior decrementBehavior)
         {
+            if (target.statuses.Count > 0)
+            {
+                Debug.Log("Interpreting Statuses");
+            }
+
             TargetType type = target.targetType;
 
             CharacterStats stats = null;
@@ -38,7 +43,16 @@ namespace SS.StatusSpace
             Agent agent = null;
             if (target.TryGetComponent<Agent>(out agent))
             {
+                //Debug.Log("BuhBuh", target.gameObject);
                 agent.ResetFactionsAndTargets();
+            }
+
+            if (target.targetType.obj)
+            {
+                if (target.GetComponent<TurnTakerControlledObject>() != null && TurnManager.tm.turnTakers.Contains(target.GetComponent<TurnTakerControlledObject>()))
+                {
+                    TurnManager.tm.turnTakers.Remove(target.GetComponent<TurnTakerControlledObject>());
+                }
             }
 
             List<Status> toRemove = new List<Status>();
@@ -143,6 +157,10 @@ namespace SS.StatusSpace
         {
             if (status.statusName == Status.StatusName.FireDamage)
             {
+                Debug.Log("Ow fuck", target.gameObject);
+                Debug.Log(characterStatsPresent);
+                Debug.Log(turnTakerPresent);
+                Debug.Log(GameController.TurnManager.currentTurnTaker == turnTaker);
                 if (characterStatsPresent && turnTakerPresent && GameController.TurnManager.currentTurnTaker == turnTaker)
                 {
                     SS.Util.TargetInterface.DamageTarget(target, new Damage(Damage.DamageType.Fire, status.magnitude), status.applyingEffect);
@@ -153,6 +171,8 @@ namespace SS.StatusSpace
                 Agent agent = null;
                 if (target.TryGetComponent<Agent>(out agent))
                 {
+                    agent.ResetFactionsAndTargets();
+
                     agent.targetFaction = Faction.FactionName.PlayerEnemyFaction;
                     agent.mainTarget = null;
                 }
@@ -203,6 +223,10 @@ namespace SS.StatusSpace
                         Util.TargetInterface.DamageTarget(t, new Damage(Damage.DamageType.Arcane, status.magnitude), status.applyingEffect);
                     }
                 }
+            }
+            else if (status.statusName == Status.StatusName.Controlled)
+            {
+                TurnManager.tm.turnTakers.Add(target.GetComponent<GameController.TurnTaker>());
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SS.Character;
 
 namespace SS.Spells
 {
@@ -25,8 +26,11 @@ namespace SS.Spells
         public List<Effect> deliveredByMain;
         public List<Modifier> modifiers;
         public Vector2 spellOrigin;
+
+        [Space(5)]
+        [Header("Resources")]
+        public EffectResources er;
         public GameObject targetableTile;
-        public List<Item.Weapon> activeWeapons;
 
         [Space(5)]
         [Header("For stats screen")]
@@ -37,10 +41,15 @@ namespace SS.Spells
         [Header("Misc")]
         public string spellName;
         public Sprite icon;
+        public CharacterStats caster;
 
         public virtual void Start()
         {
             previousMain = main;
+
+            er = GameObject.FindGameObjectWithTag("Effect Resources").GetComponent<EffectResources>();
+
+            targetableTile = er.GetCastingTile();
         }
 
         public virtual void Update()
@@ -104,6 +113,11 @@ namespace SS.Spells
             {
                 foreach (Modifier modifier in modifiers)
                 {
+                    Debug.Log(modifier.name, modifier.gameObject);
+                    Debug.Log(modifier.speed);
+                    Debug.Log(modifier.actionPointCost);
+                    Debug.Log(modifier.range);
+
                     range += modifier.range;
                     damage += modifier.damage;
                     castSpeed += modifier.speed;
@@ -138,22 +152,6 @@ namespace SS.Spells
                 }
 
                 main.InvokeEffect(Target.selectedTargets, main.normallyValid);
-
-                //Not sure yet if this should be handled in the Effect script(s) or here.
-                //foreach (Effect delivered in deliveredByMain)
-                //{
-                //    if (main.CanDeliverThisEffect(delivered))
-                //    {
-                //        delivered.InvokeEffect(Target.selectedTargets, delivered.normallyValid);
-                //    }
-                //}
-                //foreach (Effect tm in targetMain)
-                //{
-                //    if (main.CanBeTargetedBy(tm))
-                //    {
-                //        main.ModifyViaEffect(tm);
-                //    }
-                //}
             }
         }
 
@@ -185,7 +183,8 @@ namespace SS.Spells
             SetAllStats();
             ApplyModifiers();
 
-            main.spellAttachedTo = this;
+            if (main != null)
+                main.spellAttachedTo = this;
         }
         public void UnsetMain(Effect newEffect)
         {
@@ -223,7 +222,8 @@ namespace SS.Spells
             SetAllStats();
             ApplyModifiers();
 
-            newEffect.spellAttachedTo = this;
+            if(newEffect != null)
+                newEffect.spellAttachedTo = this;
         }
 
         public void AddModifier(Modifier modifier)

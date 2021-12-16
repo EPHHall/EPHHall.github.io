@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using SS.StatusSpace;
 using SS.Spells;
+using SS.Item;
+using SS.Character;
 using UnityEngine.EventSystems;
 
 namespace SS.UI
@@ -38,13 +40,78 @@ namespace SS.UI
         {
             contentName.text = status.GetName();
 
-            text.text = status.GetName() + status.explanation_DealsDamage;
+            text.text = status.GetName() + " " + status.explanation_DealsDamage + "\n" +
+                status.explanation_Main;
         }
         public void BuildFromSpell(Spell spell, Target target)
         {
             contentName.text = spell.spellName;
 
-            text.text = spell.spellName + ": Spell explanation here";
+            if (spell.main == null)
+            {
+                text.text = "No main effect.";
+                return;
+            }
+
+            text.text = spell.spellName + ": Invokes " + spell.main.effectName + ", which is targeted by ";
+
+            if (spell.targetMain.Count == 0)
+            {
+                text.text += "nothing,";
+            }
+            else
+            {
+                //Effect e = spell.targetMain[0];
+
+                //text.text += e.effectName + ", "
+            }
+            for (int i = 0; i < spell.targetMain.Count; i++)
+            {
+                Effect e = spell.targetMain[i];
+
+                if (i == spell.targetMain.Count - 1 && i != 0)
+                {
+                    text.text += " and " + e.effectName + ", ";
+                }
+                else
+                {
+                    text.text += e.effectName + ", ";
+                }
+            }
+
+            text.text += "and delivers ";
+            if (spell.deliveredByMain.Count == 0)
+            {
+                text.text += "nothing.";
+            }
+            for (int i = 0; i < spell.deliveredByMain.Count; i++)
+            {
+                Effect e = spell.deliveredByMain[i];
+
+                if (i == spell.deliveredByMain.Count - 1 && i != 0)
+                {
+                    text.text += " and " + e.effectName + ".";
+                }
+                else
+                {
+                    text.text += e.effectName + ", ";
+                }
+            }
+
+        }
+        public void BuildFromWeapon(Weapon weapon, Target target)
+        {
+            contentName.text = weapon.name;
+
+            text.text = weapon.name +
+                ": " + weapon.name + " deals " + weapon.toInflict.amount + " damage.\n" +
+                "Switched to this weapon.";
+
+            if (target.GetComponent<CharacterStats>())
+            {
+                target.GetComponent<CharacterStats>().meleeAttack.ChangeWeapon(
+                    target.GetComponent<CharacterStats>().meleeAttack.activeWeapons.IndexOf(weapon));
+            }
         }
 
         public void DisplayBox()
