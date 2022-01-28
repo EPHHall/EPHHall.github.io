@@ -9,14 +9,20 @@ namespace SS.PlayerMovement
         public GameObject wallTile;
         public GameObject moveTile;
         public int moveRange;
+        public Vector2 origin;
         public Transform player;
 
         public bool spawnMoveRange = false;
         public bool firstTurn = true;
 
+        [Space(5)]
+        [Header("Debug")]
+        public bool playerPositionIsOrigin;
+
         private void Start()
         {
             player = transform;
+            origin = transform.position;
 
             if (wallTile == null)
             {
@@ -38,6 +44,7 @@ namespace SS.PlayerMovement
 
             if (spawnMoveRange)
             {
+
                 SpawnRange();
                 spawnMoveRange = false;
             }
@@ -51,12 +58,18 @@ namespace SS.PlayerMovement
         public void SpawnRange()
         {
             Util.SpawnRange.DespawnRange();
-            SS.Util.SpawnRange.SpawnMovementRange(player.position, moveRange, moveTile, wallTile);
+
+
+            if(playerPositionIsOrigin)
+                SS.Util.SpawnRange.SpawnMovementRange(player.position, moveRange, moveTile, wallTile);
+            else
+                SS.Util.SpawnRange.SpawnMovementRange(origin, moveRange, moveTile, wallTile);
         }
 
-        public void ResetMoveRange()
+        public void ResetMoveRange(Vector2 origin)
         {
             spawnMoveRange = true;
+            this.origin = origin;
         }
     }
 }

@@ -8,9 +8,14 @@ namespace SS.UI
     {
         public StatsCard statsCard;
 
+        [SerializeField]
+        private Material lineMaterial;
+
         void Start()
         {
             statsCard = FindObjectOfType<StatsCard>();
         }
+
+        public Material GetLineMaterial() { return lineMaterial; }
     }
 }

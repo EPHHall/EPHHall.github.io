@@ -51,6 +51,8 @@ namespace SS.GameController
 
         public void SetTurnTakerList()
         {
+            turnTakers.Clear();
+
             foreach (TurnTaker turnTaker in GameObject.FindObjectsOfType<TurnTaker>())
             {
                 if (!turnTakers.Contains(turnTaker) && (turnTaker as TurnTakerControlledObject) == null)

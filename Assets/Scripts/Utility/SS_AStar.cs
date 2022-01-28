@@ -53,7 +53,7 @@ namespace SS.Util
 
                     //This if statement is the main bit that's different between the 2 AStar methods
                     RaycastHit2D ray = Physics2D.Linecast(position, potentialPosition);
-                    if (ray.collider == null /*|| ray.collider.GetComponent<PickupCollider>()*/)
+                    if (ray.collider == null || ray.collider.tag == "Player" || ray.collider.GetComponent<PickupCollider>())
                     {
                         nextPositions.Add(potentialPosition);
                     }

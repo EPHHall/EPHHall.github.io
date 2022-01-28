@@ -10,6 +10,7 @@ namespace SS.UI
         public GameObject mainScreen;
 
         public GameObject[] screens;
+        public GameObject[] enableDisable;
 
         public void Toggle()
         {
@@ -19,6 +20,11 @@ namespace SS.UI
                 mainScreen.SetActive(true);
 
                 mainScreen.transform.localPosition = Vector2.zero;
+
+                foreach (GameObject go in enableDisable)
+                {
+                    go.SetActive(true);
+                }
             }
             else
             {
@@ -28,7 +34,12 @@ namespace SS.UI
                 }
 
                 currentScreen = null;
-           }
+
+                foreach (GameObject go in enableDisable)
+                {
+                    go.SetActive(false);
+                }
+            }
         }
 
         public void ChangeScreen(GameObject otherScreen)

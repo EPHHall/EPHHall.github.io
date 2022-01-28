@@ -18,9 +18,13 @@ namespace SS.UI
         public Transform following;
         private CharacterStats stats;
         public bool showing;
+        List<Target> targets = new List<Target>();
+        public bool tryToShowStatsCard;
 
         private void Start()
         {
+            //this.enabled = false;
+
             statsCard = FindObjectOfType<StatsCard>();
 
             if (card == null)
@@ -37,71 +41,29 @@ namespace SS.UI
             stats = following.GetComponent<CharacterStats>();
         }
 
+        private void LateUpdate()
+        {
+            if (tryToShowStatsCard && !CastingTile.PointerOverAtLeastOne && !CastingTile.PointerWasOverAtLeastOne)
+            {
+                statsCard.ActivateStatsCard(transform.position.x, GetTargets(), targets[0].GetComponent<Character.CharacterStats>());
+                tryToShowStatsCard = false;
+            }
+        }
+
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (eventData.button == PointerEventData.InputButton.Right)
-            {
-                if (GameController.TurnManager.currentTurnTaker.tag == "Player")
-                {
-                    if (!showing)
-                    {
-                        if (stats.GetComponent<AI.Agent>() != null)
-                        {
-                            AI.Agent agent = stats.GetComponent<AI.Agent>();
+            ShowRange(eventData);
 
-                            if (agent.spells.Count > 0)
-                            {
-                                stats.ShowRangeOfAbilities(agent.spells[0]);
-                            }
-                            else
-                            {
-                                stats.ShowRangeOfAbilities(null);
-                            }
-
-                            showing = true;
-                        }
-                        else
-                        {
-                            stats.ShowRangeOfAbilities(null);
-                        }
-                    }
-                    else
-                    {
-                        if (GameController.TurnManager.currentTurnTaker.tag == "Player")
-                        {
-                            GameController.TurnManager.currentTurnTaker.GetComponent<PlayerMovement.SS_PlayerMoveRange>().SpawnRange();
-                            showing = false;
-                        }
-                    }
-                }
-            }
-            else
+            //There shouldn't need to be anything in here that deactivate the stats card, that's handled in CastingTile
+            if (eventData.button == PointerEventData.InputButton.Left)
             {
-                if (statsCard.gameObject.activeInHierarchy && !statsCard.firstActivation)
-                {
-                    if (statsCard.statsToDisplay != following.GetComponent<CharacterStats>())
-                    {
-                        statsCard.statsToDisplay = following.GetComponent<CharacterStats>();
-                    }
-                    else
-                    {
-                        statsCard.gameObject.SetActive(false);
-                    }
-                }
-                else
-                {
-                    statsCard.gameObject.SetActive(true);
-                    statsCard.SetPosition(following.position.x < Camera.main.transform.position.x);
-                    statsCard.targets = GetTargets();
-                    statsCard.SetStatsToDisplay(stats);
-                    statsCard.canDeactivate = false;
-                }
+                tryToShowStatsCard = true;
             }
         }
 
         public List<Target> GetTargets()
         {
-            List<Target> targets = SS.Util.GetOnlyTargets.GetTargets(Physics2D.OverlapBoxAll(transform.position, new Vector2(.5f, .5f), 0));
+            targets = SS.Util.GetOnlyTargets.GetTargets(Physics2D.OverlapBoxAll(transform.position, new Vector2(.5f, .5f), 0));
 
             return targets;
         }
@@ -114,6 +76,43 @@ namespace SS.UI
 
         public void OnPointerExit(PointerEventData eventData)
         {
+        }
+
+        public void ShowRange(PointerEventData eventData)
+        {
+            if (eventData.button == PointerEventData.InputButton.Right && GameController.TurnManager.currentTurnTaker.tag == "Player")
+            {
+                if (!showing)
+                {
+                    if (stats.GetComponent<AI.Agent>() != null)
+                    {
+                        AI.Agent agent = stats.GetComponent<AI.Agent>();
+
+                        if (agent.spells.Count > 0)
+                        {
+                            stats.ShowRangeOfAbilities(agent.spells[0]);
+                        }
+                        else
+                        {
+                            stats.ShowRangeOfAbilities(null);
+                        }
+
+                        showing = true;
+                    }
+                    else
+                    {
+                        stats.ShowRangeOfAbilities(null);
+                    }
+                }
+                else
+                {
+                    if (GameController.TurnManager.currentTurnTaker.tag == "Player")
+                    {
+                        GameController.TurnManager.currentTurnTaker.GetComponent<PlayerMovement.SS_PlayerMoveRange>().SpawnRange();
+                        showing = false;
+                    }
+                }
+            }
         }
     }
 }

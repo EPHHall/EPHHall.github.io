@@ -27,7 +27,8 @@ namespace SS.Util
 
             foreach (Tile tile in GameObject.FindObjectsOfType<Tile>())
             {
-                tile.gameObject.SetActive(false);
+                if(!tile.dontDespawn)
+                    tile.gameObject.SetActive(false);
             }
 
             List<Vector2> tilePositions = new List<Vector2>();
@@ -114,7 +115,8 @@ namespace SS.Util
 
             foreach (Tile tile in GameObject.FindObjectsOfType<Tile>())
             {
-                tile.gameObject.SetActive(false);
+                if(!tile.dontDespawn)
+                    tile.gameObject.SetActive(false);
             }
 
             List<Vector2> tilePositions = new List<Vector2>();
@@ -169,7 +171,8 @@ namespace SS.Util
 
             foreach (Tile tile in GameObject.FindObjectsOfType<Tile>())
             {
-                tile.gameObject.SetActive(false);
+                if(!tile.dontDespawn)
+                    tile.gameObject.SetActive(false);
             }
 
             spawnDespawnEvent.Invoke();
@@ -180,7 +183,7 @@ namespace SS.Util
 
             foreach (Tile tile in GameObject.FindObjectsOfType<Tile>())
             {
-                if (tile.tag == "Player Move" || tile.tag == "Player Wall")
+                if (!tile.dontDespawn && (tile.tag == "Player Move" || tile.tag == "Player Wall"))
                 {
                     tile.gameObject.SetActive(false);
                 }

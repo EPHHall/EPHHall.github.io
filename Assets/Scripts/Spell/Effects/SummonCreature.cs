@@ -54,7 +54,7 @@ namespace SS.Spells
                 return;
             }
 
-            if (target.TryGetComponent<CastingTile>(out tile) && tile.targets.Count <= 0)
+            if (target.TryGetComponent<CastingTile>(out tile) && tile.GetObstacles().Count <= 0)
             {
 
                 GameObject newDude = Instantiate(toInstantiate, target.transform.position, Quaternion.identity);

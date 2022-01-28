@@ -9,6 +9,8 @@ namespace SS.PlayerMovement
         public LayerMask movementMask;
         public Rigidbody2D rb;
 
+        public bool pauseMovementForCutscene = false;
+
         private void Start()
         {
             rb = GetComponent<Rigidbody2D>();
@@ -16,7 +18,7 @@ namespace SS.PlayerMovement
 
         void Update()
         {
-            if (SS.GameController.TurnManager.currentTurnTaker == GetComponent<SS.GameController.TurnTaker>())
+            if (!pauseMovementForCutscene && SS.GameController.TurnManager.currentTurnTaker == GetComponent<SS.GameController.TurnTaker>())
             {
                 if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
                 {

@@ -101,7 +101,7 @@ namespace SS.UI
             {
                 activeTiles.Add(tile);
 
-                foreach (Target target in tile.targets)
+                foreach (Target target in tile.GetTargets())
                 {
                     targets.Add(target);
                 }

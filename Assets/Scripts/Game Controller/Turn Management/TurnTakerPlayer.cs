@@ -22,7 +22,7 @@ namespace SS.GameController
             base.StartTurn();
 
             //Debug.Log(GetComponent<CharacterStats>().mana);
-            GetComponent<SS.PlayerMovement.SS_PlayerMoveRange>().ResetMoveRange();
+            GetComponent<SS.PlayerMovement.SS_PlayerMoveRange>().ResetMoveRange(transform.position);
             SS.Util.CharacterStatsInterface.ResetAP(GetComponent<CharacterStats>());
             SS.Util.CharacterStatsInterface.ResetMana(GetComponent<CharacterStats>());
             //Debug.Log(GetComponent<CharacterStats>().mana);

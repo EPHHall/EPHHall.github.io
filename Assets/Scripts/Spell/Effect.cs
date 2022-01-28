@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SS.StatusSpace;
 using SS.Character;
+using UnityEngine.UI;
 
 namespace SS.Spells
 {
@@ -79,6 +80,11 @@ namespace SS.Spells
         public Sprite icon;
         public Style style;
         public EffectType type;
+        public bool inUse = false;
+        public UI.MagicFrame inventoryFrame;
+        public UI.MagicFrame activeFrame;
+        [TextArea(6, 6)]
+        public string description;
 
         public virtual void Awake()
         {
@@ -331,5 +337,23 @@ namespace SS.Spells
         //public virtual void HandleDeliveredEffects(Target target, List<Status> statusesMainStatusShouldApply) {}
 
         //public virtual void HandleTargetingEffects(Target target) {}
+
+        public void SetInUse(bool setTo, UI.MagicFrame frame)
+        {
+            inUse = setTo;
+
+            if (!setTo)
+            {
+                activeFrame = null;
+                if (inventoryFrame == null)
+                {
+                    inventoryFrame = frame;
+                }
+            }
+            else if (inventoryFrame == null)
+                inventoryFrame = frame;
+            else if(setTo)
+                activeFrame = frame;
+        }
     }
 }

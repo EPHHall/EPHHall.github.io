@@ -20,7 +20,7 @@ namespace SS.GameController
         {
             base.StartTurn();
 
-            GetComponent<SS.PlayerMovement.SS_PlayerMoveRange>().ResetMoveRange();
+            GetComponent<SS.PlayerMovement.SS_PlayerMoveRange>().ResetMoveRange(transform.position);
             ToggleButtons(true);
         }
 

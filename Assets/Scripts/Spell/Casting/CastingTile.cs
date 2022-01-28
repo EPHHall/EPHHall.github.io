@@ -9,6 +9,10 @@ namespace SS.Spells
 {
     public class CastingTile : Tile, IPointerEnterHandler, IPointerExitHandler
     {
+        public static bool PointerOverAtLeastOne;
+        public static bool PointerWasOverAtLeastOne;
+        private static bool CheckToDeactivateAll;
+
         public Color defaultColor;
         public Color highlightColor;
         public Color selectedColor;
@@ -18,7 +22,8 @@ namespace SS.Spells
         public static List<CastingTile> selectedTiles = new List<CastingTile>();
         public int maxSelections = 1;
 
-        public List<Target> targets;
+        [SerializeField]
+        private List<Target> targets;
 
         UnityEvent selectedTilesChange;
 
@@ -47,8 +52,14 @@ namespace SS.Spells
         // Update is called once per frame
         void Update()
         {
+            //Setting these up for LateUpdate
+            CheckToDeactivateAll = true;
+            PointerWasOverAtLeastOne = false;
+
             if (mouseIsOver)
             {
+                PointerOverAtLeastOne = true;
+
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
                     if (selectedTiles.Contains(this))
@@ -64,16 +75,35 @@ namespace SS.Spells
                 if (Input.GetKeyDown(KeyCode.Mouse1))
                 {
                     if (selectedTiles.Contains(this))
-                    {}
+                    { }
                     else
                     {
                         SelectTile();
                     }
-
-                    //SS.UI.TargetMenuRadial targetMenuRadial = FindObjectOfType<SS.UI.TargetMenuRadial>();
-                    //targetMenuRadial.ActivateAndPlaceMenu();
                 }
             }
+        }
+
+        private void LateUpdate()
+        {
+            //this should only need to run once since Pointer... is static, so resetting the variable shouldn't be an issue
+            if (CheckToDeactivateAll && !PointerOverAtLeastOne && Input.GetKeyDown(KeyCode.Mouse0) && !statsCard.pointerIsOver)
+            {
+                while (selectedTiles.Count > 0)
+                {
+                    selectedTiles[0].DeselectTile();
+                }
+
+                statsCard.DeactivateStatsCard();
+            }
+
+            if (PointerOverAtLeastOne)
+            {
+                PointerWasOverAtLeastOne = true;
+            }
+
+            PointerOverAtLeastOne = false;
+            CheckToDeactivateAll = false;
         }
 
         public virtual void SelectTile()
@@ -88,28 +118,33 @@ namespace SS.Spells
 
             selectedTilesChange.Invoke();
 
-            if (!underFollower)
-            {
-                if (statsCard.gameObject.activeInHierarchy && !statsCard.firstActivation)
-                {
-                    statsCard.statsToDisplay = null;
-                }
-                else
-                {
-                    statsCard.gameObject.SetActive(true);
-                    statsCard.SetPosition(transform.position.x < Camera.main.transform.position.x);
-                    statsCard.targets = GetTargets();
-                    statsCard.SetStatsToDisplay(null);
-                    statsCard.canDeactivate = false;
-                }
-            }
+            statsCard.ActivateStatsCard(transform.position.x, GetTargets(), targets[0].GetComponent<Character.CharacterStats>());
         }
 
         public List<Target> GetTargets()
         {
-            List<Target> targets = SS.Util.GetOnlyTargets.GetTargets(Physics2D.OverlapBoxAll(transform.position, new Vector2(.5f, .5f), 0));
+            //List<Target> targets = SS.Util.GetOnlyTargets.GetTargets(Physics2D.OverlapBoxAll(transform.position, new Vector2(.5f, .5f), 0));
+            targets = SS.Util.GetOnlyTargets.GetTargets(Physics2D.OverlapBoxAll(transform.position, new Vector2(.5f, .5f), 0));
+
+
 
             return targets;
+        }
+        public List<Target> GetObstacles()
+        {
+            //List<Target> targets = SS.Util.GetOnlyTargets.GetTargets(Physics2D.OverlapBoxAll(transform.position, new Vector2(.5f, .5f), 0));
+            targets = SS.Util.GetOnlyTargets.GetTargets(Physics2D.OverlapBoxAll(transform.position, new Vector2(.5f, .5f), 0));
+
+            List<Target> obstacles = new List<Target>();
+            foreach (Target target in targets)
+            {
+                if (target.targetType.creature || target.targetType.obj)
+                {
+                    obstacles.Add(target);
+                }
+            }
+
+            return obstacles;
         }
         public bool GetFollowers()
         {
@@ -119,6 +154,14 @@ namespace SS.Spells
         public virtual void DeselectTile()
         {
             selectedTiles.Remove(this);
+            foreach (Target target in GetTargets())
+            {
+                if (statsCard.statsToDisplay == target.GetComponent<Character.CharacterStats>())
+                {
+                    statsCard.DeactivateStatsCard();
+                }
+            }
+
             GetComponent<SpriteRenderer>().color = defaultColor;
 
             selectedTilesChange.Invoke();
@@ -128,24 +171,32 @@ namespace SS.Spells
             selectedTilesChange.Invoke();
             selectedTiles.Remove(toRemove);
 
-            if(toRemove != null)
+            foreach (Target target in toRemove.GetTargets())
+            {
+                if (toRemove.statsCard.statsToDisplay == target.GetComponent<Character.CharacterStats>())
+                {
+                    toRemove.statsCard.DeactivateStatsCard();
+                }
+            }
+
+            if (toRemove != null)
                 toRemove.GetComponent<SpriteRenderer>().color = defaultColor;
         }
 
         private void OnTriggerEnter2D(Collider2D col)
         {
-            if (col.GetComponent<Target>() != null)
-            {
-                targets.Add(col.GetComponent<Target>());
-            }
+            //if (col.GetComponent<Target>() != null)
+            //{
+            //    targets.Add(col.GetComponent<Target>());
+            //}
         }
 
         private void OnTriggerExit2D(Collider2D col)
         {
-            if (col.GetComponent<Target>() != null)
-            {
-                targets.Remove(col.GetComponent<Target>());
-            }
+            //if (col.GetComponent<Target>() != null)
+            //{
+            //    targets.Remove(col.GetComponent<Target>());
+            //}
         }
 
         private void OnMouseOver()

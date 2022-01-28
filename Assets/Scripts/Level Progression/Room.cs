@@ -22,7 +22,7 @@ namespace SS.LevelProgression
 
         Collider2D col;
 
-        private void Start()
+        private void Awake()
         {
             cam = Camera.main;
 
@@ -84,7 +84,7 @@ namespace SS.LevelProgression
                 }
 
                 turnManager.SetTurnTakerList();
-                player.GetComponent<SS.PlayerMovement.SS_PlayerMoveRange>().ResetMoveRange();
+                player.GetComponent<SS.PlayerMovement.SS_PlayerMoveRange>().ResetMoveRange(player.transform.position);
             }
         }
 

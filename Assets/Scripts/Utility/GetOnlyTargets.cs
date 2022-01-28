@@ -24,14 +24,45 @@ namespace SS.Util
         public static List<SS.Spells.Target> GetTargets(Collider2D[] list)
         {
             List<SS.Spells.Target> targets = new List<Spells.Target>();
+            List<SS.Spells.Target> targetsObjects = new List<Spells.Target>();
+            List<SS.Spells.Target> targetsWeapons = new List<Spells.Target>();
+            List<SS.Spells.Target> targetsTiles = new List<Spells.Target>();
 
             foreach (Collider2D c in list)
             {
-                if (c.GetComponent<SS.Spells.Target>())
+                Spells.Target target = c.GetComponent<SS.Spells.Target>();
+                if (target != null)
                 {
-                    //Debug.Log("In Thing");
-                    targets.Add(c.GetComponent<SS.Spells.Target>());
+                    if (target.targetType.creature)
+                    {
+                        targets.Add(c.GetComponent<SS.Spells.Target>());
+                    }
+                    else if (target.targetType.obj)
+                    {
+                        targetsObjects.Add(c.GetComponent<SS.Spells.Target>());
+                    }
+                    else if (target.targetType.weapon)
+                    {
+                        targetsWeapons.Add(c.GetComponent<SS.Spells.Target>());
+                    }
+                    else
+                    {
+                        targetsTiles.Add(c.GetComponent<SS.Spells.Target>());
+                    }
                 }
+            }
+
+            foreach (Spells.Target target in targetsObjects)
+            {
+                targets.Add(target);
+            }
+            foreach (Spells.Target target in targetsWeapons)
+            {
+                targets.Add(target);
+            }
+            foreach (Spells.Target target in targetsTiles)
+            {
+                targets.Add(target);
             }
 
             return targets;

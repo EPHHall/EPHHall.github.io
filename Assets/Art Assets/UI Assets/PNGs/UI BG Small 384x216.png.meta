@@ -1,7 +1,55 @@
 fileFormatVersion: 2
 guid: ae48985823431034bbbc0af25d214a96
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 7293018043184876863
+    second: UI BG Small
+  - first:
+      213: 6097534799854769265
+    second: UI BG Small Grey
+  - first:
+      213: -3220381256452435392
+    second: UI BG Small Grey Next Turn
+  - first:
+      213: 85477442512098375
+    second: UI BG Small Grey Action Points
+  - first:
+      213: 8355621829272976996
+    second: UI BG Small 384x216_0
+  - first:
+      213: -2313173011561625535
+    second: UI BG Small Grey Health
+  - first:
+      213: -4912838333789555220
+    second: UI BG Small Grey Mana
+  - first:
+      213: 968050364983867920
+    second: UI BG Small Grey Attack
+  - first:
+      213: 6796335849438385140
+    second: UI BG Small Grey Movement
+  - first:
+      213: -5917442096882486419
+    second: UI BG Small Grey Spell 1
+  - first:
+      213: -4772471268438291153
+    second: UI BG Small Grey Spell 2
+  - first:
+      213: -8854482671220686516
+    second: UI BG Small Grey Spell 3
+  - first:
+      213: -5058710520169568670
+    second: UI BG Small Grey Spell 4
+  - first:
+      213: -2749915655337737350
+    second: UI BG Small 384x216_12
+  - first:
+      213: -85917747294594501
+    second: UI BG Small 384x216_13
+  - first:
+      213: -7097050861950074526
+    second: UI BG Small 384x216_14
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -41,7 +89,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -111,7 +159,301 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: UI BG Small 384x216_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 744
+        width: 384
+        height: 216
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46eb053a8c125f370800000000000000
+      internalID: 8355621829272976996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI BG Small Grey
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 744
+        width: 384
+        height: 216
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1741de6289bce9450800000000000000
+      internalID: 6097534799854769265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI BG Small Grey Next Turn
+      rect:
+        serializedVersion: 2
+        x: 816
+        y: 744
+        width: 384
+        height: 216
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04293df3f48ee43d0800000000000000
+      internalID: -3220381256452435392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI BG Small Grey Action Points
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 504
+        width: 384
+        height: 216
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7441e35f74daf2100800000000000000
+      internalID: 85477442512098375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI BG Small Grey Health
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 504
+        width: 384
+        height: 216
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14849d5d665f5efd0800000000000000
+      internalID: -2313173011561625535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI BG Small Grey Mana
+      rect:
+        serializedVersion: 2
+        x: 816
+        y: 504
+        width: 384
+        height: 216
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce53d83909712dbb0800000000000000
+      internalID: -4912838333789555220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI BG Small Grey Attack
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 264
+        width: 384
+        height: 216
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01afc819da43f6d00800000000000000
+      internalID: 968050364983867920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI BG Small Grey Movement
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 264
+        width: 384
+        height: 216
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f31700527f615e50800000000000000
+      internalID: 6796335849438385140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI BG Small Grey Spell 1
+      rect:
+        serializedVersion: 2
+        x: 816
+        y: 264
+        width: 384
+        height: 216
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d63706cc3c501eda0800000000000000
+      internalID: -5917442096882486419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI BG Small Grey Spell 2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 24
+        width: 384
+        height: 216
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2d4affbaa6c4cdb0800000000000000
+      internalID: -4772471268438291153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI BG Small Grey Spell 3
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 24
+        width: 384
+        height: 216
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c410a007cee8e1580800000000000000
+      internalID: -8854482671220686516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI BG Small Grey Spell 4
+      rect:
+        serializedVersion: 2
+        x: 816
+        y: 24
+        width: 384
+        height: 216
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 266e2c78599dbc9b0800000000000000
+      internalID: -5058710520169568670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI BG Small 384x216_12
+      rect:
+        serializedVersion: 2
+        x: 1224
+        y: 744
+        width: 384
+        height: 216
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a730f49f74656d9d0800000000000000
+      internalID: -2749915655337737350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI BG Small 384x216_13
+      rect:
+        serializedVersion: 2
+        x: 1224
+        y: 504
+        width: 384
+        height: 216
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3a9a989342cecef0800000000000000
+      internalID: -85917747294594501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

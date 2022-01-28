@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using SS.Spells;
+using UnityEngine.EventSystems;
 
 namespace SS.UI
 {
@@ -23,9 +24,14 @@ namespace SS.UI
         public override void SetContent(Object newContent)
         {
             if (newContent is Modifier)
-            {
-                modifier = newContent as Modifier;
-                base.SetContent(newContent);
+            { 
+                Modifier tempModifier = newContent as Modifier;
+
+                if (!tempModifier.inUse)
+                {
+                    modifier = tempModifier;
+                    base.SetContent(newContent);
+                }
             }
             else if (newContent == null)
             {
@@ -41,6 +47,16 @@ namespace SS.UI
             if (modifier != null)
             {
                 DisplayIcon(modifier.icon);
+            }
+        }
+
+        public override void OnPointerUp(PointerEventData eventData)
+        {
+            base.OnPointerUp(eventData);
+
+            if (content != null && pointerOver)
+            {
+                SpellCraftingScreen.activeScreen.effectCard.Spawn(modifier);
             }
         }
     }

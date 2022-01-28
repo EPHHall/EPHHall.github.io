@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 9204220491500704829}
   - component: {fileID: 1410397877}
   m_Layer: 5
-  m_Name: Delivered Frame
+  m_Name: Secondary Effect Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,10 +91,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emptySprite: {fileID: 5409890958451265960, guid: 2d3f80f0aab906b44aae73585a00a19a, type: 3}
-  dragObject: {fileID: 0}
+  dragObject: {fileID: 1709023384498452689, guid: 833f5547679baeb4685b1f9953b8afcc, type: 3}
   image: {fileID: 0}
   content: {fileID: 0}
   currentSprite: {fileID: 0}
+  spellInventory: {fileID: 0}
+  effect: {fileID: 0}
 --- !u!61 &9204220491500704829
 BoxCollider2D:
   m_ObjectHideFlags: 0

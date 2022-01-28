@@ -69,11 +69,6 @@ namespace SS.Item
 
         public void ApplyWeapon()
         {
-            if (name == "Channel Bolt")
-            {
-                Debug.Log("In thing");
-            }
-
             if (attack == null) return;
             if (attack.main == null) return;
 

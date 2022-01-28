@@ -92,3 +92,8 @@ MonoBehaviour:
   icon: {fileID: 5811675278147054703, guid: 90a2e7a07b31a8c478db8064de21d317, type: 3}
   style: 0
   type: 3
+  inUse: 0
+  inventoryFrame: {fileID: 0}
+  activeFrame: {fileID: 0}
+  description: Fire a bolt of energy at a target, dealing 1 arcane damage. Has a
+    range of 8 tiles.

@@ -47,7 +47,7 @@ namespace SS.UI
         public bool firstActivation = true;
         public CharacterStats statsToDisplay;
         private bool deactivateOnFirstFrame = false;
-        private bool pointerIsOver = false;
+        public bool pointerIsOver = false;
         private Image image;
         public GameObject[] contents;
         public List<Target> targets;
@@ -75,10 +75,13 @@ namespace SS.UI
                 deactivateOnFirstFrame = false;
             }
 
-            if (Input.GetKeyDown(KeyCode.Mouse0) && canDeactivate)
-            {
-                gameObject.SetActive(false);
-            }
+            //**************************************************
+            //if (Input.GetKeyDown(KeyCode.Mouse0) && canDeactivate)
+            //{
+            //    gameObject.SetActive(false);
+            //}
+            //**************************************************
+
 
             if (targets.Count > 0)
             {
@@ -86,6 +89,9 @@ namespace SS.UI
                 {
                     targetIndex = targets.Count - 1;
                 }
+
+                targetIndex = Mathf.Max(0, targetIndex);
+
                 targets[targetIndex].SelectTarget(targets[targetIndex]);
             }
 
@@ -124,8 +130,12 @@ namespace SS.UI
         {
             statsToDisplay = stats;
 
-            if(statsToDisplay != null)
+            if (statsToDisplay != null)
+            {
                 targetIndex = targets.IndexOf(stats.GetComponent<Target>());
+
+                Tutorial.TutorialHandler.TargetSelectedEventHandler(stats.GetComponent<Target>());
+            }
 
             BuildCard();
             //characterIcon = stats.icon;
@@ -160,28 +170,19 @@ namespace SS.UI
             }
         }
 
-        //public void ActivateStatsCard()
-        //{
-        //    if (statsCard.gameObject.activeInHierarchy && !statsCard.firstActivation)
-        //    {
-        //        if (statsCard.statsToDisplay != following.GetComponent<CharacterStats>())
-        //        {
-        //            statsCard.statsToDisplay = following.GetComponent<CharacterStats>();
-        //        }
-        //        else
-        //        {
-        //            statsCard.gameObject.SetActive(false);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        statsCard.gameObject.SetActive(true);
-        //        statsCard.SetPosition(following.position.x < Camera.main.transform.position.x);
-        //        statsCard.targets = GetTargets();
-        //        statsCard.SetStatsToDisplay(stats);
-        //        statsCard.canDeactivate = false;
-        //    }
-        //}
+        public void ActivateStatsCard(float positionX, List<Target> targets, CharacterStats stats)
+        {
+            gameObject.SetActive(true);
+            SetPosition(positionX < Camera.main.transform.position.x);
+            this.targets = targets;
+            SetStatsToDisplay(stats);
+            canDeactivate = false;
+        }
+
+        public void DeactivateStatsCard()
+        {
+            gameObject.SetActive(false);
+        }
 
         public void HandleDescription(CharacterStats stats)
         {

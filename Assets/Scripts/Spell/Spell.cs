@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SS.Character;
+using SS.Util;
 
 namespace SS.Spells
 {
     [ExecuteAlways]
     public class Spell : MonoBehaviour
     {
+        private static EventBool CAST_WAS_ATTEMPTED;
+        private static EventBool CAST_WAS_SUCCESSFUL;
+
         [Space(5)]
         [Header("Stats")]
         public int range;
@@ -45,6 +49,33 @@ namespace SS.Spells
 
         public virtual void Start()
         {
+            if (CAST_WAS_ATTEMPTED == null)
+            {
+                if (GameObject.Find("Cast Was Attempted?") != null)
+                {
+                    CAST_WAS_ATTEMPTED = GameObject.Find("Cast Was Attempted?").GetComponent<EventBool>();
+                    CAST_WAS_ATTEMPTED.Set(false);
+                }
+                else
+                {
+                    CAST_WAS_ATTEMPTED = new GameObject("Cast Was Attempted?").AddComponent<EventBool>();
+                    CAST_WAS_ATTEMPTED.Set(false);
+                }
+            }
+            if (CAST_WAS_SUCCESSFUL == null)
+            {
+                if (GameObject.Find("Cast Was Successful?") != null)
+                {
+                    CAST_WAS_SUCCESSFUL = GameObject.Find("Cast Was Successful?").GetComponent<EventBool>();
+                    CAST_WAS_SUCCESSFUL.Set(false);
+                }
+                else
+                {
+                    CAST_WAS_SUCCESSFUL = new GameObject("Cast Was Successful?").AddComponent<EventBool>();
+                    CAST_WAS_SUCCESSFUL.Set(false);
+                }
+            }
+            
             previousMain = main;
 
             er = GameObject.FindGameObjectWithTag("Effect Resources").GetComponent<EffectResources>();
@@ -90,6 +121,13 @@ namespace SS.Spells
                 apCost = main.actionPointCost;
 
                 currentSpellPoints = maxSpellPoints - main.spellPointCost;
+
+                foreach (Effect e in targetMain)
+                {
+                    if (e == null) continue;
+
+                    currentSpellPoints -= e.spellPointCost;
+                }
             }
             else
             {
@@ -136,6 +174,8 @@ namespace SS.Spells
             SS.Character.CharacterStats character = SS.GameController.TurnManager.currentTurnTaker.GetComponent<SS.Character.CharacterStats>();
             if ((CastingTile.selectedTiles.Count > 0 || overrideTileRequirement) && character != null && character.mana >= manaCost && character.actionPoints >= apCost)
             {
+                CAST_WAS_SUCCESSFUL.Set(true);
+
                 SS.Util.CharacterStatsInterface.DamageMana(character, manaCost);
                 SS.Util.CharacterStatsInterface.DamageActionPoints(character, apCost);
 
@@ -157,6 +197,8 @@ namespace SS.Spells
 
         public virtual void ShowRange()
         {
+            CAST_WAS_ATTEMPTED.Set(true);
+
             if (currentSpellPoints < 0)
             {
                 GameObject.Find("Player Update Text").GetComponent<SS.UI.UpdateText>().SetMessage("Negative spell points!", Color.red);
@@ -240,6 +282,19 @@ namespace SS.Spells
 
             SetAllStats();
             ApplyModifiers();
+        }
+
+        public static bool Get_IfCastWasSuccessful()
+        {
+            bool temp = CAST_WAS_SUCCESSFUL.Get();
+            CAST_WAS_SUCCESSFUL.Set(false);
+            return temp;
+        }
+        public static bool Get_IfCastWasAttempted()
+        {
+            bool temp = CAST_WAS_ATTEMPTED.Get();
+            CAST_WAS_ATTEMPTED.Set(false);
+            return temp;
         }
     }
 }
