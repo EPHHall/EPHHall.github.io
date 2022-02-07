@@ -83,7 +83,7 @@ namespace SS.UI
                 effectFrames_Inventory[index].content = effect;
             }
         }
-        public void SpellChanged(MagicFrame frame, Object toRemove)
+        public void SpellCraftingScreen_SpellChanged(MagicFrame frame, Object toRemove)
         {
             EffectFrame effectFrame = frame as EffectFrame;
             ModifierFrame modifierFrame = frame as ModifierFrame;
@@ -98,7 +98,7 @@ namespace SS.UI
             }
             else if (effectFrame != null && SpellCraftingScreen.activeScreen.secondaryFrames.Contains(effectFrame))
             {
-                spell.SetTargetsMain(effectFrame.effect, SpellCraftingScreen.activeScreen.secondaryFrames.IndexOf(effectFrame));
+                spell.SetDelivered(effectFrame.effect, SpellCraftingScreen.activeScreen.secondaryFrames.IndexOf(effectFrame));
             }
             else if (SpellCraftingScreen.activeScreen.modifierFrames.Contains(modifierFrame))
             {
@@ -198,6 +198,21 @@ namespace SS.UI
             }
         }
 
+        private void ApplyFrames()
+        {
+            spell.SetMain(mainFrame.effect);
+
+            /*for (int i = 0; i < secondaryFrames.Count; i++)
+            {
+                spell.SetDelivered(secondaryFrames[i].effect, i);
+            }*/
+
+            for (int i = 0; i < modifierFrames.Count; i++)
+            {
+                spell.AddModifier(modifierFrames[i].modifier);
+            }
+        }
+
         private void OnEnable()
         {
             activeScreen = this;
@@ -207,7 +222,11 @@ namespace SS.UI
 
             ResetFrames();
 
+            ApplyFrames();
+
             ChangeInventoryList(true);
+
+            UpdateSpellPointsText(spell.currentSpellPoints, spell.maxSpellPoints);
         }
 
         private void OnDisable()

@@ -44,11 +44,16 @@ namespace SS.UI
 
         public void ChangeScreen(GameObject otherScreen)
         {
-            currentScreen.SetActive(false);
+            if (currentScreen != null)
+            {
+                currentScreen.SetActive(false);
+            }
             otherScreen.SetActive(true);
             currentScreen = otherScreen;
 
             currentScreen.transform.localPosition = Vector2.zero;
+
+            Tutorial.TutorialHandler.screenActivated = currentScreen;
         }
     }
 }

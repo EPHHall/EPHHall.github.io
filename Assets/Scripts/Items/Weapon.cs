@@ -23,6 +23,8 @@ namespace SS.Item
 
         public bool unarmed;
 
+        public string weaponName;
+
         public void Awake()
         {
             if (!Application.isPlaying)
@@ -36,6 +38,10 @@ namespace SS.Item
             ApplyWeapon();
         }
 
+        public static void CreateWeapon(Weapon toCreate, Spell_Attack parent, string name)
+        {
+            CreateWeapon(toCreate.damageMod, toCreate.speedMod, toCreate.rangeMod, toCreate.statusesToInflict, toCreate.toInflict, toCreate.unarmed, parent, name);
+        }
         public static void CreateWeapon(int damageMod, int speedMod, int rangeMod, 
             List<Status> statusesToInflict, Damage toInflict, bool unarmed, Spell_Attack parent,
             string name)

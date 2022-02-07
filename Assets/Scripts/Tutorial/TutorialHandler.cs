@@ -17,6 +17,9 @@ namespace Tutorial
 
         private string buttonID = "";
         private static SS.Spells.Target selectedTarget = null;
+        public static GameObject screenActivated;
+        public static SS.UI.MagicFrame frameAddedTo;
+        public static SS.Util.EventBool rangeWasShown;
 
         [Header("Debug")]
         public bool startScene = false;
@@ -25,6 +28,14 @@ namespace Tutorial
         private void Start()
         {
             currentScene = 0;
+
+            rangeWasShown = GameObject.Find("Enemy Range Shown?").GetComponent<SS.Util.EventBool>();
+
+            scenes.Clear();
+            foreach (TutorialScene scene in transform.GetComponentsInChildren<TutorialScene>())
+            {
+                scenes.Add(scene);
+            }
         }
 
         private void Update()
@@ -70,6 +81,29 @@ namespace Tutorial
 
                     StartCurrentScene(5);
                 }
+                if (scenes[currentScene].trigger_Destroyed == null && scenes[currentScene].objectWasNotNull)
+                {
+                    StartCurrentScene(6);
+                }
+                if (Input.GetKeyDown(scenes[currentScene].trigger_KeyPress))
+                {
+                    StartCurrentScene(7);
+                }
+                if (screenActivated != null && scenes[currentScene].trigger_ScreenActivated == screenActivated)
+                {
+                    screenActivated = null;
+                    StartCurrentScene(8);
+                }
+                if (frameAddedTo != null && scenes[currentScene].trigger_FrameAddedTo == frameAddedTo)
+                {
+                    frameAddedTo = null;
+                    StartCurrentScene(9);
+                }
+                if (scenes[currentScene].trigger_RangeWasShown && rangeWasShown.Get())
+                {
+                    rangeWasShown.Set(false);
+                    StartCurrentScene(10);
+                }
             }
         }
 
@@ -88,7 +122,7 @@ namespace Tutorial
 
         public void StartCurrentScene(int calledBy)
         {
-            Debug.Log(calledBy);
+            //Debug.Log(calledBy);
 
             if (currentScene >= scenes.Count)
                 return;
@@ -112,6 +146,13 @@ namespace Tutorial
             scenes[currentScene].ResetScene();
 
             currentScene++;
+        }
+
+        public void ResetFlags()
+        {
+            buttonID = TutorialScene.NO_BUTTON_ID;
+            selectedTarget = null;
+            frameAddedTo = null;
         }
     }
 }

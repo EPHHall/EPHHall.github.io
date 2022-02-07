@@ -8,6 +8,11 @@ namespace SS.Spells
     {
         public GameObject toPickUp;
 
+        private void Start()
+        {
+            
+        }
+
         public override void BePickedUp()
         {
             base.BePickedUp();

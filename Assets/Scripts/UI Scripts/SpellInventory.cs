@@ -60,7 +60,7 @@ namespace SS.UI
                     tempMod.SetInUse(false, frame);
             }
 
-            SpellCraftingScreen.activeScreen.SpellChanged(frame, toRemove);
+            SpellCraftingScreen.activeScreen.SpellCraftingScreen_SpellChanged(frame, toRemove);
         }
 
         public void ChangeInventoryList(int i)

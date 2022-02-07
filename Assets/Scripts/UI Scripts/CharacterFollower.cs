@@ -52,7 +52,10 @@ namespace SS.UI
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            ShowRange(eventData);
+            if (eventData.button == PointerEventData.InputButton.Right)
+            {
+                ShowRange(eventData);
+            }
 
             //There shouldn't need to be anything in here that deactivate the stats card, that's handled in CastingTile
             if (eventData.button == PointerEventData.InputButton.Left)
@@ -80,8 +83,10 @@ namespace SS.UI
 
         public void ShowRange(PointerEventData eventData)
         {
+
             if (eventData.button == PointerEventData.InputButton.Right && GameController.TurnManager.currentTurnTaker.tag == "Player")
             {
+                Tutorial.TutorialHandler.rangeWasShown.Set(true);
                 if (!showing)
                 {
                     if (stats.GetComponent<AI.Agent>() != null)

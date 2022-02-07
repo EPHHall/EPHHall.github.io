@@ -13,6 +13,8 @@ namespace SS.Spells
         {
             if (collision.tag == "Player")
             {
+                updateText = GameObject.FindObjectOfType<SS.UI.UpdateText>();
+
                 BePickedUp();
             }
         }

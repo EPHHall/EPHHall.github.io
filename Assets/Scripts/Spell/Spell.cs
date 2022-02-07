@@ -23,6 +23,8 @@ namespace SS.Spells
         public int currentSpellPoints = 10;
         public int maxSpellPoints = 10;
 
+        public int modifiedDamage;
+
         [Space(5)]
         [Header("Casting Variables")]
         public Effect main; private Effect previousMain;
@@ -94,11 +96,15 @@ namespace SS.Spells
                     if (main == null)
                     {
                         SetAllStats(0);
+
+                        //modifiedDamage = 0;
                         ApplyModifiers();
                     }
                     else
                     {
                         SetAllStats();
+
+                        //modifiedDamage = 0;
                         ApplyModifiers();
                     }
 
@@ -122,7 +128,7 @@ namespace SS.Spells
 
                 currentSpellPoints = maxSpellPoints - main.spellPointCost;
 
-                foreach (Effect e in targetMain)
+                foreach (Effect e in deliveredByMain)
                 {
                     if (e == null) continue;
 
@@ -149,15 +155,15 @@ namespace SS.Spells
         {
             if (main != null)
             {
+                modifiedDamage = 0;
+
                 foreach (Modifier modifier in modifiers)
                 {
-                    Debug.Log(modifier.name, modifier.gameObject);
-                    Debug.Log(modifier.speed);
-                    Debug.Log(modifier.actionPointCost);
-                    Debug.Log(modifier.range);
-
                     range += modifier.range;
+
                     damage += modifier.damage;
+                    modifiedDamage += modifier.damage;
+
                     castSpeed += modifier.speed;
                     manaCost += modifier.manaCost;
                     apCost += modifier.actionPointCost;
@@ -192,6 +198,13 @@ namespace SS.Spells
                 }
 
                 main.InvokeEffect(Target.selectedTargets, main.normallyValid);
+
+                foreach (Target target in Target.selectedTargets)
+                {
+                    Damage newDamage = new Damage(Damage.DamageType.Arcane, modifiedDamage);
+
+                    TargetInterface.DamageTarget(target, newDamage, main);
+                }
             }
         }
 
@@ -270,6 +283,10 @@ namespace SS.Spells
 
         public void AddModifier(Modifier modifier)
         {
+            Debug.Log("In Add Modidifer");
+
+            if (modifier == null) return;
+
             modifiers.Add(modifier);
 
             SetAllStats();
@@ -278,6 +295,8 @@ namespace SS.Spells
 
         public void RemoveModifier(Modifier modifier)
         {
+            Debug.Log("In Remove Modidifer");
+
             modifiers.Remove(modifier);
 
             SetAllStats();

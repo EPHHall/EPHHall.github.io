@@ -80,6 +80,8 @@ namespace SS.Spells
         {
             base.BehaviorWhenDelivered_Projection(package);
 
+            Debug.Log("In Delovered");
+
             foreach (Target target in package.targets)
             {
                 target.ApplyStatus(mainStatus, this);
@@ -138,6 +140,8 @@ namespace SS.Spells
         public override void BehaviorWhenTargeting_Projection(BehaviorPackage package)
         {
             base.BehaviorWhenTargeting_Projection(package);
+
+            Debug.Log("In Targeting");
 
             package.effect.AddToMainDamageList(new SS.Character.Damage(mainStatus.GetDamageType(), mainStatus.magnitude));
         }

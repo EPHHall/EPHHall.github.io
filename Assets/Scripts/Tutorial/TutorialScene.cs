@@ -28,12 +28,25 @@ namespace Tutorial
         public bool trigger_SpellSuccessfullyCast;
         public string trigger_ButtonPressed = NO_BUTTON_ID;
         public SS.Spells.Target trigger_TargetWasSelected = null;
+        public GameObject trigger_Destroyed; [System.NonSerialized] public bool objectWasNotNull;
+        public KeyCode trigger_KeyPress = KeyCode.None;
+        public GameObject trigger_ScreenActivated = null;
+        public SS.UI.MagicFrame trigger_FrameAddedTo = null;
+        public bool trigger_RangeWasShown;
 
         private void Start()
         {
             if (trigger_ButtonPressed == "")
             {
                 trigger_ButtonPressed = NO_BUTTON_ID;
+            }
+
+            objectWasNotNull = trigger_Destroyed != null;
+
+            steps.Clear();
+            foreach (TutorialStep step in transform.GetComponentsInChildren<TutorialStep>())
+            {
+                steps.Add(step);
             }
         }
 
@@ -50,6 +63,8 @@ namespace Tutorial
         public void ProgressScene()
         {
             steps[currentStep].EndStep();
+
+            handler.ResetFlags();
 
             currentStep++;
 

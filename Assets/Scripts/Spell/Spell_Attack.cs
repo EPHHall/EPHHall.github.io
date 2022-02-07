@@ -8,6 +8,8 @@ namespace SS.Spells
     [ExecuteAlways]
     public class Spell_Attack : Spell
     {
+        [Space(10)]
+        [Header("Spell Attack Variables")]
         public List<Item.Weapon> activeWeapons;
         public Item.Weapon unarmedWeapon;
         public int weaponBeingUsed = -1;

@@ -47,7 +47,7 @@ MonoBehaviour:
   speed: 1
   manaCost: 5
   spellPointCost: 4
-  actionPointCost: 0
+  actionPointCost: 3
   baseDamage: 0
   mainDamage:
     type: 0
@@ -92,6 +92,10 @@ MonoBehaviour:
   icon: {fileID: 0}
   style: 0
   type: 2
+  inUse: 0
+  inventoryFrame: {fileID: 0}
+  activeFrame: {fileID: 0}
+  description: 
   enchantmentStatus:
     statusName: 0
     magnitude: 0

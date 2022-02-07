@@ -43,6 +43,8 @@ namespace SS.UI
                 effect = null;
                 base.SetContent(newContent);
             }
+
+            Tutorial.TutorialHandler.frameAddedTo = this;
         }
 
         public override void ResetDisplay()

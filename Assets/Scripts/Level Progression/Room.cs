@@ -7,6 +7,7 @@ namespace SS.LevelProgression
 {
     public class Room : MonoBehaviour
     {
+        public bool dontActivate = false;
         public bool displayCurrentlyActive = false;
         public static Room currentlyActive = null;
 
@@ -70,7 +71,7 @@ namespace SS.LevelProgression
 
         public void ActivateRoom()
         {
-            if (!cleared)
+            if (!cleared && !dontActivate)
             {
                 doors.SetActive(true);
                 currentlyActive = this;
