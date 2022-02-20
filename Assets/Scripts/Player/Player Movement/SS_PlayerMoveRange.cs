@@ -61,9 +61,9 @@ namespace SS.PlayerMovement
 
 
             if(playerPositionIsOrigin)
-                SS.Util.SpawnRange.SpawnMovementRange(player.position, moveRange, moveTile, wallTile);
+                SS.Util.SpawnRange.SpawnMovementRange(player.position, moveRange, moveTile, wallTile, true);
             else
-                SS.Util.SpawnRange.SpawnMovementRange(origin, moveRange, moveTile, wallTile);
+                SS.Util.SpawnRange.SpawnMovementRange(origin, moveRange, moveTile, wallTile, true);
         }
 
         public void ResetMoveRange(Vector2 origin)

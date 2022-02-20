@@ -25,6 +25,7 @@ namespace Tutorial
         public Button backButton;
 
         public Text content;
+        public Text title;
 
         [System.Serializable]
         public class ArrowArray
@@ -41,6 +42,10 @@ namespace Tutorial
         public void SetText(string text)
         {
             content.text = text;
+        }
+        public void SetTitle(string text)
+        {
+            title.text = text;
         }
 
         public void SetPos(Vector2 newPos)
@@ -64,10 +69,25 @@ namespace Tutorial
             }
         }
 
-        private void OnEnable()
+        public void ActivateButtons()
         {
             forwardButton.interactable = true;
             backButton.interactable = true;
+        }
+
+        private void OnEnable()
+        {
+            ActivateButtons();
+
+            foreach (TutorialBox box in GameObject.FindObjectsOfType<TutorialBox>())
+            {
+                if (box == this) continue;
+
+                box.gameObject.SetActive(false);
+            }
+
+            Vector2 contentPosition = content.GetComponent<RectTransform>().anchoredPosition;
+            content.GetComponent<RectTransform>().anchoredPosition = new Vector2(contentPosition.x, 0);
         }
     }
 }

@@ -109,6 +109,7 @@ namespace SS.UI
         {
             if (selectedTab == this) selectedTab = null;
 
+            //Debug.Log(image, gameObject);
             image.sprite = originalSprite;
             //active = false;
 

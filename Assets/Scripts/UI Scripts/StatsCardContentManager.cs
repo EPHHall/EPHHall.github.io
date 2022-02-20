@@ -20,6 +20,8 @@ namespace SS.UI
 
         public GameObject subCardPrefab;
 
+        public Transform actionButtonParent;
+
         Target character;
         Target prevCharacter;
         List<StatsSubCard> subCards = new List<StatsSubCard>();
@@ -104,13 +106,23 @@ namespace SS.UI
 
                     if (character.targetType.creature)
                     {
-                        Spell meleeAttack = character.transform.Find("Melee Attack").GetComponent<Spell_Attack>();
+                        Spell_Attack meleeAttack = character.transform.Find("Melee Attack").GetComponent<Spell_Attack>();
                         Weapon[] weaponChildren = meleeAttack.transform.GetComponentsInChildren<Weapon>();
                         for (int i = 0; i < weaponChildren.Length; i++)
                         {
                             Weapon currentWeapon = weaponChildren[i];
 
-                            StatsSubCard card = Instantiate(subCardPrefab, transform).GetComponent<StatsSubCard>();
+                            Transform parent;
+                            if (actionButtonParent != null)
+                            {
+                                parent = actionButtonParent;
+                                actionButtonParent.GetComponent<HighlightActiveWeapon>().SetCharacter(character);
+                                actionButtonParent.GetComponent<HighlightActiveWeapon>().SetMeleeAttack(meleeAttack);
+                            }
+                            else
+                                parent = transform;
+
+                            StatsSubCard card = Instantiate(subCardPrefab, parent).GetComponent<StatsSubCard>();
                             card.transform.localPosition = new Vector2(0, defaultPos + (i * verticalDelta));
                             card.transform.rotation = Quaternion.identity;
 

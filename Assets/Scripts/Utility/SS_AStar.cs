@@ -34,7 +34,7 @@ namespace SS.Util
             return nextPositions;
         }
 
-        public List<Vector2> AStar_ForMovement(List<Vector2> positionsToCheck, List<Vector2> takenPositions)
+        public List<Vector2> AStar_ForMovement(List<Vector2> positionsToCheck, List<Vector2> takenPositions, bool ignorePlayer)
         {
             List<Vector2> nextPositions = new List<Vector2>();
 
@@ -53,7 +53,7 @@ namespace SS.Util
 
                     //This if statement is the main bit that's different between the 2 AStar methods
                     RaycastHit2D ray = Physics2D.Linecast(position, potentialPosition);
-                    if (ray.collider == null || ray.collider.tag == "Player" || ray.collider.GetComponent<PickupCollider>())
+                    if (ray.collider == null || (ray.collider.tag == "Player" && ignorePlayer) || ray.collider.GetComponent<PickupCollider>())
                     {
                         nextPositions.Add(potentialPosition);
                     }

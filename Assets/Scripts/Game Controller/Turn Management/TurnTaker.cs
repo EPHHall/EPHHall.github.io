@@ -33,7 +33,7 @@ namespace SS.GameController
                 transform.Find("Turn Marker").parent = null;
             }
 
-            TurnManager.tm.turnTakers.Remove(this);
+            TurnManager.tm.RemoveTurnTakerFromPlay(this);
         }
     }
 }

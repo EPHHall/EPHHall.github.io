@@ -39,6 +39,10 @@ namespace SS.Character
         public Spells.Spell_Attack meleeAttack;
 
         [Space(5)]
+        [Header("For Death")]
+        public CharacterDeath characterDeath;
+
+        [Space(5)]
         [Header("Dont Touch")]
         public List<Vector2> initialPositions;
         public List<Vector2> takenPositions;
@@ -68,15 +72,27 @@ namespace SS.Character
             {
                 if (name == "Player")
                 {
-                    Debug.Log(name + " Died!!!");
-
-                    hp = hpMax;
+                    if (characterDeath == null)
+                    {
+                        DefaultDeath();
+                    }
+                    else
+                    {
+                        characterDeath.Death(this);
+                    }
                 }
                 else
                 {
                     Destroy(gameObject);
                 }
             }
+        }
+
+        private void DefaultDeath()
+        {
+            Debug.Log(name + " Died!!!");
+
+            hp = hpMax;
         }
 
         public void ResetMana()
@@ -87,6 +103,11 @@ namespace SS.Character
         public void ResetAP()
         {
             actionPoints = actionPointsMax;
+        }
+
+        public void ResetHealth()
+        {
+            hp = hpMax;
         }
 
         public void DisplayText(string message)
@@ -105,7 +126,7 @@ namespace SS.Character
 
             if (spell != null)
             {
-                List<Vector2>[] lists = Util.SpawnRange.SpawnMovementRange(transform.position, speed - 1, moveTile, moveTile);
+                List<Vector2>[] lists = Util.SpawnRange.SpawnMovementRange(transform.position, speed - 1, moveTile, moveTile, false);
                 initialPositions = new List<Vector2>();
                 takenPositions = new List<Vector2>();
 
@@ -119,7 +140,7 @@ namespace SS.Character
             }
             else
             {
-                Util.SpawnRange.SpawnMovementRange(transform.position, speed, moveTile, abilityTile);
+                Util.SpawnRange.SpawnMovementRange(transform.position, speed, moveTile, abilityTile, false);
             }
         }
     }

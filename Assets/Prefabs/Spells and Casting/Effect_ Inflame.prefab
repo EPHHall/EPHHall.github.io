@@ -89,7 +89,7 @@ MonoBehaviour:
   deliveredEffects: []
   targetMeEffects: []
   attachedEffect: {fileID: 0}
-  icon: {fileID: 0}
+  icon: {fileID: 5323494853082957110, guid: 48ac5cf2c8a188448b66974d86c71558, type: 3}
   style: 0
   type: 2
   inUse: 0

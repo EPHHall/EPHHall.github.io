@@ -53,10 +53,28 @@ namespace Tutorial
                 ProgressCurrentScene();
             }
 
+            if (currentScene < scenes.Count && scenes[currentScene].GetStarted())
+            {
+                if (Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    ProgressCurrentScene();
+                }
+
+                if (Input.GetKeyDown(KeyCode.LeftArrow))
+                {
+                    RegressCurrentScene();
+                }
+            }
+
             if (currentScene < scenes.Count && !scenes[currentScene].GetStarted() && 
                 (scenes[currentScene].trigger_MustBeThisTurn == null || scenes[currentScene].trigger_MustBeThisTurn == SS.GameController.TurnManager.currentTurnTaker
                 || scenes[currentScene].trigger_StartASAP))
             {
+                if (Input.GetKeyDown(KeyCode.T))
+                {
+                    StartPreviousScene();
+                }
+
                 if (scenes[currentScene].trigger_StartASAP)
                 {
                     StartCurrentScene(1);
@@ -130,6 +148,22 @@ namespace Tutorial
             scenes[currentScene].StartScene(this);
         }
 
+        public void StartPreviousScene()
+        {
+            Debug.Log("1. Current Scene = " + currentScene);
+            currentScene--;
+            Debug.Log("2. Current Scene = " + currentScene);
+
+            if (currentScene < 0)
+            {
+                currentScene++; 
+            Debug.Log("3. Current Scene = " + currentScene);
+                return;
+            }
+
+            scenes[currentScene].StartScene(this);
+        }
+
         public void ProgressCurrentScene()
         {
             if (currentScene >= scenes.Count)
@@ -138,14 +172,27 @@ namespace Tutorial
             scenes[currentScene].ProgressScene();
         }
 
+        public void RegressCurrentScene()
+        {
+            if (currentScene < 0)
+                return;
+
+            scenes[currentScene].RegressScene();
+        }
+
         public void SceneEnded()
+        {
+            SceneEnded(true);
+        }
+        public void SceneEnded(bool increaseSceneCount)
         {
             if (currentScene >= scenes.Count)
                 return;
 
             scenes[currentScene].ResetScene();
 
-            currentScene++;
+            if(increaseSceneCount)
+                currentScene++;
         }
 
         public void ResetFlags()
@@ -153,6 +200,7 @@ namespace Tutorial
             buttonID = TutorialScene.NO_BUTTON_ID;
             selectedTarget = null;
             frameAddedTo = null;
+            screenActivated = null;
         }
     }
 }

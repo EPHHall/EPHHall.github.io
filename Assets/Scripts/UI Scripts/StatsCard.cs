@@ -27,6 +27,8 @@ namespace SS.UI
 
         public Transform tabsParent;
 
+        public StatsCardTab defaultTab;
+
         [Space(5)]
         [Header("Info to Fill In")]
         public Text characterName;
@@ -265,6 +267,8 @@ namespace SS.UI
             {
                 Destroy(abilityButton.gameObject);
             }
+
+            defaultTab.SelectTab();
         }
 
         private void OnDisable()

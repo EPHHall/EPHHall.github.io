@@ -29,6 +29,12 @@ TextureImporter:
   - first:
       213: -1000023377504731767
     second: Text Boxes Right Button
+  - first:
+      213: -7383478062416632111
+    second: Text Box Up Arrow
+  - first:
+      213: -3071109595493404071
+    second: Text Box Down Arrow
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -295,7 +301,7 @@ TextureImporter:
         width: 30
         height: 14
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -316,7 +322,7 @@ TextureImporter:
         width: 30
         height: 14
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -324,6 +330,48 @@ TextureImporter:
       bones: []
       spriteID: 98d7eb859043f12f0800000000000000
       internalID: -1000023377504731767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Text Box Up Arrow
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 837
+        width: 5
+        height: 3
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d664c252dd988990800000000000000
+      internalID: -7383478062416632111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Text Box Down Arrow
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 748
+        width: 5
+        height: 3
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9527256281a3165d0800000000000000
+      internalID: -3071109595493404071
       vertices: []
       indices: 
       edges: []

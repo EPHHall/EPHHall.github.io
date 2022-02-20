@@ -96,6 +96,8 @@ namespace SS.UI
                         if (agent.spells.Count > 0)
                         {
                             stats.ShowRangeOfAbilities(agent.spells[0]);
+
+                            GameController.TurnManager.currentTurnTaker.GetComponent<PlayerMovement.SS_PlayerController>().PauseMovement_RangeShown();
                         }
                         else
                         {
@@ -111,6 +113,8 @@ namespace SS.UI
                 }
                 else
                 {
+                    GameController.TurnManager.currentTurnTaker.GetComponent<PlayerMovement.SS_PlayerController>().UnPauseMovement_RangeShown();
+
                     if (GameController.TurnManager.currentTurnTaker.tag == "Player")
                     {
                         GameController.TurnManager.currentTurnTaker.GetComponent<PlayerMovement.SS_PlayerMoveRange>().SpawnRange();

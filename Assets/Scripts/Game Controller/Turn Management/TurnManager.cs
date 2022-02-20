@@ -122,6 +122,17 @@ namespace SS.GameController
             }
         }
 
+        public void RemoveTurnTakerFromPlay(TurnTaker tt)
+        {
+            turnTakers.Remove(tt);
+            turnTakersIndex--;
+
+            if (turnTakersIndex < 1)
+            {
+                turnTakersIndex = 1;
+            }
+        }
+
         public void EndTurn(TurnTakerPlayer turnTaker)
         {
             turnTaker.EndTurn();

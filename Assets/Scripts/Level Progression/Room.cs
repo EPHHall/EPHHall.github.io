@@ -67,6 +67,18 @@ namespace SS.LevelProgression
         {
             doors.SetActive(false);
             cleared = true;
+
+            foreach (GameObject creature in toLoad)
+            {
+                if (creature != null && creature.GetComponent<Character.CharacterStats>() != null && creature.tag != "Player")
+                {
+                    Destroy(creature.gameObject);
+                }
+            }
+        }
+        public void ClearRoom(bool clearCurrentlyActive)
+        {
+            currentlyActive.ClearRoom();
         }
 
         public void ActivateRoom()

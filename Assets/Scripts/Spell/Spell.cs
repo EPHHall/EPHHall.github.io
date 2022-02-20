@@ -176,8 +176,13 @@ namespace SS.Spells
         public virtual void CastSpell(bool overrideTileRequirement)
         {
             //SS.GameController.TurnManager.staticPrintTurnTaker = true;
-
             SS.Character.CharacterStats character = SS.GameController.TurnManager.currentTurnTaker.GetComponent<SS.Character.CharacterStats>();
+
+            if (character.actionPoints < apCost)
+            {
+                GameObject.FindObjectOfType<SS.UI.UpdateText>().SetMessage("Too few action points!", Color.red);
+            }
+
             if ((CastingTile.selectedTiles.Count > 0 || overrideTileRequirement) && character != null && character.mana >= manaCost && character.actionPoints >= apCost)
             {
                 CAST_WAS_SUCCESSFUL.Set(true);

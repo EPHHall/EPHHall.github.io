@@ -16,7 +16,6 @@ namespace SS.AI
         {
             base.InvokeBehavior(spells);
 
-
             agent.closest = Vector2.positiveInfinity;
            
             //Find the positions close to the agent's target

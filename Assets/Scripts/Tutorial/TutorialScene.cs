@@ -70,7 +70,7 @@ namespace Tutorial
 
             if (currentStep >= steps.Count)
             {
-                EndScene();
+                EndScene(true);
                 return;
 
             }
@@ -78,10 +78,30 @@ namespace Tutorial
             steps[currentStep].StartStep(this);
         }
 
-        public void EndScene()
+        public void RegressScene()
+        {
+            steps[currentStep].EndStep();
+
+            handler.ResetFlags();
+
+            currentStep--;
+
+            if (currentStep < 0)
+            {
+                currentStep = 0;
+
+                //EndScene(false);
+
+                //handler.StartPreviousScene();
+            }
+
+            steps[currentStep].StartStep(this);
+        }
+
+        public void EndScene(bool increaseSceneCount)
         {
             ended = true;
-            handler.SceneEnded();
+            handler.SceneEnded(increaseSceneCount);
         }
 
         public bool GetEnded()

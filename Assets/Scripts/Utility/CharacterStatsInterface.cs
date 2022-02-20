@@ -51,5 +51,10 @@ namespace SS.Util
         {
             character.ResetAP();
         }
+
+        public static void ResetHealth(CharacterStats character)
+        {
+            character.ResetHealth();
+        }
     }
 }

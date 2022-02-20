@@ -34,7 +34,7 @@ namespace SS.AI
             {
                 AddListToOriginal.AddList(visitedPositions, nextPositions);
 
-                nextPositions = aStar.AStar_ForMovement(nextPositions, visitedPositions);
+                nextPositions = aStar.AStar_ForMovement(nextPositions, visitedPositions, false);
             }
 
             return visitedPositions;

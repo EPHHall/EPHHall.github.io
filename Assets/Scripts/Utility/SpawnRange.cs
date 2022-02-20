@@ -107,7 +107,7 @@ namespace SS.Util
         }
 
         public static List<Vector2>[] SpawnMovementRange(Vector2 initialPosition, int range,
-            GameObject mainTile, GameObject lastTile)
+            GameObject mainTile, GameObject lastTile, bool spawningPlayerRange)
         {
             Start();
 
@@ -135,7 +135,8 @@ namespace SS.Util
                 tilePositions = new List<Vector2>();
 
                 SS_AStar aStar = new Util.SS_AStar();
-                foreach (Vector2 position in aStar.AStar_ForMovement(temp, takenPositions))
+
+                foreach (Vector2 position in aStar.AStar_ForMovement(temp, takenPositions, spawningPlayerRange))
                 {
                     tilePositions.Add(position);
                 }

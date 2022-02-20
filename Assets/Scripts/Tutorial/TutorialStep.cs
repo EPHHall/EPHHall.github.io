@@ -29,8 +29,14 @@ namespace Tutorial
         public List<Button> toActivate;
         public GreyOutObjectScript greyOut;
         public GreyOutObjectScript.GreyOutSprite emphasize;
-
+        public string title;
         public SS.PlayerMovement.SS_PlayerController player;
+
+        [Space(5)]
+        [Header("Fail State Stuff")]
+        public SS.Character.CharacterDeath_TutorialDeath characterDeath;
+        public string characterDeathMessage;
+        public Vector2 characterDeathRespawnPoint;
 
         private void Start()
         {
@@ -45,7 +51,7 @@ namespace Tutorial
             scene = partOf;
 
             if (preventPlayerMovement)
-                player.pauseMovementForCutscene = true;
+                player.PauseMovement_ForCutscene();
 
             if (deactivateAllButtons)
             {
@@ -61,7 +67,9 @@ namespace Tutorial
                 textBox.gameObject.SetActive(true);
                 textBox.SetPos(textBoxPos);
                 textBox.SetText(text);
+                textBox.SetTitle(title);
                 textBox.HandleArrow(arrowOrientation, arrowPos);
+                textBox.ActivateButtons();
             }
 
             foreach (Button button in toActivate)
@@ -74,11 +82,21 @@ namespace Tutorial
                 greyOut.ActivateGreyOut();
                 greyOut.ChangeSprite(emphasize);
             }
+
+            if (characterDeath != null)
+            {
+                characterDeath.deathMessage = characterDeathMessage;
+
+                if (characterDeathRespawnPoint != Vector2.zero)
+                {
+                    characterDeath.respawnPoint = characterDeathRespawnPoint;
+                }
+            }
         }
 
         public void EndStep()
         {
-            player.pauseMovementForCutscene = false;
+            player.UnPauseMovement_ForCutscene();
 
             if (activateAllButtons)
             {
