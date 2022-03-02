@@ -49,9 +49,14 @@ namespace SS.PlayerMovement
                 spawnMoveRange = false;
             }
 
-            if (SS.LevelProgression.Room.currentlyActive != null && SS.LevelProgression.Room.currentlyActive.cleared)
+            if (SS.LevelDesign.Room.currentlyActive != null && SS.LevelDesign.Room.currentlyActive.cleared)
             {
                 SS.Util.SpawnRange.DespawnMoveRange();
+            }
+
+            if (GetComponent<Character.CharacterStats>() != null)
+            {
+                moveRange = GetComponent<Character.CharacterStats>().speed;
             }
         }
 

@@ -60,7 +60,8 @@ namespace SS.UI
                     tempMod.SetInUse(false, frame);
             }
 
-            SpellCraftingScreen.activeScreen.SpellCraftingScreen_SpellChanged(frame, toRemove);
+            if(SpellCraftingScreen.activeScreen != null)
+                SpellCraftingScreen.activeScreen.SpellCraftingScreen_SpellChanged(frame, toRemove);
         }
 
         public void ChangeInventoryList(int i)
@@ -71,6 +72,27 @@ namespace SS.UI
         public void ChangeSpellName()
         {
             SpellCraftingScreen.activeScreen.ChangeSpellName();
+        }
+
+        public void RemoveAndDestroyContents()
+        {
+            int breakInt = 0;
+            while (inventoryParent.transform.childCount > 0)
+            {
+                Transform formerChild = inventoryParent.transform.GetChild(0);
+                formerChild.parent = null;
+
+                Destroy(formerChild.gameObject);
+
+                if (breakInt == 100)
+                {
+                    break;
+                }
+
+                breakInt++;
+            }
+
+            Debug.Log("Spell Inventory while, break = " + breakInt);
         }
     }
 }

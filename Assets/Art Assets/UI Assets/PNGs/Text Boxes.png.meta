@@ -35,6 +35,18 @@ TextureImporter:
   - first:
       213: -3071109595493404071
     second: Text Box Down Arrow
+  - first:
+      213: 5222678238594399148
+    second: Text Box Confirm Cancel Bottom
+  - first:
+      213: -4690536922708420850
+    second: Text Box Confirm Cancel Top
+  - first:
+      213: -4589004972875592254
+    second: Text Box Cancel Button
+  - first:
+      213: -8336977664052321804
+    second: Text Box Confirm Button
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -372,6 +384,90 @@ TextureImporter:
       bones: []
       spriteID: 9527256281a3165d0800000000000000
       internalID: -3071109595493404071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Text Box Confirm Cancel Bottom
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 485
+        width: 312
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cabf493ef2eaa7840800000000000000
+      internalID: 5222678238594399148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Text Box Confirm Cancel Top
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 419
+        width: 312
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e075c14358dd7eeb0800000000000000
+      internalID: -4690536922708420850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Text Box Cancel Button
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 392
+        width: 30
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2cdcf3f6a449050c0800000000000000
+      internalID: -4589004972875592254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Text Box Confirm Button
+      rect:
+        serializedVersion: 2
+        x: 719
+        y: 392
+        width: 30
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f1abc95cfa1d4c80800000000000000
+      internalID: -8336977664052321804
       vertices: []
       indices: 
       edges: []

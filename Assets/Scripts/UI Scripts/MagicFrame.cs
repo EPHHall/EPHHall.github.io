@@ -15,6 +15,7 @@ namespace SS.UI
         public Material lineMaterial;
         public bool inventoryFrame;
         public InfoBox_NameDisplay infoBoxName;
+        public bool activeFrame = true;
 
         [Space(5)]
         [Header("Dont Touch")]
@@ -237,7 +238,7 @@ namespace SS.UI
         {
             //TODO: If there are any issues with spawning the dragobject, it could be because this code was moved from 
             //OnPointerDown
-            if (dragObject != null && eventData.button != PointerEventData.InputButton.Right)
+            if (activeFrame && dragObject != null && eventData.button != PointerEventData.InputButton.Right)
             {
                 currentDragObject = Instantiate(dragObject, GameObject.Find("Drag Box Parent").transform);
                 currentDragObject.GetComponent<FrameDragObject>().createdFrom = this;

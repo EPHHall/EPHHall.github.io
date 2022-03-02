@@ -22,6 +22,25 @@ namespace SS.PlayerMovement
             rb = GetComponent<Rigidbody2D>();
         }
 
+        private bool DetectIfMovementIsPossible(Vector2 origin, Vector2 destination)
+        {
+            RaycastHit2D[] rays = Physics2D.LinecastAll(origin, destination, movementMask);
+
+            bool canMove = true;
+
+            foreach (RaycastHit2D ray in rays)
+            {
+                canMove = false;
+                if (ray.collider.tag == "Bridge")
+                {
+                    canMove = true;
+                    break;
+                }
+            }
+
+            return canMove;
+        }
+
         void Update()
         {
             if (!pauseMovementForCutscene && !pauseMovementBecauseRangeWasShown && SS.GameController.TurnManager.currentTurnTaker == GetComponent<SS.GameController.TurnTaker>())
@@ -32,9 +51,10 @@ namespace SS.PlayerMovement
                     timer = -1;
                 }
 
+
                 if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
                 {
-                    RaycastHit2D ray = Physics2D.Linecast(transform.position, (Vector2)transform.position + Vector2.up, movementMask);
+                    bool canMove = DetectIfMovementIsPossible(transform.position, (Vector2)transform.position + Vector2.up);
 
                     if (timer == -1)
                     {
@@ -42,7 +62,7 @@ namespace SS.PlayerMovement
                         cooldownCounter = 0;
                     }
 
-                    if (ray.collider == null && timer >= cooldownCounter)
+                    if (canMove && timer >= cooldownCounter)
                     {
                         transform.Translate(Vector2.up);
 
@@ -58,7 +78,7 @@ namespace SS.PlayerMovement
                 }
                 if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
                 {
-                    RaycastHit2D ray = Physics2D.Linecast(transform.position, (Vector2)transform.position + Vector2.left, movementMask);
+                    bool canMove = DetectIfMovementIsPossible(transform.position, (Vector2)transform.position + Vector2.left);
 
                     if (timer == -1)
                     {
@@ -66,7 +86,7 @@ namespace SS.PlayerMovement
                         cooldownCounter = 0;
                     }
 
-                    if (ray.collider == null && timer >= cooldownCounter)
+                    if (canMove && timer >= cooldownCounter)
                     {
                         transform.Translate(Vector2.left);
 
@@ -82,7 +102,7 @@ namespace SS.PlayerMovement
                 }
                 if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
                 {
-                    RaycastHit2D ray = Physics2D.Linecast(transform.position, (Vector2)transform.position + Vector2.down, movementMask);
+                    bool canMove = DetectIfMovementIsPossible(transform.position, (Vector2)transform.position + Vector2.down);
 
                     if (timer == -1)
                     {
@@ -90,7 +110,7 @@ namespace SS.PlayerMovement
                         cooldownCounter = 0;
                     }
 
-                    if (ray.collider == null && timer >= cooldownCounter)
+                    if (canMove && timer >= cooldownCounter)
                     {
                         transform.Translate(Vector2.down);
 
@@ -106,7 +126,7 @@ namespace SS.PlayerMovement
                 }
                 if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
                 {
-                    RaycastHit2D ray = Physics2D.Linecast(transform.position, (Vector2)transform.position + Vector2.right, movementMask);
+                    bool canMove = DetectIfMovementIsPossible(transform.position, (Vector2)transform.position + Vector2.right);
 
                     if (timer == -1)
                     {
@@ -114,7 +134,7 @@ namespace SS.PlayerMovement
                         cooldownCounter = 0;
                     }
 
-                    if (ray.collider == null && timer >= cooldownCounter)
+                    if (canMove && timer >= cooldownCounter)
                     {
                         transform.Translate(Vector2.right);
 

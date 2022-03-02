@@ -7,6 +7,10 @@ TagManager:
   - Player Wall
   - Player Move
   - Effect Resources
+  - Play Area Midpoint
+  - Wall
+  - Bridge
+  - Replace
   layers:
   - Default
   - TransparentFX

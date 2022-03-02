@@ -212,6 +212,20 @@ namespace SS.Spells
                 }
             }
         }
+        public virtual void CastSpell(bool overrideTileRequirement, bool ignoreManaCost, bool ignoreAPCost)
+        {
+            CastSpell(overrideTileRequirement);
+            SS.Character.CharacterStats character = SS.GameController.TurnManager.currentTurnTaker.GetComponent<SS.Character.CharacterStats>();
+
+            if (ignoreManaCost)
+            {
+                SS.Util.CharacterStatsInterface.AddMana(character, manaCost);
+            }
+            if (ignoreAPCost)
+            {
+                SS.Util.CharacterStatsInterface.AddActionPoints(character, apCost);
+            }
+        }
 
         public virtual void ShowRange()
         {
@@ -288,7 +302,7 @@ namespace SS.Spells
 
         public void AddModifier(Modifier modifier)
         {
-            Debug.Log("In Add Modidifer");
+            //Debug.Log("In Add Modidifer");
 
             if (modifier == null) return;
 
@@ -300,6 +314,7 @@ namespace SS.Spells
 
         public void RemoveModifier(Modifier modifier)
         {
+            //
             Debug.Log("In Remove Modidifer");
 
             modifiers.Remove(modifier);

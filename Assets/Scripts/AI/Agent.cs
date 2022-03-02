@@ -25,7 +25,7 @@ namespace SS.AI
         public Faction.FactionName targetFaction;
         public Faction.FactionName previousTargetFaction;
         private Faction.FactionName defaultFaction;
-        private Target defaultTarget;
+        public Target defaultTarget;
 
         public List<Spell> spells;
         public Spell spellToCast;

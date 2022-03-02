@@ -47,7 +47,7 @@ namespace SS.Util
                 tilePositions = new List<Vector2>();
 
                 SS_AStar aStar = new Util.SS_AStar();
-                foreach (Vector2 position in aStar.AStar(temp, takenPositions))
+                foreach (Vector2 position in aStar.AStar_Targeting(temp, takenPositions))
                 {
                     tilePositions.Add(position);
                 }
@@ -88,7 +88,7 @@ namespace SS.Util
 
                 SS_AStar aStar = new Util.SS_AStar();
 
-                foreach (Vector2 position in aStar.AStar(temp, takenPositions))
+                foreach (Vector2 position in aStar.AStar_Targeting(temp, takenPositions))
                 {
                     tilePositions.Add(position);
                 }

@@ -43,6 +43,9 @@ namespace SS.UI
                 SetSliderValue(stats.hp);
             }
 
+            if(stats != null)
+                SetSliderMax(stats.hpMax);
+
             SetText();
         }
 

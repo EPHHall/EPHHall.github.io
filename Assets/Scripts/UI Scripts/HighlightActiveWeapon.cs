@@ -19,7 +19,6 @@ namespace SS.UI
             {
                 foreach (StatsSubCard card in transform.GetComponentsInChildren<StatsSubCard>())
                 {
-                        Debug.Log("In Thing");
                     card.GetComponent<Image>().color = Color.white;
 
                     Item.Weapon weaponInUse;

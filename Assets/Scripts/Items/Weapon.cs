@@ -10,6 +10,29 @@ namespace SS.Item
     [ExecuteAlways]
     public class Weapon : Item
     {
+        [System.Serializable]
+        public class WeaponTemplate
+        {
+            public int damageMod;
+            public int speedMod;
+            public int rangeMod;
+
+            public Spell_Attack attack;
+
+            public List<Status> statusesToInflict;
+
+            public Damage toInflict;
+
+            public bool unarmed;
+
+            public string weaponName;
+
+            public GameObject spellObject;
+            public Spell spellToCast;
+            public int spellUses;
+            public int spellUsesMax;
+        }
+
         //stats
         public int damageMod;
         public int speedMod;
@@ -20,6 +43,10 @@ namespace SS.Item
         public List<Status> statusesToInflict;
 
         public Damage toInflict;
+        public GameObject spellObject;
+        public Spell spellToCast;
+        public int spellUses;
+        public int spellUsesMax;
 
         public bool unarmed;
 
@@ -38,13 +65,23 @@ namespace SS.Item
             ApplyWeapon();
         }
 
-        public static void CreateWeapon(Weapon toCreate, Spell_Attack parent, string name)
+        public static Weapon CreateWeapon(WeaponTemplate weaponTemplate)
         {
-            CreateWeapon(toCreate.damageMod, toCreate.speedMod, toCreate.rangeMod, toCreate.statusesToInflict, toCreate.toInflict, toCreate.unarmed, parent, name);
+            Weapon newWeapon = CreateWeapon(weaponTemplate.damageMod, weaponTemplate.speedMod, weaponTemplate.rangeMod, weaponTemplate.statusesToInflict, weaponTemplate.toInflict, weaponTemplate.unarmed, weaponTemplate.attack, 
+                weaponTemplate.weaponName, weaponTemplate.spellObject, weaponTemplate.spellToCast, weaponTemplate.spellUses, weaponTemplate.spellUsesMax);
+
+            return newWeapon;
         }
-        public static void CreateWeapon(int damageMod, int speedMod, int rangeMod, 
+        public static Weapon CreateWeapon(Weapon toCreate, Spell_Attack parent, string name)
+        {
+            Weapon newWeapon = CreateWeapon(toCreate.damageMod, toCreate.speedMod, toCreate.rangeMod, toCreate.statusesToInflict, toCreate.toInflict, toCreate.unarmed, parent, name, 
+                toCreate.spellObject, toCreate.spellToCast, toCreate.spellUses, toCreate.spellUsesMax);
+
+            return newWeapon;
+        }
+        public static Weapon CreateWeapon(int damageMod, int speedMod, int rangeMod, 
             List<Status> statusesToInflict, Damage toInflict, bool unarmed, Spell_Attack parent,
-            string name)
+            string name, GameObject spellObject, Spell spellToCast, int spellUses, int maxUses)
         {
             GameObject instantiated = new GameObject(name);
             instantiated.transform.parent = parent.transform;
@@ -63,14 +100,33 @@ namespace SS.Item
             }
 
             newWeapon.toInflict = toInflict;
+            toInflict.weapon = newWeapon;
 
             newWeapon.unarmed = unarmed;
 
             newWeapon.attack = parent;
 
+            newWeapon.weaponName = name;
+
             parent.AddWeapon(newWeapon);
 
-            //return ;
+            newWeapon.gameObject.AddComponent<CircleCollider2D>();
+            newWeapon.GetComponent<CircleCollider2D>().radius = .4f;
+            newWeapon.gameObject.AddComponent<Target>();
+            newWeapon.GetComponent<Target>().targetType = new TargetType(false, false, true, false);
+            newWeapon.GetComponent<Target>().targetName = name;
+
+            if (spellObject != null)
+            {
+                GameObject so = Instantiate(spellObject, newWeapon.transform);
+                newWeapon.spellToCast = so.GetComponent<Spell>();
+
+                so.transform.localPosition = Vector2.zero;
+            }
+            newWeapon.spellUses = spellUses;
+            newWeapon.spellUsesMax = maxUses;
+    
+            return newWeapon;
         }
 
         public void ApplyWeapon()

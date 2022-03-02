@@ -50,7 +50,7 @@ namespace SS.UI
         public CharacterStats statsToDisplay;
         private bool deactivateOnFirstFrame = false;
         public bool pointerIsOver = false;
-        private Image image;
+        public Image image;
         public GameObject[] contents;
         public List<Target> targets;
         public int targetIndex = 0;

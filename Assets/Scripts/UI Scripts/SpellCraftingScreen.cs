@@ -8,6 +8,9 @@ namespace SS.UI
 {
     public class SpellCraftingScreen : MonoBehaviour
     {
+        public bool screenActive = false;
+        public bool forceActive = false;
+
         public static SpellCraftingScreen activeScreen;
         public SpellInventory spellInventory;
 
@@ -21,6 +24,7 @@ namespace SS.UI
         public List<EffectFrame> effectFrames_Inventory;
         public ModifierFrame[] modifierFrames_Inventory1 = new ModifierFrame[16];
         public ModifierFrame[] modifierFrames_Inventory2 = new ModifierFrame[16];
+        public List<MagicFrame> everyFrame = new List<MagicFrame>();
 
         [Space(5)]
         [Header("Inventory Stuff")]
@@ -53,6 +57,34 @@ namespace SS.UI
         void Start()
         {
             initialized = false;
+
+            everyFrame.Add(mainFrame);
+
+            foreach (MagicFrame frame in secondaryFrames)
+            {
+                everyFrame.Add(frame);
+            }
+            foreach (MagicFrame frame in modifierFrames)
+            {
+                everyFrame.Add(frame);
+            }
+            foreach (MagicFrame frame in modifierFrames_Inventory1)
+            {
+                everyFrame.Add(frame);
+            }
+            foreach (MagicFrame frame in modifierFrames_Inventory2)
+            {
+                everyFrame.Add(frame);
+            }
+            foreach (MagicFrame frame in effectFrames_Inventory)
+            {
+                everyFrame.Add(frame);
+            }
+
+            if(!screenActive)
+            {
+                DeactivateFrames();
+            }
         }
 
         void Update()
@@ -63,6 +95,30 @@ namespace SS.UI
             }
 
             UpdateStatTexts();
+
+            if (forceActive)
+            {
+                ActivateFrames();
+            }
+        }
+
+        public void ActivateFrames()
+        {
+            Debug.Log("In Activate Screens");
+
+            foreach (MagicFrame frame in everyFrame)
+            {
+                frame.activeFrame = true;
+            }
+        }
+        public void DeactivateFrames()
+        {
+            Debug.Log("In Deactivate Screens");
+
+            foreach (MagicFrame frame in everyFrame)
+            {
+                frame.activeFrame = false;
+            }
         }
 
         public void AddModifierToInventory(Modifier mod, int index, int max)
@@ -171,7 +227,7 @@ namespace SS.UI
             spell.spellName = spellNameInput.text;
         }
 
-        private void ResetFrames()
+        public void ResetFrames()
         {
             for (int i = 0; i < modifierFrames_Inventory1.Length; i++)
             {
@@ -198,6 +254,20 @@ namespace SS.UI
             }
         }
 
+        public void ResetFunctionalFrames()
+        {
+            for (int i = 0; i < modifierFrames.Count; i++)
+            {
+                modifierFrames[i].ResetFrame();
+            }
+            for (int i = 0; i < secondaryFrames.Count; i++)
+            {
+                secondaryFrames[i].ResetFrame();
+            }
+
+            mainFrame.ResetFrame();
+        }
+
         private void ApplyFrames()
         {
             spell.SetMain(mainFrame.effect);
@@ -213,7 +283,7 @@ namespace SS.UI
             }
         }
 
-        private void OnEnable()
+        public void ResetScreen()
         {
             activeScreen = this;
 
@@ -227,6 +297,11 @@ namespace SS.UI
             ChangeInventoryList(true);
 
             UpdateSpellPointsText(spell.currentSpellPoints, spell.maxSpellPoints);
+        }
+
+        private void OnEnable()
+        {
+            ResetScreen();
         }
 
         private void OnDisable()

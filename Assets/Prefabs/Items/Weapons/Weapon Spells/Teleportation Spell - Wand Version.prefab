@@ -1,0 +1,143 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &708499588744235332
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 708499588744235330}
+  - component: {fileID: 708499588744235333}
+  m_Layer: 0
+  m_Name: Teleportation Spell
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &708499588744235330
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708499588744235332}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 613845926627600511}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &708499588744235333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708499588744235332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cd71671e61cbf142962616389909bbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 6
+  damage: 0
+  castSpeed: 1
+  manaCost: 5
+  apCost: 1
+  currentSpellPoints: 6
+  maxSpellPoints: 10
+  modifiedDamage: 0
+  main: {fileID: 6160320238461626767}
+  targetMain: []
+  deliveredByMain: []
+  modifiers: []
+  spellOrigin: {x: 0, y: 0}
+  er: {fileID: 0}
+  targetableTile: {fileID: 1103078107984049863, guid: c4b7b9f61b78f614c996d6b4be984425, type: 3}
+  description: 
+  statusesDescription: 
+  spellName: 
+  icon: {fileID: 0}
+  caster: {fileID: 0}
+--- !u!1001 &708499588276459946
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 708499588744235330}
+    m_Modifications:
+    - target: {fileID: 95078073716699605, guid: 00707694a4952b24689e30426c6f8f36, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 95078073716699605, guid: 00707694a4952b24689e30426c6f8f36, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 95078073716699605, guid: 00707694a4952b24689e30426c6f8f36, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 95078073716699605, guid: 00707694a4952b24689e30426c6f8f36, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 95078073716699605, guid: 00707694a4952b24689e30426c6f8f36, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 95078073716699605, guid: 00707694a4952b24689e30426c6f8f36, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 95078073716699605, guid: 00707694a4952b24689e30426c6f8f36, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 95078073716699605, guid: 00707694a4952b24689e30426c6f8f36, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 95078073716699605, guid: 00707694a4952b24689e30426c6f8f36, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 95078073716699605, guid: 00707694a4952b24689e30426c6f8f36, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 95078073716699605, guid: 00707694a4952b24689e30426c6f8f36, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 95078073716699607, guid: 00707694a4952b24689e30426c6f8f36, type: 3}
+      propertyPath: m_Name
+      value: Effect_ Teleport
+      objectReference: {fileID: 0}
+    - target: {fileID: 6676799757506916389, guid: 00707694a4952b24689e30426c6f8f36, type: 3}
+      propertyPath: spellAttachedTo
+      value: 
+      objectReference: {fileID: 708499588744235333}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 00707694a4952b24689e30426c6f8f36, type: 3}
+--- !u!4 &613845926627600511 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 95078073716699605, guid: 00707694a4952b24689e30426c6f8f36, type: 3}
+  m_PrefabInstance: {fileID: 708499588276459946}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6160320238461626767 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6676799757506916389, guid: 00707694a4952b24689e30426c6f8f36, type: 3}
+  m_PrefabInstance: {fileID: 708499588276459946}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c771f37255af5d34f95c34bd007e10d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

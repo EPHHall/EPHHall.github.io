@@ -34,11 +34,22 @@ namespace SS.Spells
         {
             if (weaponBeingUsed != -1)
             {
-                Debug.Log("0.5");
+                ApplyWeapon();
+            }
+            else
+            {
+                weaponBeingUsed = 0;
                 ApplyWeapon();
             }
 
             base.CastSpell(overrideTileRequirement);
+
+            Weapon currentWeapon = activeWeapons[weaponBeingUsed];
+            if(currentWeapon.spellToCast != null && currentWeapon.spellUses > 0)
+            {
+                currentWeapon.spellToCast.CastSpell(overrideTileRequirement, true, true);
+                currentWeapon.spellUses--;
+            }
         }
 
         public override void ShowRange()
@@ -87,6 +98,38 @@ namespace SS.Spells
             weaponBeingUsed = index;
 
             ApplyWeapon();
+        }
+
+
+        public void RemoveAndDestroyWeapons()
+        {
+            List<Weapon> toRemove = new List<Weapon>();
+            foreach (Weapon weapon in activeWeapons)
+            {
+                if (weapon == unarmedWeapon) continue;
+
+                toRemove.Add(weapon);
+            }
+
+            int breakInt = 0;
+            while(toRemove.Count > 0)
+            {
+                Weapon temp = toRemove[0];
+                toRemove.Remove(temp);
+                activeWeapons.Remove(temp);
+
+                Destroy(temp.gameObject);
+
+                if (breakInt == 100)
+                {
+                    break;
+                }
+
+                breakInt++;
+            }
+
+
+            Debug.Log("Spell_Attack while, breakInt = " + breakInt);
         }
     }
 }

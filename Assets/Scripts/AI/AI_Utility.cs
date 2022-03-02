@@ -19,7 +19,7 @@ namespace SS.AI
             {
                 AddListToOriginal.AddList(visitedPositions, nextPositions);
 
-                nextPositions = aStar.AStar(nextPositions, visitedPositions);
+                nextPositions = aStar.AStar_Targeting(nextPositions, visitedPositions);
             }
 
             return visitedPositions;

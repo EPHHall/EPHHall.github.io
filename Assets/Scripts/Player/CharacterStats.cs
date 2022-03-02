@@ -143,5 +143,18 @@ namespace SS.Character
                 Util.SpawnRange.SpawnMovementRange(transform.position, speed, moveTile, abilityTile, false);
             }
         }
+
+        public void SetMaxHealth(int newMax)
+        {
+            hpMax = newMax;
+        }
+        public void SetMaxMana(int newMana)
+        {
+            manaMax = newMana;
+        }
+        public void SetSpeed(int newSpeed)
+        {
+            speed = newSpeed;
+        }
     }
 }

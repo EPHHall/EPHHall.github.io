@@ -22,6 +22,8 @@ namespace SS.Item
 
         public void BePickedUp()
         {
+            Debug.Log(toPickUp.spellToCast);
+
             Weapon.CreateWeapon(toPickUp, parent, toPickUp.weaponName);
 
             DisplayMessage();

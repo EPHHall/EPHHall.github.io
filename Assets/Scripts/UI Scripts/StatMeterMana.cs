@@ -19,6 +19,7 @@ namespace SS.UI
 
             SetSliderValue(stats.mana);
             SetText();
+            SetSliderMax(stats.manaMax);
         }
     }
 }

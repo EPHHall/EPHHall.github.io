@@ -31,7 +31,7 @@ public class Effect_Projection : Effect
         foreach (Target target in package.targets)
         {
             SS.Item.Weapon.CreateWeapon(0, 0, range, null, newDamage, 
-                true, target.GetComponent<CharacterStats>().meleeAttack, "Channel Bolt");
+                true, target.GetComponent<CharacterStats>().meleeAttack, "Channel Bolt", null, null, 0, 0);
         }
     }
 
@@ -44,7 +44,7 @@ public class Effect_Projection : Effect
         foreach (Target target in package.targets)
         {
             SS.Item.Weapon.CreateWeapon(0, 0, range, null, newDamage,
-                true, target.GetComponent<CharacterStats>().meleeAttack, "Channel Bolt");
+                true, target.GetComponent<CharacterStats>().meleeAttack, "Channel Bolt", null, null, 0, 0);
         }
     }
 
@@ -57,7 +57,7 @@ public class Effect_Projection : Effect
         foreach (Target target in package.targets)
         {
             SS.Item.Weapon.CreateWeapon(0, 0, range, null, newDamage,
-                true, target.GetComponent<CharacterStats>().meleeAttack, "Channel Bolt");
+                true, target.GetComponent<CharacterStats>().meleeAttack, "Channel Bolt", null, null, 0, 0);
         }
     }
 
@@ -78,7 +78,7 @@ public class Effect_Projection : Effect
         Damage newDamage = new Damage(Damage.DamageType.Arcane, mainDamage.amount);
 
         SS.Item.Weapon.CreateWeapon(0, 0, range, null, newDamage,
-            true, bps.toSummon.GetComponent<CharacterStats>().meleeAttack, "Channel Bolt");
+            true, bps.toSummon.GetComponent<CharacterStats>().meleeAttack, "Channel Bolt", null, null, 0, 0);
     }
 
 

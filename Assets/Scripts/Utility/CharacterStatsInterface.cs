@@ -42,6 +42,34 @@ namespace SS.Util
             }
         }
 
+        public static void AddHP(CharacterStats character, Damage damage)
+        {
+            if (character != null)
+            {
+                character.hp += damage.amount;
+                //if (character.textTemp != null)
+                //{
+                //    character.DisplayText("Gained " + damage + " HP.");
+                //}
+            }
+        }
+
+        public static void AddMana(CharacterStats character, int damage)
+        {
+            if (character != null)
+            {
+                character.mana += damage;
+            }
+        }
+
+        public static void AddActionPoints(CharacterStats character, int damage)
+        {
+            if (character != null)
+            {
+                character.actionPoints += damage;
+            }
+        }
+
         public static void ResetMana(CharacterStats character)
         {
             character.ResetMana();
