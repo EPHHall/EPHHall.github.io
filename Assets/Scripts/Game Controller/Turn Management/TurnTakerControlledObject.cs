@@ -7,32 +7,86 @@ namespace SS.GameController
 {
     public class TurnTakerControlledObject : TurnTaker
     {
-        public GameObject[] buttonsToSpawn = new GameObject[0];
+        PlayerMovement.SS_PlayerController controller;
+        PlayerMovement.SS_PlayerMoveRange moveRange;
+        AI.Agent agent;
+
+        public bool enemyVersion;
+
+        public void Initialize(bool appliedByEnemy)
+        {
+            enemyVersion = appliedByEnemy;
+
+            if (enemyVersion)
+            {
+                agent = GetComponent<AI.Agent>();
+
+                agent.enabled = true;
+
+                if (agent.mainTarget == null)
+                {
+                    agent.mainTarget = GameObject.FindGameObjectWithTag("Player").GetComponent<Spells.Target>();
+                }
+
+                agent.Awake();
+            }
+            else
+            {
+                controller = GetComponent<SS.PlayerMovement.SS_PlayerController>();
+                moveRange = GetComponent<SS.PlayerMovement.SS_PlayerMoveRange>();
+
+                if (moveRange == null)
+                {
+                    moveRange = gameObject.AddComponent<SS.PlayerMovement.SS_PlayerMoveRange>();
+                }
+
+                if (controller == null)
+                {
+                    controller = gameObject.AddComponent<SS.PlayerMovement.SS_PlayerController>();
+                }
+
+                controller.Initialize();
+
+                moveRange.Initialize();
+            }
+        }
 
         public override void EndTurn()
         {
             base.EndTurn();
-
-            ToggleButtons(false);
         }
 
         public override void StartTurn()
         {
             base.StartTurn();
 
-            GetComponent<SS.PlayerMovement.SS_PlayerMoveRange>().ResetMoveRange(transform.position);
-            ToggleButtons(true);
+            if (!enemyVersion)
+            {
+                moveRange.ResetMoveRange(transform.position);
+            }
+            else
+            {
+                agent.StartTurn();
+            }
         }
 
-        public void ToggleButtons(bool toggle)
+        public int EndControl()
         {
-            if (buttonsToSpawn.Length > 0)
+            int previousIndex = -1;
+
+            if (TurnManager.tm.turnTakers.Contains(this))
             {
-                foreach (GameObject button in buttonsToSpawn)
-                {
-                    button.SetActive(toggle);
-                }
+                previousIndex = TurnManager.tm.turnTakers.IndexOf(this);
+                TurnManager.tm.turnTakers.Remove(this);
             }
+
+            if (enemyVersion)
+            {
+                agent.enabled = false;
+            }
+
+            return previousIndex;
+            //Destroy(this);
         }
     }
 }

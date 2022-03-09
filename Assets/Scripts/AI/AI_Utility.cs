@@ -15,7 +15,7 @@ namespace SS.AI
             List<Vector2> visitedPositions = new List<Vector2>();
             List<Vector2> nextPositions = new List<Vector2>();
             nextPositions.Add(initialPosition);
-            for (int i = 0; i < range; i++)
+            for (int i = 0; i <= range; i++)
             {
                 AddListToOriginal.AddList(visitedPositions, nextPositions);
 
@@ -30,7 +30,7 @@ namespace SS.AI
             List<Vector2> visitedPositions = new List<Vector2>();
             List<Vector2> nextPositions = new List<Vector2>();
             nextPositions.Add(initialPosition);
-            for (int i = 0; i < range; i++)
+            for (int i = 0; i <= range; i++)
             {
                 AddListToOriginal.AddList(visitedPositions, nextPositions);
 

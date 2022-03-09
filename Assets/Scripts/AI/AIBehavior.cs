@@ -8,6 +8,7 @@ namespace SS.AI
     public class AIBehavior
     {
         public Agent agent;
+        public int timesCompleted = 0;
 
         public AIBehavior(Agent agent)
         {
@@ -16,11 +17,9 @@ namespace SS.AI
 
         public virtual void InvokeBehavior(List<Spell> spells)
         {
-
         }
         public virtual void InvokeBehavior(List<Spell> spells, Target toTarget)
         {
-
         }
 
         public virtual bool WasBehaviorFulfilled()

@@ -30,9 +30,11 @@ namespace SS.AI
         public List<Spell> spells;
         public Spell spellToCast;
 
+        public Vector2 positionAtStartofTurn;
+
         public SS.Character.CharacterStats characterStats;
 
-        private void Start()
+        public void Awake()
         {
             InitializePackagesAndBehaviors();
 
@@ -75,9 +77,18 @@ namespace SS.AI
             SS.Util.CharacterStatsInterface.ResetAP(characterStats);
             SS.Util.CharacterStatsInterface.ResetMana(characterStats);
 
+            positionAtStartofTurn = transform.position;
+
             foreach (AIPackage package in packages)
             {
-                package.InvokeAI();
+                if (package.groupsVersion)
+                {
+                    package.InvokeAI(true);
+                }
+                else
+                {
+                    package.InvokeAI();
+                }
             }
 
             EndTurn();

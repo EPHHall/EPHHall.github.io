@@ -175,6 +175,8 @@ namespace SS.Spells
 
         public virtual void CastSpell(bool overrideTileRequirement)
         {
+            apCost = castSpeed;
+
             //SS.GameController.TurnManager.staticPrintTurnTaker = true;
             SS.Character.CharacterStats character = SS.GameController.TurnManager.currentTurnTaker.GetComponent<SS.Character.CharacterStats>();
 

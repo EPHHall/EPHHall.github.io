@@ -6,6 +6,8 @@ namespace SS.PlayerMovement
 {
     public class SS_PlayerMoveRange : MonoBehaviour
     {
+        private static SS_PlayerMoveRange mainPlayerMoveRange;
+
         public GameObject wallTile;
         public GameObject moveTile;
         public int moveRange;
@@ -18,9 +20,15 @@ namespace SS.PlayerMovement
         [Space(5)]
         [Header("Debug")]
         public bool playerPositionIsOrigin;
+        public bool showMainMoveRange;
 
         private void Start()
         {
+            if (mainPlayerMoveRange == null && this.tag == "Player")
+            {
+                mainPlayerMoveRange = this;
+            }
+
             player = transform;
             origin = transform.position;
 
@@ -34,8 +42,25 @@ namespace SS.PlayerMovement
             }
         }
 
+        public void Initialize()
+        {
+            if (GetComponent<Character.CharacterStats>() != null && GetComponent<Character.CharacterStats>().speed <= 0)
+            {
+                GetComponent<Character.CharacterStats>().speed = 5;
+            }
+
+            wallTile = mainPlayerMoveRange.wallTile;
+            moveTile = mainPlayerMoveRange.moveTile;
+        }
+
         private void Update()
         {
+            if (showMainMoveRange)
+            {
+                showMainMoveRange = false;
+                Debug.Log(mainPlayerMoveRange, mainPlayerMoveRange.gameObject);
+            }
+
             if (firstTurn)
             {
                 spawnMoveRange = false;

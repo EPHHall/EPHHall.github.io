@@ -6,6 +6,8 @@ namespace SS.PlayerMovement
 {
     public class SS_PlayerController : MonoBehaviour
     {
+        private static SS_PlayerController mainController;
+
         public LayerMask movementMask;
         public Rigidbody2D rb;
 
@@ -20,6 +22,21 @@ namespace SS.PlayerMovement
         private void Start()
         {
             rb = GetComponent<Rigidbody2D>();
+
+            if (mainController == null && this.tag == "Player")
+            {
+                mainController = this;
+            }
+        }
+
+        public void Initialize()
+        {
+            movementMask = mainController.movementMask;
+
+            cooldownBeforeNextMove = mainController.cooldownBeforeNextMove;
+            firstCooldownBeforeNextMove = mainController.firstCooldownBeforeNextMove;
+            timer = mainController.timer;
+            cooldownCounter = mainController.cooldownCounter;
         }
 
         private bool DetectIfMovementIsPossible(Vector2 origin, Vector2 destination)
@@ -43,7 +60,18 @@ namespace SS.PlayerMovement
 
         void Update()
         {
-            if (!pauseMovementForCutscene && !pauseMovementBecauseRangeWasShown && SS.GameController.TurnManager.currentTurnTaker == GetComponent<SS.GameController.TurnTaker>())
+            bool result;
+
+            if (tag == "Player")
+            {
+                result = !pauseMovementForCutscene && !pauseMovementBecauseRangeWasShown && SS.GameController.TurnManager.currentTurnTaker == GetComponent<SS.GameController.TurnTaker>();
+            }
+            else
+            {
+                result = !pauseMovementForCutscene && !pauseMovementBecauseRangeWasShown && SS.GameController.TurnManager.currentTurnTaker == GetComponent<SS.GameController.TurnTakerControlledObject>();
+            }
+
+            if (result)
             {
                 if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D) ||
                     Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.RightArrow))

@@ -92,3 +92,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 25efd71b24221a64caed02e4e0600094, type: 3}
   style: 0
   type: 4
+  inUse: 0
+  inventoryFrame: {fileID: 0}
+  activeFrame: {fileID: 0}
+  description: 

@@ -1,5 +1,52 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1972566798
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1972566799}
+  - component: {fileID: 1972566800}
+  m_Layer: 0
+  m_Name: Pathfind Closer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1972566799
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1972566798}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7949776490252138203}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1972566800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1972566798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d4caaca6e4486148ac3c90350fb1805, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groupsVersion: 0
+  attachedAgent: {fileID: 0}
+  behaviorGroups: []
+  target: {fileID: 0}
 --- !u!1 &7949776489864918621
 GameObject:
   m_ObjectHideFlags: 0
@@ -43,7 +90,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97e1aa72e5308c64eb44f07f14203585, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groupsVersion: 0
   attachedAgent: {fileID: 0}
+  behaviorGroups: []
 --- !u!1 &7949776490252138204
 GameObject:
   m_ObjectHideFlags: 0
@@ -66,7 +115,7 @@ GameObject:
   - component: {fileID: 7949776490252138202}
   m_Layer: 0
   m_Name: Ogre
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -78,13 +127,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7949776490252138204}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.5, y: -1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7949776489864918620}
   - {fileID: 7949776491765011825}
   - {fileID: 5986364648139407276}
+  - {fileID: 1972566799}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -268,8 +318,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 338a6102241a02140988db4805f66b8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 1
-  mana: 10
+  hp: 6
+  mana: 0
   actionPoints: 2
   speed: 5
   hpMax: 0
@@ -278,7 +328,7 @@ MonoBehaviour:
   textTemp: {fileID: 0}
   follower: {fileID: 762097819130045207, guid: 30f830321e7960f4fa0dd9f5fed97a4e, type: 3}
   followerParent: {fileID: 0}
-  description: A weak, fledgling vampire.
+  description: A bumbling ogre.
   toDisplay: {fileID: 0}
   moveTile: {fileID: 1103078107984049863, guid: 263d992086af3b34c9357f5f95978c04, type: 3}
   abilityTile: {fileID: 6753667278753664400, guid: 26d1fb1e2ccf63f41adc7faf60a39d85, type: 3}
@@ -534,6 +584,38 @@ PrefabInstance:
       propertyPath: range
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 466735156509912314, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
+      propertyPath: speed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 466735156509912314, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
+      propertyPath: damageList.Array.data[1].amount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 466735156509912314, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
+      propertyPath: originalDamageList.Array.data[1].amount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3656605557539978194, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
+      propertyPath: toInflict.amount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3656605557539978194, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
+      propertyPath: unarmed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3656605557539978194, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
+      propertyPath: weaponName
+      value: Club
+      objectReference: {fileID: 0}
+    - target: {fileID: 3656605557539978194, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
+      propertyPath: speedMod
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3656605557539978222, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
+      propertyPath: m_Name
+      value: Club
+      objectReference: {fileID: 0}
     - target: {fileID: 4413687577028108883, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -580,7 +662,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4413687577028108893, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: damage
-      value: 1
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413687577028108893, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
+      propertyPath: castSpeed
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4413687577028108894, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: m_Name

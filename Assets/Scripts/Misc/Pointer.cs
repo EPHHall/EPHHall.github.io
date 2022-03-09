@@ -30,6 +30,13 @@ namespace SS.Misc
                         castingTilesDetected.Add(tile, true);
                     }
                 }
+                
+                //TODO: Display the range that the player would need to enter to cause an enemy to move
+                //AI.Package_IdleThenMoveAndAttack package = hit.GetComponent<AI.Package_IdleThenMoveAndAttack>();
+                //if (package != null)
+                //{
+
+                //}
             }
 
             List<CastingTile> keysToRemove = new List<CastingTile>();

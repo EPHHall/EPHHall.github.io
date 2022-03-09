@@ -21,6 +21,22 @@ namespace SS.Util
             return targets;
         }
 
+        public static List<SS.Spells.Target> GetTargets(List<Vector2> list)
+        {
+            List<SS.Spells.Target> targets = new List<Spells.Target>();
+            List<Collider2D> collider2Ds = new List<Collider2D>();
+
+            foreach (Vector2 v in list)
+            {
+                foreach (Collider2D c in Physics2D.OverlapCircleAll(v, .4f))
+                {
+                    collider2Ds.Add(c);
+                }
+            }
+
+            return GetTargets(collider2Ds);
+        }
+
         public static List<SS.Spells.Target> GetTargets(Collider2D[] list)
         {
             List<SS.Spells.Target> targets = new List<Spells.Target>();

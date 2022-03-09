@@ -11,6 +11,8 @@ TagManager:
   - Wall
   - Bridge
   - Replace
+  - Display Radius on Mouse Over
+  - Enemy
   layers:
   - Default
   - TransparentFX

@@ -86,7 +86,11 @@ namespace SS.UI
 
             if (eventData.button == PointerEventData.InputButton.Right && GameController.TurnManager.currentTurnTaker.tag == "Player")
             {
-                Tutorial.TutorialHandler.rangeWasShown.Set(true);
+                if (Tutorial.TutorialHandler.rangeWasShown != null)
+                {
+                    Tutorial.TutorialHandler.rangeWasShown.Set(true);
+                }
+
                 if (!showing)
                 {
                     if (stats.GetComponent<AI.Agent>() != null)
@@ -109,6 +113,7 @@ namespace SS.UI
                     else
                     {
                         stats.ShowRangeOfAbilities(null);
+                        showing = true;
                     }
                 }
                 else

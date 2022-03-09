@@ -10,8 +10,23 @@ namespace SS.AI
         {
             base.Awake();
 
-            behaviors.Add(new Behavior_MoveCloserToTarget(attachedAgent));
-            behaviors.Add(new Behavior_DoMostDamage(attachedAgent));
+            groupsVersion = true;
+
+            BehaviorGroup initialStage = new BehaviorGroup();
+            initialStage.behaviors.Add(new Behavior_PathfindToTarget(attachedAgent, FindObjectOfType<Pathfinding.Grid>(), FindObjectOfType<Pathfinding.AStar>()));
+
+            BehaviorGroup stage2 = new BehaviorGroup();
+            stage2.behaviors.Add(new Behavior_DoMostDamage(attachedAgent));
+            
+            behaviorGroups.Add(initialStage);
+            behaviorGroups.Add(stage2);
+
+
+
+
+            //behaviors.Add(new Behavior_PathfindToTarget(attachedAgent, FindObjectOfType<Pathfinding.Grid>(), FindObjectOfType<Pathfinding.AStar>()));
+
+            //behaviors.Add(new Behavior_DoMostDamage(attachedAgent));
         }
     }
 }

@@ -70,7 +70,8 @@ namespace SS.Util
             List<Vector2> tilePositions = initialPositions;
             List<Vector2> dontSpawn = new List<Vector2>();
 
-            for (int i = 0; i < range; i++)
+            //TODO: There's definitely a better way to do this than just adding 1 to range, but idc this works for now.
+            for (int i = 0; i < range + 1; i++)
             {
                 foreach (Vector2 position in tilePositions)
                 {

@@ -15,7 +15,8 @@ namespace SS.StatusSpace
             FireDamage,
             ArcaneDamage,
             Controlled,
-            Possessed
+            Possessed,
+            ControlledByEnemy
         }
 
         //main stats

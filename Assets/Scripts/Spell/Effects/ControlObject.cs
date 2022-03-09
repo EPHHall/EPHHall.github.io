@@ -7,6 +7,10 @@ namespace SS.Spells
     [ExecuteAlways]
     public class ControlObject : Effect_Possession
     {
+        [Space(10)]
+        [Header("Control Object Specific")]
+        public bool enemyVersion;
+
         public override void Awake()
         {
             base.Awake();
@@ -21,7 +25,7 @@ namespace SS.Spells
 
             actionPointCost = 2;
 
-            duration = 2;
+            //duration = 2;
 
             normallyValid = new TargetType(false, true, true, false);
         }
@@ -36,7 +40,20 @@ namespace SS.Spells
             {
                 if (target.targetType.obj)
                 {
-                    target.ApplyStatus(StatusSpace.Status.StatusName.Controlled, 1, duration, SS.GameController.TurnManager.currentTurnTaker, this);
+                    StatusSpace.Status newStatus;
+                    if (enemyVersion)
+                    {
+                        Debug.Log("enemy version");
+                        newStatus = new StatusSpace.Status(StatusSpace.Status.StatusName.ControlledByEnemy, 1, duration, SS.GameController.TurnManager.currentTurnTaker);
+                    }
+                    else
+                    {
+                        Debug.Log("regular version");
+                        newStatus = new StatusSpace.Status(StatusSpace.Status.StatusName.Controlled, 1, duration, SS.GameController.TurnManager.currentTurnTaker);
+                    }
+
+                    target.ApplyStatus(newStatus, this);
+                    target.HandleStatus(false, true, newStatus);
                 }
             }
 

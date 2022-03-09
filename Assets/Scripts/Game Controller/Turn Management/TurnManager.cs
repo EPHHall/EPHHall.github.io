@@ -19,6 +19,8 @@ namespace SS.GameController
 
         private Transform marker;
 
+        private TurnTakerPlayer player;
+
         [Space(5)]
         [Header("Controls")]
         public bool printTurnTaker;
@@ -29,6 +31,8 @@ namespace SS.GameController
             {
                 tm = this;
             }
+
+            player = FindObjectOfType<TurnTakerPlayer>();
 
             turnTakers.Add(GameObject.Find("Player").GetComponent<TurnTaker>());
 
@@ -55,11 +59,55 @@ namespace SS.GameController
 
             foreach (TurnTaker turnTaker in GameObject.FindObjectsOfType<TurnTaker>())
             {
-                if (!turnTakers.Contains(turnTaker) && (turnTaker as TurnTakerControlledObject) == null)
+                if (turnTaker == player as TurnTaker)
+                {
+                    continue;
+                }
+
+                if (!turnTakers.Contains(turnTaker) && (turnTaker as TurnTakerControlledObject) == null && !turnTaker.dontAutomaticallyAdd)
                 {
                     turnTakers.Add(turnTaker);
                 }
             }
+
+            turnTakers.Insert(0, player);
+            turnTakersIndex = 0;
+        }
+
+        public void AddNextTurnTaker(TurnTaker nextTurnTaker)
+        {
+            if (turnTakers.Contains(nextTurnTaker))
+            {
+                TurnTaker temp = GetNextTurnTaker();
+                turnTakers.Remove(nextTurnTaker);
+
+                //turnTakers.Insert(turnTakersIndex, nextTurnTaker);
+
+                turnTakers.Insert(turnTakers.IndexOf(temp), nextTurnTaker);
+            }
+            else
+            {
+                //TurnTaker temp = GetNextTurnTaker();
+                //turnTakers.Insert(turnTakers.IndexOf(temp), nextTurnTaker);
+
+                turnTakers.Insert(turnTakersIndex + 1, nextTurnTaker);
+            }
+        }
+
+        public TurnTaker GetNextTurnTaker()
+        {
+            TurnTaker toReturn = null;
+
+            if (turnTakersIndex < turnTakers.Count - 1)
+            {
+                toReturn = turnTakers[turnTakersIndex + 1];
+            }
+            else
+            {
+                toReturn = turnTakers[0];
+            }
+
+            return toReturn;
         }
 
         private static void PrintCurrentTurnTaker()
@@ -70,6 +118,7 @@ namespace SS.GameController
         public void ChangeTurnTaker()
         {
             bool newRound = false;
+            turnTakersIndex++;
 
             if (currentTurnTaker != null)
             {
@@ -90,7 +139,6 @@ namespace SS.GameController
             }
 
             StartTurn(turnTakers[turnTakersIndex]);
-            turnTakersIndex++;
 
             SS.Spells.Target[] targets = FindObjectsOfType<SS.Spells.Target>();
             for (int i = 0; i < targets.Length; i++)

@@ -126,15 +126,14 @@ namespace SS.Character
 
             if (spell != null)
             {
-                List<Vector2>[] lists = Util.SpawnRange.SpawnMovementRange(transform.position, speed - 1, moveTile, moveTile, false);
+                List<Vector2>[] lists = Util.SpawnRange.SpawnMovementRange(transform.position, speed, moveTile, moveTile, false);
                 initialPositions = new List<Vector2>();
                 takenPositions = new List<Vector2>();
 
                 initialPositions = lists[0];
                 takenPositions = lists[1];
 
-                //List<Vector2> initialPositions = new List<Vector2>();
-                //List<Vector2> takenPositions = new List<Vector2>();
+
 
                 Util.SpawnRange.SpawnTargetingRange(initialPositions, takenPositions, spell.range, abilityTile, null);
             }

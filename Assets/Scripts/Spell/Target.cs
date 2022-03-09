@@ -15,7 +15,7 @@ namespace SS.Spells
         public int hp;
         public string targetName;
 
-        public List<Status> statuses;
+        public List<Status> statuses = new List<Status>();
 
         public static List<Target> selectedTargets = new List<Target>();
         public bool displaySelectedTargets;
@@ -52,9 +52,14 @@ namespace SS.Spells
 
         public void HandleStatuses(bool newRound, bool preventDecrement)
         {
+            //if (name == "Table Piece (8)")
+            //{
+            //    Debug.Log(preventDecrement);
+            //}
+
             if (preventDecrement)
             {
-                StatusInterpreter.InterpretStatuses(this, StatusInterpreter.DecrementBehavior.Dont);
+                StatusInterpreter.InterpretStatuses(this, StatusInterpreter.DecrementBehavior.Dont, statuses);
                 return;
             }
 
@@ -67,7 +72,7 @@ namespace SS.Spells
                 else
                     behavior = StatusInterpreter.DecrementBehavior.Dont;
 
-                StatusInterpreter.InterpretStatuses(this, behavior);
+                StatusInterpreter.InterpretStatuses(this, behavior, statuses);
             }
             else if (targetType.obj)
             {
@@ -76,11 +81,11 @@ namespace SS.Spells
                 else
                     behavior = StatusInterpreter.DecrementBehavior.Dont;
 
-                StatusInterpreter.InterpretStatuses(this, StatusInterpreter.DecrementBehavior.CheckApplier);
+                StatusInterpreter.InterpretStatuses(this, StatusInterpreter.DecrementBehavior.CheckApplier, statuses);
             }
             else if (targetType.weapon)
             {
-                StatusInterpreter.InterpretStatuses(this, StatusInterpreter.DecrementBehavior.CheckApplier);
+                StatusInterpreter.InterpretStatuses(this, StatusInterpreter.DecrementBehavior.CheckApplier, statuses);
             }
             else if (targetType.tile)
             {
@@ -89,7 +94,53 @@ namespace SS.Spells
                 else
                     behavior = StatusInterpreter.DecrementBehavior.Dont;
 
-                StatusInterpreter.InterpretStatuses(this, behavior);
+                StatusInterpreter.InterpretStatuses(this, behavior, statuses);
+            }
+        }
+
+        public void HandleStatus(bool newRound, bool preventDecrement, Status status)
+        {
+            if (preventDecrement)
+            {
+                StatusInterpreter.InterpretStatuses(this, StatusInterpreter.DecrementBehavior.Dont, statuses);
+                return;
+            }
+
+            List<Status> statusToInterpret = new List<Status>();
+            statusToInterpret.Add(status);
+
+            StatusInterpreter.DecrementBehavior behavior;
+
+            if (targetType.creature)
+            {
+                if (TurnManager.currentTurnTaker == GetComponent<TurnTaker>())
+                    behavior = StatusInterpreter.DecrementBehavior.Do;
+                else
+                    behavior = StatusInterpreter.DecrementBehavior.Dont;
+
+                StatusInterpreter.InterpretStatuses(this, behavior, statusToInterpret);
+            }
+            else if (targetType.obj)
+            {
+                if (newRound)
+                    behavior = StatusInterpreter.DecrementBehavior.Do;
+                else
+                    behavior = StatusInterpreter.DecrementBehavior.Dont;
+
+                StatusInterpreter.InterpretStatuses(this, StatusInterpreter.DecrementBehavior.CheckApplier, statusToInterpret);
+            }
+            else if (targetType.weapon)
+            {
+                StatusInterpreter.InterpretStatuses(this, StatusInterpreter.DecrementBehavior.CheckApplier, statusToInterpret);
+            }
+            else if (targetType.tile)
+            {
+                if (newRound)
+                    behavior = StatusInterpreter.DecrementBehavior.Do;
+                else
+                    behavior = StatusInterpreter.DecrementBehavior.Dont;
+
+                StatusInterpreter.InterpretStatuses(this, behavior, statusToInterpret);
             }
         }
 

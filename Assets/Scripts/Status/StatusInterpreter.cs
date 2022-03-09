@@ -18,11 +18,13 @@ namespace SS.StatusSpace
             Delete
         }
 
-        public static void InterpretStatuses(Target target, DecrementBehavior decrementBehavior)
+        private static int controlledObjectIndex = -1;
+
+        public static void InterpretStatuses(Target target, DecrementBehavior decrementBehavior, List<Status> statusesToInterpret)
         {
-            if (target.statuses.Count > 0)
+            if (statusesToInterpret.Count > 0)
             {
-                Debug.Log("Interpreting Statuses");
+                //Debug.Log("Interpreting Statuses");
             }
 
             TargetType type = target.targetType;
@@ -47,20 +49,24 @@ namespace SS.StatusSpace
                 agent.ResetFactionsAndTargets();
             }
 
+            controlledObjectIndex = -1;
             if (target.targetType.obj)
             {
-                if (target.GetComponent<TurnTakerControlledObject>() != null && TurnManager.tm.turnTakers.Contains(target.GetComponent<TurnTakerControlledObject>()))
+                if (target.GetComponent<TurnTakerControlledObject>() != null /*&& TurnManager.tm.turnTakers.Contains(target.GetComponent<TurnTakerControlledObject>())*/)
                 {
-                    TurnManager.tm.turnTakers.Remove(target.GetComponent<TurnTakerControlledObject>());
+                    //Debug.Log(1);
+
+                    controlledObjectIndex = target.GetComponent<TurnTakerControlledObject>().EndControl();
+                    //TurnManager.tm.turnTakers.Remove(target.GetComponent<TurnTakerControlledObject>());
                 }
             }
 
             List<Status> toRemove = new List<Status>();
 
             DecrementBehavior defaultBehavior = decrementBehavior;
-            for (int i = 0; i < target.statuses.Count; i++)
+            for (int i = 0; i < statusesToInterpret.Count; i++)
             {
-                Status status = target.statuses[i];
+                Status status = statusesToInterpret[i];
                 decrementBehavior = defaultBehavior;
 
                 if (decrementBehavior == DecrementBehavior.CheckApplier)
@@ -83,19 +89,19 @@ namespace SS.StatusSpace
 
                 if (type.creature)
                 {
-                    InterpretStatus_Creature(target.statuses[i], type, target, characterStatsPresent, turnTakerPresent, turnTaker);
+                    InterpretStatus_Creature(statusesToInterpret[i], type, target, characterStatsPresent, turnTakerPresent, turnTaker);
                 }
                 else if (type.obj)
                 {
-                    InterpretStatus_Object(target.statuses[i], type, target);
+                    InterpretStatus_Object(statusesToInterpret[i], type, target);
                 }
                 else if (type.weapon)
                 {
-                    InterpretStatus_Weapon(target.statuses[i], type, target, weaponPresent, weapon);
+                    InterpretStatus_Weapon(statusesToInterpret[i], type, target, weaponPresent, weapon);
                 }
                 else if (type.tile)
                 {
-                    InterpretStatus_Tile(target.statuses[i], type, target);
+                    InterpretStatus_Tile(statusesToInterpret[i], type, target);
                 }
 
                 foreach (Status s in status.statusesToApply)
@@ -148,7 +154,7 @@ namespace SS.StatusSpace
 
             while (toRemove.Count > 0)
             {
-                target.statuses.Remove(toRemove[0]);
+                statusesToInterpret.Remove(toRemove[0]);
                 toRemove.RemoveAt(0);
             }
         }
@@ -157,10 +163,10 @@ namespace SS.StatusSpace
         {
             if (status.statusName == Status.StatusName.FireDamage)
             {
-                Debug.Log("Ow fuck", target.gameObject);
-                Debug.Log(characterStatsPresent);
-                Debug.Log(turnTakerPresent);
-                Debug.Log(GameController.TurnManager.currentTurnTaker == turnTaker);
+                //Debug.Log("Ow fuck", target.gameObject);
+                //Debug.Log(characterStatsPresent);
+                //Debug.Log(turnTakerPresent);
+                //Debug.Log(GameController.TurnManager.currentTurnTaker == turnTaker);
                 if (characterStatsPresent && turnTakerPresent && GameController.TurnManager.currentTurnTaker == turnTaker)
                 {
                     SS.Util.TargetInterface.DamageTarget(target, new Damage(Damage.DamageType.Fire, status.magnitude), status.applyingEffect);
@@ -226,7 +232,50 @@ namespace SS.StatusSpace
             }
             else if (status.statusName == Status.StatusName.Controlled)
             {
-                TurnManager.tm.turnTakers.Add(target.GetComponent<GameController.TurnTaker>());
+
+                if (target.GetComponent<TurnTakerControlledObject>() == null)
+                {
+                    target.gameObject.AddComponent<TurnTakerControlledObject>();
+                }
+
+                target.GetComponent<TurnTakerControlledObject>().Initialize(false);
+
+                if (!TurnManager.tm.turnTakers.Contains(target.GetComponent<GameController.TurnTakerControlledObject>()))
+                {
+                    if (controlledObjectIndex != -1)
+                    {
+                        TurnManager.tm.turnTakers.Insert(controlledObjectIndex, target.GetComponent<GameController.TurnTakerControlledObject>());
+                        Debug.Log(TurnManager.tm.turnTakers.IndexOf(target.GetComponent<GameController.TurnTakerControlledObject>()), target.gameObject);
+                    }
+                    else
+                    {
+                        TurnManager.tm.AddNextTurnTaker(target.GetComponent<GameController.TurnTakerControlledObject>());
+                        Debug.Log(TurnManager.tm.turnTakers.IndexOf(target.GetComponent<GameController.TurnTakerControlledObject>()), target.gameObject);
+                    }
+                }
+            }
+            else if (status.statusName == Status.StatusName.ControlledByEnemy)
+            {
+                if (target.GetComponent<TurnTakerControlledObject>() == null)
+                {
+                    target.gameObject.AddComponent<TurnTakerControlledObject>();
+                }
+
+                target.GetComponent<TurnTakerControlledObject>().Initialize(true);
+
+                if (!TurnManager.tm.turnTakers.Contains(target.GetComponent<GameController.TurnTakerControlledObject>()))
+                {
+                    if (controlledObjectIndex != -1)
+                    {
+                        TurnManager.tm.turnTakers.Insert(controlledObjectIndex, target.GetComponent<GameController.TurnTakerControlledObject>());
+                        //Debug.Log(TurnManager.tm.turnTakers.IndexOf(target.GetComponent<GameController.TurnTakerControlledObject>()), target.gameObject);
+                    }
+                    else
+                    {
+                        TurnManager.tm.AddNextTurnTaker(target.GetComponent<GameController.TurnTakerControlledObject>());
+                        //Debug.Log(TurnManager.tm.turnTakers.IndexOf(target.GetComponent<GameController.TurnTakerControlledObject>()), target.gameObject);
+                    }
+                }
             }
         }
 
