@@ -31,6 +31,9 @@ namespace SS.Pathfinding
         {
             grid.visited.Clear();
 
+            start -= (Vector2)transform.position;
+            end -= (Vector2)transform.position;
+
             Node startNode = grid.NodeFromWorldPosition(start);
             Node endNode = grid.NodeFromWorldPosition(end);
 

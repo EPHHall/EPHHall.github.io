@@ -104,7 +104,7 @@ namespace SS.UI
 
         public void ActivateFrames()
         {
-            Debug.Log("In Activate Screens");
+            //Debug.Log("In Activate Screens");
 
             foreach (MagicFrame frame in everyFrame)
             {
@@ -113,7 +113,7 @@ namespace SS.UI
         }
         public void DeactivateFrames()
         {
-            Debug.Log("In Deactivate Screens");
+            //Debug.Log("In Deactivate Screens");
 
             foreach (MagicFrame frame in everyFrame)
             {

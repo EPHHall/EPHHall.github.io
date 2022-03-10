@@ -16,6 +16,7 @@ namespace Tutorial
         [Space(5)]
 
         public bool preventPlayerMovement;
+        public bool unpausePlayerMovement = true;
         public bool deactivateAllButtons;
         public bool activateAllButtons;
 
@@ -96,7 +97,10 @@ namespace Tutorial
 
         public void EndStep()
         {
-            player.UnPauseMovement_ForCutscene();
+            if (unpausePlayerMovement)
+            {
+                player.UnPauseMovement_ForCutscene();
+            }
 
             if (activateAllButtons)
             {

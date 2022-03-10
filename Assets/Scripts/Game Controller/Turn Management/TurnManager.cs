@@ -130,6 +130,11 @@ namespace SS.GameController
                 turnTakersIndex = 0;
                 roundNumber++;
 
+                foreach (Spells.Spell spell in GameObject.FindObjectsOfType<Spells.Spell>())
+                {
+                    spell.TurnChangeReset();
+                }
+
                 newRound = true;
             }
 

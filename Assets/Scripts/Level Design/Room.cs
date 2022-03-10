@@ -14,6 +14,7 @@ namespace SS.LevelDesign
         public Vector3 cameraPosition;
         public bool cleared;
         public List<GameObject> toLoad = new List<GameObject>();
+        public Transform toLoadParent = null;
 
         public Camera cam;
         GameObject doors;
@@ -23,9 +24,28 @@ namespace SS.LevelDesign
 
         Collider2D col;
 
+        [Space(5)]
+        [Header("Rewards")]
+        public List<GameObject> rewards = new List<GameObject>();
+        public bool rewardsWereSpawned = false;
+
         private void Awake()
         {
             cam = Camera.main;
+
+            toLoad = new List<GameObject>();
+            if (toLoadParent == null)
+            {
+                toLoadParent = transform.Find("To Load");
+            }
+
+            if (toLoadParent != null)
+            {
+                foreach (Transform child in toLoadParent.GetComponentsInChildren<Transform>())
+                {
+                    toLoad.Add(child.gameObject);
+                }
+            }
 
             doors = transform.Find("Doors").gameObject;
             if (doors != null)
@@ -46,6 +66,11 @@ namespace SS.LevelDesign
 
             cameraPosition = transform.position;
             cameraPosition.z = -10;
+
+            foreach (GameObject reward in rewards)
+            {
+                reward.SetActive(false);
+            }
         }
 
         private void Update()
@@ -55,6 +80,16 @@ namespace SS.LevelDesign
                 if (FindObjectOfType<SS.GameController.TurnManager>().turnTakers.Count == 1 && FindObjectOfType<SS.GameController.TurnManager>().turnTakers.Contains(player.GetComponent<SS.GameController.TurnTaker>()))
                 {
                     ClearRoom();
+                }
+            }
+
+            if (cleared && !rewardsWereSpawned)
+            {
+                rewardsWereSpawned = true;
+
+                for (int i = 0; i < rewards.Count; i++)
+                {
+                    rewards[i].SetActive(true);
                 }
             }
 
@@ -86,10 +121,11 @@ namespace SS.LevelDesign
 
         public void ActivateRoom()
         {
+            currentlyActive = this;
+
             if (!cleared && !dontActivate)
             {
                 doors.SetActive(true);
-                currentlyActive = this;
 
                 foreach (GameObject load in toLoad)
                 {

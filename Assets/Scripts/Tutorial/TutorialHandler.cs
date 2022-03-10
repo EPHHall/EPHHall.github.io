@@ -20,6 +20,8 @@ namespace Tutorial
         public static GameObject screenActivated;
         public static SS.UI.MagicFrame frameAddedTo;
         public static SS.Util.EventBool rangeWasShown;
+        public static bool altarWasActivated;
+        public static bool switchWasActivated;
 
         [Header("Debug")]
         public bool startScene = false;
@@ -122,6 +124,48 @@ namespace Tutorial
                     rangeWasShown.Set(false);
                     StartCurrentScene(10);
                 }
+                if (scenes[currentScene].trigger_AltarActivation && altarWasActivated)
+                {
+                    altarWasActivated = false;
+                    StartCurrentScene(11);
+                }
+                if (scenes[currentScene].trigger_FramesToFill.Count > 0)
+                {
+                    int numberFilled = 0;
+                    foreach (MagicFrame frame in scenes[currentScene].trigger_FramesToFill)
+                    {
+                        if (frame.content != null)
+                        {
+                            numberFilled++;
+                        }
+                    }
+
+                    if(numberFilled >= scenes[currentScene].numberOfFramesMustBeFilled)
+                    {
+                        StartCurrentScene(12);
+                    }
+                }
+                if (scenes[currentScene].trigger_SwitchActivation && switchWasActivated)
+                {
+                    switchWasActivated = false;
+                    StartCurrentScene(13);
+                }
+                if (scenes[currentScene].trigger_ObjectsToBeDestroyed.Count > 0)
+                {
+                    int numberDestroyed = 0;
+                    foreach (GameObject obj in scenes[currentScene].trigger_ObjectsToBeDestroyed)
+                    {
+                        if (obj == null)
+                        {
+                            numberDestroyed++;
+                        }
+                    }
+
+                    if (numberDestroyed >= scenes[currentScene].numberOfObjectsMustBeDestroyed)
+                    {
+                        StartCurrentScene(14);
+                    }
+                }
             }
         }
 
@@ -201,6 +245,7 @@ namespace Tutorial
             selectedTarget = null;
             frameAddedTo = null;
             screenActivated = null;
+            altarWasActivated = false;
         }
     }
 }

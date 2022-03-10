@@ -39,7 +39,7 @@ namespace SS.StatusSpace
             bool weaponPresent = target.TryGetComponent<Item.Weapon>(out weapon);
             if (weaponPresent)
             {
-                weapon.attack.main.ResetMainDamageList();
+                weapon.attack.main.ResetMainDamageList(true);
             }
 
             Agent agent = null;
@@ -169,7 +169,8 @@ namespace SS.StatusSpace
                 //Debug.Log(GameController.TurnManager.currentTurnTaker == turnTaker);
                 if (characterStatsPresent && turnTakerPresent && GameController.TurnManager.currentTurnTaker == turnTaker)
                 {
-                    SS.Util.TargetInterface.DamageTarget(target, new Damage(Damage.DamageType.Fire, status.magnitude), status.applyingEffect);
+                    //TODO: I think these damages should probably be flagged as temporary but im not sure. If it gets to be an issue ill come back to it.
+                    SS.Util.TargetInterface.DamageTarget(target, new Damage(Damage.DamageType.Fire, status.magnitude, false), status.applyingEffect);
                 }
             }
             else if (status.statusName == Status.StatusName.Possessed)
@@ -187,7 +188,7 @@ namespace SS.StatusSpace
             {
                 if (characterStatsPresent && turnTakerPresent && GameController.TurnManager.currentTurnTaker == turnTaker)
                 {
-                    SS.Util.TargetInterface.DamageTarget(target, new Damage(Damage.DamageType.Arcane, status.magnitude), status.applyingEffect);
+                    SS.Util.TargetInterface.DamageTarget(target, new Damage(Damage.DamageType.Arcane, status.magnitude, false), status.applyingEffect);
                 }
             }
         }
@@ -206,7 +207,7 @@ namespace SS.StatusSpace
                     TurnTaker turnTaker = null;
                     if (t.TryGetComponent<TurnTaker>(out turnTaker) && turnTaker == TurnManager.previousTurnTaker)
                     {
-                        Util.TargetInterface.DamageTarget(t, new Damage(Damage.DamageType.Fire, status.magnitude), status.applyingEffect);
+                        Util.TargetInterface.DamageTarget(t, new Damage(Damage.DamageType.Fire, status.magnitude, false), status.applyingEffect);
                     }
                 }
             }
@@ -226,7 +227,7 @@ namespace SS.StatusSpace
                     TurnTaker turnTaker = null;
                     if (t.TryGetComponent<TurnTaker>(out turnTaker) && turnTaker == TurnManager.previousTurnTaker)
                     {
-                        Util.TargetInterface.DamageTarget(t, new Damage(Damage.DamageType.Arcane, status.magnitude), status.applyingEffect);
+                        Util.TargetInterface.DamageTarget(t, new Damage(Damage.DamageType.Arcane, status.magnitude, false), status.applyingEffect);
                     }
                 }
             }
@@ -285,7 +286,7 @@ namespace SS.StatusSpace
             {
                 if (weaponPresent)
                 {
-                    weapon.attack.main.damageList.Add(new Damage(Damage.DamageType.Fire, status.magnitude));
+                    weapon.attack.main.AddToMainDamageList(new Damage(Damage.DamageType.Fire, status.magnitude, true));
                 }
             }
             else if (status.statusName == Status.StatusName.Possessed)
@@ -296,7 +297,7 @@ namespace SS.StatusSpace
             {
                 if (weaponPresent)
                 {
-                    weapon.attack.main.damageList.Add(new Damage(Damage.DamageType.Arcane, status.magnitude));
+                    weapon.attack.main.AddToMainDamageList(new Damage(Damage.DamageType.Arcane, status.magnitude, true));
                 }
             }
 

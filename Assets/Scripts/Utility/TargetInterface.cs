@@ -10,7 +10,10 @@ namespace SS.Util
     {
         public static void DamageTarget(Target target, Damage damage, Effect inflictor)
         {
+            if (target == null) return;
+
             SS.Character.CharacterStats stats;
+
 
             if (target.TryGetComponent(out stats))
             {

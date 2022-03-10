@@ -143,8 +143,7 @@ namespace SS.Item
             attack.main.ResetStats();
 
             if (attack.activeWeapons.Contains(this) &&
-                (attack.weaponBeingUsed == attack.activeWeapons.IndexOf(this) || 
-                (attack.weaponBeingUsed == -1 && attack.activeWeapons.IndexOf(this) == 0)))
+                (attack.weaponBeingUsed == attack.activeWeapons.IndexOf(this) || (attack.weaponBeingUsed == -1 && attack.activeWeapons.IndexOf(this) == 0)))
             {
                 foreach (Damage damage in attack.main.originalDamageList)
                 {
@@ -156,9 +155,9 @@ namespace SS.Item
                 
                 attack.main.AddToOriginalDamageList(toInflict, this);
 
-                attack.main.ResetMainDamageList();
+                attack.main.ResetMainDamageList(false);
 
-                attack.main.speed += speedMod;
+                attack.main.actionPointCost += speedMod;
                 attack.main.range += rangeMod;
 
                 toInflict.statusesToInflict = new List<Status>(statusesToInflict);
@@ -166,7 +165,7 @@ namespace SS.Item
             else
             {
                 attack.main.originalDamageList.Remove(toInflict);
-                attack.main.ResetMainDamageList();
+                attack.main.ResetMainDamageList(false);
             }
 
             attack.SetAllStats();

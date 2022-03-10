@@ -46,6 +46,7 @@ MonoBehaviour:
   groupsVersion: 0
   attachedAgent: {fileID: 0}
   behaviorGroups: []
+  position: {x: -Infinity, y: -Infinity}
   target: {fileID: 0}
 --- !u!1 &4819733081513012157
 GameObject:
@@ -252,6 +253,7 @@ MonoBehaviour:
   groupsVersion: 0
   attachedAgent: {fileID: 0}
   behaviorGroups: []
+  position: {x: -Infinity, y: -Infinity}
 --- !u!1 &4819733082684959916
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,6 +510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 676ffc63b72f993439385f8075f51cb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dontAutomaticallyAdd: 0
   packages:
   - {fileID: 5665193140102866373}
   activate: 0
@@ -531,6 +534,7 @@ MonoBehaviour:
   spells:
   - {fileID: 9197389223854237138}
   spellToCast: {fileID: 0}
+  positionAtStartofTurn: {x: 0, y: 0}
   characterStats: {fileID: 0}
 --- !u!114 &4819733082684959913
 MonoBehaviour:
@@ -574,7 +578,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 466735156509912314, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: range
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 466735156509912314, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: damageList.Array.data[0].amount
@@ -595,6 +599,18 @@ PrefabInstance:
     - target: {fileID: 3656605557539978194, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: toInflict.amount
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3656605557539978194, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
+      propertyPath: unarmed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3656605557539978194, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
+      propertyPath: weaponName
+      value: Sword
+      objectReference: {fileID: 0}
+    - target: {fileID: 3656605557539978194, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
+      propertyPath: rangeMod
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3656605557539978222, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: m_Name
@@ -647,6 +663,10 @@ PrefabInstance:
     - target: {fileID: 4413687577028108893, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: damage
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413687577028108893, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
+      propertyPath: range
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4413687577028108894, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: m_Name

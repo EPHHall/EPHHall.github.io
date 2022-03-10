@@ -1,0 +1,287 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1840903454321545875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5795278734940594696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73e3f22acb8c53e4f96505ed6b46416b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  room: {fileID: 0}
+  noUseUntilRoomClear: 0
+  deactivateAfterUse: 0
+  activationZones:
+  - {fileID: 5795278735823854603}
+  - {fileID: 5795278736575120069}
+  - {fileID: 5795278736102150909}
+  - {fileID: 5795278736216935630}
+  - {fileID: 5795278736619413822}
+  - {fileID: 5795278736727472706}
+  - {fileID: 5795278736788668062}
+  - {fileID: 5795278736147031414}
+  tagsToCheckFor:
+  - Player
+  bringUpConfirmationBoxFirst: 1
+  conBoxManager: {fileID: 0}
+  textForConBox: Activate Altar? Doing so will allow you to modify your spells until
+    you leave this room. One time use.
+  activationKey: 32
+  sprites:
+  - {fileID: 21300000, guid: 0c2ad17d5ac4c024193603c7ed63e18a, type: 3}
+  - {fileID: 21300000, guid: dbdac5fe35042054eaabd41956410e34, type: 3}
+  - {fileID: 21300000, guid: 1c514fa92b5391b4085595381b22589d, type: 3}
+  altarActivated: 0
+  altarSpent: 0
+  screens:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!1001 &6761296113044147406
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 988546386749961870, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546386874789375, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546386927980086, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546387277512706, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546387392568894, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546388190957767, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546388553608900, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546388553608900, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546388553608900, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546388553608900, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546388553608900, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546388553608900, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546388553608900, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546388553608900, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546388553608900, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546388553608900, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546388553608900, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546388553608902, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: m_Name
+      value: Spell Crafting Altar -Tutorial Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546388553608922, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: activationZones.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546388553608922, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: activationZones.Array.data[0]
+      value: 
+      objectReference: {fileID: 5795278735823854603}
+    - target: {fileID: 988546388553608922, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: activationZones.Array.data[1]
+      value: 
+      objectReference: {fileID: 5795278736575120069}
+    - target: {fileID: 988546388553608922, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: screens.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546388553608922, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: screens.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546388553608922, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: screens.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546388553608922, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: screens.Array.data[3]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546388553608922, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: room
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546388553608922, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: conBoxManager
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546388553608922, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: activationZones.Array.data[2]
+      value: 
+      objectReference: {fileID: 5795278736102150909}
+    - target: {fileID: 988546388553608922, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: activationZones.Array.data[3]
+      value: 
+      objectReference: {fileID: 5795278736216935630}
+    - target: {fileID: 988546388553608922, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: activationZones.Array.data[4]
+      value: 
+      objectReference: {fileID: 5795278736619413822}
+    - target: {fileID: 988546388553608922, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: activationZones.Array.data[5]
+      value: 
+      objectReference: {fileID: 5795278736727472706}
+    - target: {fileID: 988546388553608922, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: activationZones.Array.data[6]
+      value: 
+      objectReference: {fileID: 5795278736788668062}
+    - target: {fileID: 988546388553608922, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: activationZones.Array.data[7]
+      value: 
+      objectReference: {fileID: 5795278736147031414}
+    - target: {fileID: 988546388553608922, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: activationZones.Array.data[8]
+      value: 
+      objectReference: {fileID: 5795278736788668062}
+    - target: {fileID: 988546388553608922, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: activationZones.Array.data[9]
+      value: 
+      objectReference: {fileID: 5795278736147031414}
+    m_RemovedComponents:
+    - {fileID: 988546388553608922, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+--- !u!1 &5795278734940594696 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 988546388553608902, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+  m_PrefabInstance: {fileID: 6761296113044147406}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5795278735823854603 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 988546388190957765, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+  m_PrefabInstance: {fileID: 6761296113044147406}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61d350a0827cc0a458fc43f3d62aba3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5795278736575120069 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 988546386927980043, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+  m_PrefabInstance: {fileID: 6761296113044147406}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61d350a0827cc0a458fc43f3d62aba3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5795278736102150909 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 988546387392568883, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+  m_PrefabInstance: {fileID: 6761296113044147406}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61d350a0827cc0a458fc43f3d62aba3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5795278736216935630 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 988546387277512704, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+  m_PrefabInstance: {fileID: 6761296113044147406}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61d350a0827cc0a458fc43f3d62aba3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5795278736619413822 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 988546386874789360, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+  m_PrefabInstance: {fileID: 6761296113044147406}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61d350a0827cc0a458fc43f3d62aba3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5795278736727472706 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 988546386749961868, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+  m_PrefabInstance: {fileID: 6761296113044147406}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61d350a0827cc0a458fc43f3d62aba3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5795278736788668062 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 988546387242152528, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+  m_PrefabInstance: {fileID: 6761296113044147406}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61d350a0827cc0a458fc43f3d62aba3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5795278736147031414 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 988546387338783160, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+  m_PrefabInstance: {fileID: 6761296113044147406}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61d350a0827cc0a458fc43f3d62aba3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

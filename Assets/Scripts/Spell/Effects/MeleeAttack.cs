@@ -16,8 +16,6 @@ namespace SS.Spells
 
         public override void ResetStats()
         {
-            speed = 1;
-
             range = 1;
 
             actionPointCost = 1;
@@ -28,11 +26,11 @@ namespace SS.Spells
             normallyValid = new TargetType(true, true, false, false);
 
             originalDamageList.Clear();
-            originalDamageList.Add(new Character.Damage(Character.Damage.DamageType.Physical, 0));
-            ResetMainDamageList();
+            originalDamageList.Add(new Character.Damage(Character.Damage.DamageType.Physical, 0, false));
+            ResetMainDamageList(false);
 
             originalStatusList.Clear();
-            ResetMainDamageList();
+            ResetMainDamageList(false);
 
             style = Style.InstantDamage;
         }
@@ -43,6 +41,8 @@ namespace SS.Spells
 
             foreach (Target target in targets)
             {
+                Debug.Log("Should be damaging. " + damageList.Count);
+
                 DamageTarget(target, damageList);
 
                 foreach (Status s in statusList)

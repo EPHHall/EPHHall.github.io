@@ -15,7 +15,6 @@ namespace SS.Spells
         {
             base.Awake();
 
-            speed = 1;
             manaCost = 5;
             spellPointCost = 4;
             baseDamage = 0;

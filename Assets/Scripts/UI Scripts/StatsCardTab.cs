@@ -25,6 +25,8 @@ namespace SS.UI
         public StatsCard.StatsCardLayout layout;
         public StatsCard statsCard;
 
+        public bool unused;
+
         [Space(5)]
         [Header("Don't touch")]
         public StatsCardTab[] tabs;
@@ -37,10 +39,15 @@ namespace SS.UI
         private void Awake()
         {
             image = GetComponent<Image>();
+
             button = GetComponent<Button>();
         }
         private void Start()
         {
+            image = GetComponent<Image>();
+
+            button = GetComponent<Button>();
+
             if (name == "Top Tab")
             {
                 SelectTab();
@@ -63,13 +70,13 @@ namespace SS.UI
 
         private void Update()
         {
-            if (icon != null)
+            if (icon != null && !unused)
             {
                 if (pointerIsOver)
                 {
                     icon.transform.localPosition = iconPosOriginal + iconOffset;
                 }
-                else if(selectedTab != this)
+                else if (selectedTab != this)
                 {
                     icon.transform.localPosition = iconPosOriginal;
                 }
@@ -78,7 +85,7 @@ namespace SS.UI
 
         public void SelectTab()
         {
-            if (!active) return;
+            if (!active || unused) return;
 
             DeselectTabs();
 
@@ -107,11 +114,15 @@ namespace SS.UI
 
         public void DeselectTab()
         {
+            if (unused) return;
+
             if (selectedTab == this) selectedTab = null;
 
-            image.sprite = originalSprite;
+            if (image != null)
+                image.sprite = originalSprite;
 
-            button.interactable = true;
+            if (button != null)
+                button.interactable = true;
 
 
             if (icon != null)

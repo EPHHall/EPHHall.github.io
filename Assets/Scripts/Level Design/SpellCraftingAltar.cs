@@ -45,6 +45,8 @@ namespace SS.LevelDesign
 
             if (altarActivated && !altarSpent)
             {
+                Debug.Log(Room.currentlyActive, Room.currentlyActive.gameObject);
+
                 if (room != Room.currentlyActive)
                 {
                     altarSpent = true;
@@ -69,7 +71,9 @@ namespace SS.LevelDesign
             base.ActivateInteractable();
 
             if (!altarSpent)
+            {
                 altarActivated = true;
+            }
         }
     }
 }

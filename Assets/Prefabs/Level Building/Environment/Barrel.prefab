@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 6942790012565140642}
   - component: {fileID: 7176284489311151732}
   - component: {fileID: 6693565356532449093}
+  - component: {fileID: -3808357740402541280}
+  - component: {fileID: 8439894567235143693}
   m_Layer: 0
   m_Name: Barrel
   m_TagString: Untagged
@@ -109,3 +111,57 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-3808357740402541280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2464601831527118785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 425c3c1c56439f341a5387918a11f94b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetType:
+    toggleNone: 0
+    toggleAll: 0
+    creature: 0
+    obj: 1
+    weapon: 0
+    tile: 0
+  hp: 2
+  targetName: Chair
+  statuses: []
+  displaySelectedTargets: 0
+--- !u!114 &8439894567235143693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2464601831527118785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 338a6102241a02140988db4805f66b8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 4
+  mana: 0
+  actionPoints: 0
+  speed: 0
+  hpMax: 0
+  manaMax: 0
+  actionPointsMax: 0
+  textTemp: {fileID: 0}
+  follower: {fileID: 762097819130045207, guid: 30f830321e7960f4fa0dd9f5fed97a4e, type: 3}
+  followerParent: {fileID: 0}
+  description: A normal Barrel.
+  toDisplay: {fileID: 0}
+  moveTile: {fileID: 1103078107984049863, guid: 263d992086af3b34c9357f5f95978c04, type: 3}
+  abilityTile: {fileID: 6753667278753664400, guid: 26d1fb1e2ccf63f41adc7faf60a39d85, type: 3}
+  meleeAttack: {fileID: 0}
+  characterDeath: {fileID: 0}
+  initialPositions: []
+  takenPositions: []
+  characterFollower: {fileID: 0}

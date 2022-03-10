@@ -8,6 +8,9 @@ TextureImporter:
   - first:
       213: 2798250516866983683
     second: Main Menu_1
+  - first:
+      213: 6936311897552531074
+    second: Main Menu_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -123,11 +126,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 24
+        y: 278
         width: 384
         height: 216
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -144,11 +147,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 254
         width: 89
         height: 24
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -156,6 +159,27 @@ TextureImporter:
       bones: []
       spriteID: 307e862f40265d620800000000000000
       internalID: 2798250516866983683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Main Menu_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 38
+        width: 384
+        height: 216
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28e2fe0bbeab24060800000000000000
+      internalID: 6936311897552531074
       vertices: []
       indices: 
       edges: []

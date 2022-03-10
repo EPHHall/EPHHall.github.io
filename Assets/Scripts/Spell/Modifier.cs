@@ -6,7 +6,6 @@ namespace SS.Spells
 {
     public class Modifier : MonoBehaviour
     {
-        public int speed;
         public int manaCost;
         public int spellPointCost;
         public int actionPointCost;

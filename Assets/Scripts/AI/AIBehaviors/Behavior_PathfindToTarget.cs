@@ -45,10 +45,11 @@ namespace SS.AI
             foundPath = new List<Pathfinding.Node>();
 
             Transform workingTarget = target;
-            if (workingTarget == null)
+            if (workingTarget == null && agent != null)
             {
                 workingTarget = agent.mainTarget.transform;
             }
+            if (workingTarget == null) return;
 
             foundPath = aStar.FindPath(agent.positionAtStartofTurn, workingTarget.position);
             //aStar.targetPos = agent.mainTarget.transform;

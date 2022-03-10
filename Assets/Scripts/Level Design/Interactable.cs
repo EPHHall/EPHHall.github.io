@@ -100,5 +100,13 @@ namespace SS.LevelDesign
         {
             
         }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.GetComponent<Room>() && room == null)
+            {
+                room = collision.GetComponent<Room>();
+            }
+        }
     }
 }

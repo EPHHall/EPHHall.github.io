@@ -41,7 +41,6 @@ namespace SS.Spells
 
         [Space(5)]
         [Header("Stats")]
-        public int speed;
         public int manaCost;
         public int spellPointCost;
         public int actionPointCost;
@@ -120,7 +119,26 @@ namespace SS.Spells
 
         public void ResetMainDamageList()
         {
+            ResetMainDamageList(false);
+        }
+        public void ResetMainDamageList(bool resetTempDamagesAsWell)
+        {
+            List<Damage> tempDamages = new List<Damage>();
+            foreach(Damage damage in damageList)
+            {
+                if(damage.temporary)
+                    tempDamages.Add(damage);
+            }
+
             damageList = new List<Character.Damage>(originalDamageList);
+
+            if(!resetTempDamagesAsWell)
+            {
+                foreach(Damage damage in tempDamages)
+                {
+                    damageList.Add(damage);
+                }
+            }
         }
         public void ResetMainStatusList()
         {
@@ -155,7 +173,7 @@ namespace SS.Spells
         public void EndInvoke()
         {
             ResetMainStatusList();
-            ResetMainDamageList();
+            ResetMainDamageList(false);
         }
 
         public virtual bool CanDeliverThisEffect(Effect otherEffect)

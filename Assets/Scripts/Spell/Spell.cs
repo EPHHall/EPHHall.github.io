@@ -16,7 +16,6 @@ namespace SS.Spells
         [Header("Stats")]
         public int range;
         public int damage;
-        public int castSpeed;
         public int manaCost;
         public int apCost;
 
@@ -48,6 +47,7 @@ namespace SS.Spells
         public string spellName;
         public Sprite icon;
         public CharacterStats caster;
+        public int timesCastThisRound = 0;
 
         public virtual void Start()
         {
@@ -116,13 +116,17 @@ namespace SS.Spells
             }
         }
 
+        public void TurnChangeReset()
+        {
+            timesCastThisRound = 0;
+        }
+
         public void SetAllStats()
         {
             if (main != null)
             {
                 range = main.range;
                 damage = main.GetTotalDamage();
-                castSpeed = main.speed;
                 manaCost = main.manaCost;
                 apCost = main.actionPointCost;
 
@@ -144,7 +148,6 @@ namespace SS.Spells
         {
             range = newValue;
             damage = newValue;
-            castSpeed = newValue;
             manaCost = newValue;
             apCost = newValue;
 
@@ -164,7 +167,6 @@ namespace SS.Spells
                     damage += modifier.damage;
                     modifiedDamage += modifier.damage;
 
-                    castSpeed += modifier.speed;
                     manaCost += modifier.manaCost;
                     apCost += modifier.actionPointCost;
 
@@ -175,8 +177,6 @@ namespace SS.Spells
 
         public virtual void CastSpell(bool overrideTileRequirement)
         {
-            apCost = castSpeed;
-
             //SS.GameController.TurnManager.staticPrintTurnTaker = true;
             SS.Character.CharacterStats character = SS.GameController.TurnManager.currentTurnTaker.GetComponent<SS.Character.CharacterStats>();
 
@@ -190,7 +190,26 @@ namespace SS.Spells
                 CAST_WAS_SUCCESSFUL.Set(true);
 
                 SS.Util.CharacterStatsInterface.DamageMana(character, manaCost);
-                SS.Util.CharacterStatsInterface.DamageActionPoints(character, apCost);
+
+                int cost = 0;
+                if (apCost < 1)
+                {
+                    if (timesCastThisRound < Mathf.Abs(1 - apCost))
+                    {
+                        cost = 0;
+                    }
+                    else
+                    {
+                        cost = 1;
+                    }
+                }
+                else
+                {
+                    cost = apCost;
+                }
+                SS.Util.CharacterStatsInterface.DamageActionPoints(character, cost);
+
+                timesCastThisRound++;
 
                 main.deliveredEffects.Clear();
                 foreach (Effect de in deliveredByMain)

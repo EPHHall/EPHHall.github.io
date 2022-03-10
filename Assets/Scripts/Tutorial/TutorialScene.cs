@@ -33,6 +33,14 @@ namespace Tutorial
         public GameObject trigger_ScreenActivated = null;
         public SS.UI.MagicFrame trigger_FrameAddedTo = null;
         public bool trigger_RangeWasShown;
+        public bool trigger_AltarActivation;
+        public bool trigger_SwitchActivation;
+
+        public int numberOfFramesMustBeFilled;
+        public List<SS.UI.MagicFrame> trigger_FramesToFill = new List<SS.UI.MagicFrame>();
+
+        public int numberOfObjectsMustBeDestroyed;
+        public List<GameObject> trigger_ObjectsToBeDestroyed = new List<GameObject>();
 
         private void Start()
         {

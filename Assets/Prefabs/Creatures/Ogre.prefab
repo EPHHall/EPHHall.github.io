@@ -46,6 +46,7 @@ MonoBehaviour:
   groupsVersion: 0
   attachedAgent: {fileID: 0}
   behaviorGroups: []
+  position: {x: -Infinity, y: -Infinity}
   target: {fileID: 0}
 --- !u!1 &7949776489864918621
 GameObject:
@@ -93,6 +94,7 @@ MonoBehaviour:
   groupsVersion: 0
   attachedAgent: {fileID: 0}
   behaviorGroups: []
+  position: {x: -Infinity, y: -Infinity}
 --- !u!1 &7949776490252138204
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,6 +351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 676ffc63b72f993439385f8075f51cb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dontAutomaticallyAdd: 0
   packages:
   - {fileID: 7949776489864918619}
   activate: 0
@@ -372,6 +375,7 @@ MonoBehaviour:
   spells:
   - {fileID: 5986364648139407266}
   spellToCast: {fileID: 0}
+  positionAtStartofTurn: {x: 0, y: 0}
   characterStats: {fileID: 0}
 --- !u!114 &7949776490252138201
 MonoBehaviour:
@@ -582,7 +586,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 466735156509912314, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: range
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 466735156509912314, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: speed
@@ -602,7 +606,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3656605557539978194, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: unarmed
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3656605557539978194, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: weaponName
@@ -611,6 +615,10 @@ PrefabInstance:
     - target: {fileID: 3656605557539978194, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: speedMod
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3656605557539978194, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
+      propertyPath: rangeMod
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3656605557539978222, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: m_Name
@@ -667,6 +675,10 @@ PrefabInstance:
     - target: {fileID: 4413687577028108893, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: castSpeed
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413687577028108893, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
+      propertyPath: range
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4413687577028108894, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: m_Name

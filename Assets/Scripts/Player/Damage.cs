@@ -25,10 +25,20 @@ namespace SS.Character
 
         public Item.Weapon weapon;
 
+        public bool temporary;
+
         public Damage(DamageType type, int amount)
         {
             this.type = type;
             this.amount = amount;
+            temporary = false;
+        }
+
+        public Damage(DamageType type, int amount, bool temporary)
+        {
+            this.type = type;
+            this.amount = amount;
+            this.temporary = temporary;
         }
 
         public void InflictOnTarget(SS.Spells.Target target, Character.CharacterStats stats, Spells.Effect inflictor)
