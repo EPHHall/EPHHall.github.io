@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6674346015179789664}
   m_Layer: 10
   m_Name: Effect Pickup Control Object
-  m_TagString: Untagged
+  m_TagString: Can Walk Through
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52,7 +52,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.24, y: 0.24}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1.0833334, y: 1.1666666}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

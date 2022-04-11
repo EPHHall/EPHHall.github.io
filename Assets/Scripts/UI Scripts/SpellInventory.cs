@@ -46,18 +46,33 @@ namespace SS.UI
 
         public void SpellChanged(MagicFrame frame, Object toRemove)
         {
+
+
             Effect tempEffect = toRemove as Effect;
             Modifier tempMod = toRemove as Modifier;
 
             if (tempEffect != null)
             {
-                if(!frame.dontSetInUseFlags)
+                if (!frame.dontSetInUseFlags)
+                {
+                        //Debug.Log("In Thing, 3");
+                    if (name == "Effect_ Arcane Bolt(Clone)")
+                    {
+                    }
+
                     tempEffect.SetInUse(false, frame);
+                }
             }
             if (tempMod != null)
             {
-                if(!frame.dontSetInUseFlags)
+                if (!frame.dontSetInUseFlags)
+                {
+                        //Debug.Log("In Thing, 4");
+                    if (name == "Effect_ Arcane Bolt(Clone)")
+                    {
+                    }
                     tempMod.SetInUse(false, frame);
+                }
             }
 
             if(SpellCraftingScreen.activeScreen != null)
@@ -92,7 +107,7 @@ namespace SS.UI
                 breakInt++;
             }
 
-            Debug.Log("Spell Inventory while, break = " + breakInt);
+            //Debug.Log("Spell Inventory while, break = " + breakInt);
         }
     }
 }

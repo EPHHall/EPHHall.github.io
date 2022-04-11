@@ -163,7 +163,7 @@ namespace SS.StatusSpace
         {
             if (status.statusName == Status.StatusName.FireDamage)
             {
-                //Debug.Log("Ow fuck", target.gameObject);
+                //Debug.Log("Ow ", target.gameObject);
                 //Debug.Log(characterStatsPresent);
                 //Debug.Log(turnTakerPresent);
                 //Debug.Log(GameController.TurnManager.currentTurnTaker == turnTaker);

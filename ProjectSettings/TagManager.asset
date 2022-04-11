@@ -13,6 +13,9 @@ TagManager:
   - Replace
   - Display Radius on Mouse Over
   - Enemy
+  - Pit
+  - Can Walk Through
+  - Animation
   layers:
   - Default
   - TransparentFX
@@ -25,7 +28,7 @@ TagManager:
   - Move Square
   - Held Weapon
   - Pickup
-  - 
+  - Wall
   - 
   - 
   - 

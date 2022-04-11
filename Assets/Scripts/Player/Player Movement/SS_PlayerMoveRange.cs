@@ -17,6 +17,8 @@ namespace SS.PlayerMovement
         public bool spawnMoveRange = false;
         public bool firstTurn = true;
 
+        public LevelDesign.Room room;
+
         [Space(5)]
         [Header("Debug")]
         public bool playerPositionIsOrigin;
@@ -87,19 +89,33 @@ namespace SS.PlayerMovement
 
         public void SpawnRange()
         {
+            GetComponent<SS_PlayerController>().pauseMovementBecauseRangeWasShown = false;
+
             Util.SpawnRange.DespawnRange();
 
-
-            if(playerPositionIsOrigin)
-                SS.Util.SpawnRange.SpawnMovementRange(player.position, moveRange, moveTile, wallTile, true);
-            else
-                SS.Util.SpawnRange.SpawnMovementRange(origin, moveRange, moveTile, wallTile, true);
+            if (room != null && !room.cleared)
+            {
+                if(playerPositionIsOrigin)
+                    SS.Util.SpawnRange.SpawnMovementRange(player.position, moveRange + 1, moveTile, wallTile, true);
+                else
+                    SS.Util.SpawnRange.SpawnMovementRange(origin, moveRange + 1, moveTile, wallTile, true);
+            }
         }
 
         public void ResetMoveRange(Vector2 origin)
         {
             spawnMoveRange = true;
             this.origin = origin;
+
+            SpawnRange();
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.GetComponent<LevelDesign.Room>() != null)
+            {
+                room = collision.GetComponent<LevelDesign.Room>();
+            }
         }
     }
 }

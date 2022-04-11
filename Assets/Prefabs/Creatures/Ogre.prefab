@@ -47,7 +47,23 @@ MonoBehaviour:
   attachedAgent: {fileID: 0}
   behaviorGroups: []
   position: {x: -Infinity, y: -Infinity}
+  run: 0
+  currentGroup:
+    timesCompleted: 0
+    timesTillFullyCompleted: -1
+    fullyCompleted: 0
+    goTo: -1
+    andOr: 1
+  index: 0
+  mainBehaviors: 0
+  waitForAnimations:
+    timesCompleted: 0
+    timesTillFullyCompleted: -1
+    fullyCompleted: 0
+    goTo: -1
+    andOr: 1
   target: {fileID: 0}
+  movementAnimation: {fileID: 0}
 --- !u!1 &7949776489864918621
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,6 +111,22 @@ MonoBehaviour:
   attachedAgent: {fileID: 0}
   behaviorGroups: []
   position: {x: -Infinity, y: -Infinity}
+  run: 0
+  currentGroup:
+    timesCompleted: 0
+    timesTillFullyCompleted: -1
+    fullyCompleted: 0
+    goTo: -1
+    andOr: 1
+  index: 0
+  mainBehaviors: 0
+  waitForAnimations:
+    timesCompleted: 0
+    timesTillFullyCompleted: -1
+    fullyCompleted: 0
+    goTo: -1
+    andOr: 1
+  movementAnimation: {fileID: 0}
 --- !u!1 &7949776490252138204
 GameObject:
   m_ObjectHideFlags: 0
@@ -115,6 +147,8 @@ GameObject:
   - component: {fileID: 7949776490252138200}
   - component: {fileID: 7949776490252138201}
   - component: {fileID: 7949776490252138202}
+  - component: {fileID: -3329177049109679970}
+  - component: {fileID: 7650767569031603035}
   m_Layer: 0
   m_Name: Ogre
   m_TagString: Enemy
@@ -339,6 +373,7 @@ MonoBehaviour:
   initialPositions: []
   takenPositions: []
   characterFollower: {fileID: 0}
+  mayDie: 0
 --- !u!114 &7949776490252138200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -402,6 +437,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f40ecf91114b6c498e156c02fe43afa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-3329177049109679970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7949776490252138204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd3bd1d7eb2e69143b0557274ba76118, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interval: 0.145
+--- !u!114 &7650767569031603035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7949776490252138204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61397d61e71e8b14ca4b9dd449beab35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprite2: {fileID: 21300000, guid: 8739be97e9162c145beeb931b98ffeb5, type: 3}
+  frequency: 0.25
 --- !u!1 &7949776491226624461
 GameObject:
   m_ObjectHideFlags: 0
@@ -447,7 +509,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 8
   damage: 1
-  castSpeed: 1
   manaCost: 2
   apCost: 1
   currentSpellPoints: 8
@@ -462,9 +523,13 @@ MonoBehaviour:
   targetableTile: {fileID: 1103078107984049863, guid: c4b7b9f61b78f614c996d6b4be984425, type: 3}
   description: 
   statusesDescription: 
+  animationsToPlay: []
   spellName: 
   icon: {fileID: 5811675278147054703, guid: 90a2e7a07b31a8c478db8064de21d317, type: 3}
   caster: {fileID: 0}
+  timesCastThisRound: 0
+  animationManager: {fileID: 0}
+  animationObjectManager: {fileID: 0}
 --- !u!1 &7949776491295131109
 GameObject:
   m_ObjectHideFlags: 0
@@ -510,7 +575,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 8
   damage: 1
-  castSpeed: 1
   manaCost: 2
   apCost: 1
   currentSpellPoints: 8
@@ -526,9 +590,13 @@ MonoBehaviour:
   targetableTile: {fileID: 1103078107984049863, guid: c4b7b9f61b78f614c996d6b4be984425, type: 3}
   description: 
   statusesDescription: 
+  animationsToPlay: []
   spellName: 
   icon: {fileID: 5811675278147054703, guid: 90a2e7a07b31a8c478db8064de21d317, type: 3}
   caster: {fileID: 0}
+  timesCastThisRound: 0
+  animationManager: {fileID: 0}
+  animationObjectManager: {fileID: 0}
 --- !u!1 &7949776491765011826
 GameObject:
   m_ObjectHideFlags: 0

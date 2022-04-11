@@ -7,8 +7,12 @@ namespace SS.GameController
     public class TurnTaker : MonoBehaviour
     {
         public bool dontAutomaticallyAdd = false;
-
-        public void Start()
+        
+        public virtual void Awake()
+        {
+        }
+        
+        public virtual void Start()
         {
         }
 

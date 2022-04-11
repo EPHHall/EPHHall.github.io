@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 988546386749961856}
   m_Layer: 8
   m_Name: Activation Zone 6
-  m_TagString: Untagged
+  m_TagString: Can Walk Through
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 988546386874789361}
   m_Layer: 8
   m_Name: Activation Zone 5
-  m_TagString: Untagged
+  m_TagString: Can Walk Through
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -357,7 +357,7 @@ GameObject:
   - component: {fileID: 988546386927980040}
   m_Layer: 8
   m_Name: Activation Zone 2
-  m_TagString: Untagged
+  m_TagString: Can Walk Through
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -527,7 +527,7 @@ GameObject:
   - component: {fileID: 988546387242152529}
   m_Layer: 8
   m_Name: Activation Zone 7
-  m_TagString: Untagged
+  m_TagString: Can Walk Through
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -697,7 +697,7 @@ GameObject:
   - component: {fileID: 988546387277512708}
   m_Layer: 8
   m_Name: Activation Zone 4
-  m_TagString: Untagged
+  m_TagString: Can Walk Through
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -867,7 +867,7 @@ GameObject:
   - component: {fileID: 988546387338783164}
   m_Layer: 8
   m_Name: Activation Zone 8
-  m_TagString: Untagged
+  m_TagString: Can Walk Through
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1037,7 +1037,7 @@ GameObject:
   - component: {fileID: 988546387392568880}
   m_Layer: 8
   m_Name: Activation Zone 3
-  m_TagString: Untagged
+  m_TagString: Can Walk Through
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

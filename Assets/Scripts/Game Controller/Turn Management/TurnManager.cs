@@ -143,6 +143,11 @@ namespace SS.GameController
                 counter.DecrementCountdowns();
             }
 
+            foreach (AI.AIPackage package in FindObjectsOfType<AI.AIPackage>())
+            {
+                package.run = false;
+            }
+
             StartTurn(turnTakers[turnTakersIndex]);
 
             SS.Spells.Target[] targets = FindObjectsOfType<SS.Spells.Target>();
@@ -180,9 +185,9 @@ namespace SS.GameController
             turnTakers.Remove(tt);
             turnTakersIndex--;
 
-            if (turnTakersIndex < 1)
+            if (turnTakersIndex < 0)
             {
-                turnTakersIndex = 1;
+                turnTakersIndex = 0;
             }
         }
 

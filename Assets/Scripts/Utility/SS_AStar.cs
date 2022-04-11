@@ -5,7 +5,7 @@ using UnityEngine;
 namespace SS.Util
 {
     public class SS_AStar
-    {        
+    {
         public List<Vector2> AStar_General(List<Vector2> positionsToCheck, List<Vector2> takenPositions)
         {
             List<Vector2> nextPositions = new List<Vector2>();
@@ -33,7 +33,7 @@ namespace SS.Util
 
             return nextPositions;
         }
-        
+
         public List<Vector2> AStar_Targeting(List<Vector2> positionsToCheck, List<Vector2> takenPositions)
         {
             List<Vector2> nextPositions = new List<Vector2>();
@@ -52,7 +52,10 @@ namespace SS.Util
                     }
 
                     RaycastHit2D ray = Physics2D.Linecast(position, potentialPosition);
-                    if (ray.collider == null || ray.collider.GetComponent<NotObstacle>() || ray.collider.GetComponent<SS.Spells.Target>())
+                    RaycastHit2D[] rays = new RaycastHit2D[1];
+                    rays[0] = ray;
+                    bool canMove = Util.CheckIfWayIsClear.Check(rays, false);
+                    if (ray.collider == null || ray.collider.GetComponent<NotObstacle>() || ray.collider.GetComponent<SS.Spells.Target>() || canMove)
                     {
                         nextPositions.Add(potentialPosition);
                     }
@@ -89,40 +92,11 @@ namespace SS.Util
                     //{
 
                     //}
-                    
+
 
                     RaycastHit2D[] rays = Physics2D.LinecastAll(position, potentialPosition);
-                    bool canAddPosition = true;
-                    bool limitFlagChange = false;
-                    //Debug.Log("Rays size = " + rays.Length);
-                    foreach (RaycastHit2D ray in rays)
-                    {
-                        //Debug.Log("In foreach");
-                        if (ray.collider.tag == "Player" && ignorePlayer)
-                        {
-                            canAddPosition = true;
-                            break;
-                        }
-                        else if (ray.collider == null || ray.collider.GetComponent<PickupCollider>())
-                        {
-                            if (!limitFlagChange)
-                                canAddPosition = true;
-                        }
-                        else if (ray.collider.tag == "Wall")
-                        {
-                            canAddPosition = false;
-                            limitFlagChange = true;
-                        }
-                        else if (ray.collider.tag == "Bridge")
-                        {
-                            canAddPosition = true;
-                            break;
-                        }
-                        else
-                        {
-                            canAddPosition = false;
-                        }
-                    }
+                    bool canAddPosition = Util.CheckIfWayIsClear.Check(rays, ignorePlayer);
+                    
 
                     if (canAddPosition)
                     {

@@ -16,8 +16,8 @@ GameObject:
   - component: {fileID: 3037313608856800427}
   - component: {fileID: 3037313608856800428}
   m_Layer: 8
-  m_Name: Activation Zone 1
-  m_TagString: Untagged
+  m_Name: Activation Zone
+  m_TagString: Can Walk Through
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61d350a0827cc0a458fc43f3d62aba3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disable: 0
   parent: {fileID: 0}
 --- !u!212 &3037313608856800427
 SpriteRenderer:

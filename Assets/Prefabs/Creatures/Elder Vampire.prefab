@@ -45,7 +45,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 8
   damage: 1
-  castSpeed: 1
   manaCost: 2
   apCost: 1
   currentSpellPoints: 8
@@ -63,6 +62,7 @@ MonoBehaviour:
   spellName: 
   icon: {fileID: 5811675278147054703, guid: 90a2e7a07b31a8c478db8064de21d317, type: 3}
   caster: {fileID: 0}
+  timesCastThisRound: 0
 --- !u!1 &1115285535338122414
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,7 +108,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 8
   damage: 1
-  castSpeed: 1
   manaCost: 2
   apCost: 1
   currentSpellPoints: 8
@@ -127,6 +126,7 @@ MonoBehaviour:
   spellName: 
   icon: {fileID: 5811675278147054703, guid: 90a2e7a07b31a8c478db8064de21d317, type: 3}
   caster: {fileID: 0}
+  timesCastThisRound: 0
 --- !u!1 &1115285535808003129
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,6 +206,13 @@ MonoBehaviour:
   attachedAgent: {fileID: 0}
   behaviorGroups: []
   position: {x: -Infinity, y: -Infinity}
+  run: 0
+  currentGroup:
+    turnOffGroupWhenCompleted: 0
+    timesCompleted: 0
+    andOr: 1
+  index: 0
+  movementAnimation: {fileID: 0}
 --- !u!1 &1115285537044496279
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,6 +233,7 @@ GameObject:
   - component: {fileID: 1115285537044496275}
   - component: {fileID: 1115285537044496274}
   - component: {fileID: 1115285537044496273}
+  - component: {fileID: -6632479403277496198}
   m_Layer: 0
   m_Name: Elder Vampire
   m_TagString: Enemy
@@ -513,6 +521,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f40ecf91114b6c498e156c02fe43afa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-6632479403277496198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115285537044496279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd3bd1d7eb2e69143b0557274ba76118, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interval: 0.145
 --- !u!1 &7815447012485272325
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,7 +581,14 @@ MonoBehaviour:
   attachedAgent: {fileID: 0}
   behaviorGroups: []
   position: {x: -Infinity, y: -Infinity}
+  run: 0
+  currentGroup:
+    turnOffGroupWhenCompleted: 0
+    timesCompleted: 0
+    andOr: 1
+  index: 0
   target: {fileID: 0}
+  movementAnimation: {fileID: 0}
 --- !u!1 &8087065556312580188
 GameObject:
   m_ObjectHideFlags: 0

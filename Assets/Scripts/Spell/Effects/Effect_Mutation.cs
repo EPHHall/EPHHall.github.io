@@ -20,6 +20,34 @@ public class Effect_Mutation : Effect
         package.targets = t;
     }
 
+    //public override void BehaviorWhenDelivered_Enchanting(BehaviorPackage package)
+    //{
+    //    base.BehaviorWhenDelivered_Enchanting(package);
+    //}
+
+    //public override void BehaviorWhenDelivered_Mutation(BehaviorPackage package)
+    //{
+    //    base.BehaviorWhenDelivered_Mutation(package);
+    //}
+
+    //public override void BehaviorWhenDelivered_Possession(BehaviorPackage package)
+    //{
+    //    base.BehaviorWhenDelivered_Possession(package);
+    //}
+
+    //public override void BehaviorWhenDelivered_Projection(BehaviorPackage package)
+    //{
+    //    base.BehaviorWhenDelivered_Projection(package);
+    //}
+
+    //public override void BehaviorWhenDelivered_Summoning(BehaviorPackage package)
+    //{
+    //    base.BehaviorWhenDelivered_Summoning(package);
+    //}
+
+
+
+
     public override void BehaviorWhenDelivered_Enchanting(BehaviorPackage package)
     {
         base.BehaviorWhenDelivered_Enchanting(package);
@@ -45,34 +73,6 @@ public class Effect_Mutation : Effect
         base.BehaviorWhenDelivered_Summoning(package);
     }
 
-
-
-
-    public override void BehaviorWhenTargeting_Enchanting(BehaviorPackage package)
-    {
-        base.BehaviorWhenTargeting_Enchanting(package);
-    }
-
-    public override void BehaviorWhenTargeting_Mutation(BehaviorPackage package)
-    {
-        base.BehaviorWhenTargeting_Mutation(package);
-    }
-
-    public override void BehaviorWhenTargeting_Possession(BehaviorPackage package)
-    {
-        base.BehaviorWhenTargeting_Possession(package);
-    }
-
-    public override void BehaviorWhenTargeting_Projection(BehaviorPackage package)
-    {
-        base.BehaviorWhenTargeting_Projection(package);
-    }
-
-    public override void BehaviorWhenTargeting_Summoning(BehaviorPackage package)
-    {
-        base.BehaviorWhenTargeting_Summoning(package);
-    }
-
     public virtual void HandleDeliveredAndTargeting(List<Target> targets)
     {
         BuildPackage_Mutation(targets);
@@ -81,7 +81,7 @@ public class Effect_Mutation : Effect
         {
             if (e == null) continue;
 
-            e.BehaviorWhenTargeting(package);
+            e.BehaviorWhenDelivered(package);
         }
         foreach (Effect e in deliveredEffects)
         {

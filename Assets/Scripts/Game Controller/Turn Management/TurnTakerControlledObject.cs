@@ -28,7 +28,7 @@ namespace SS.GameController
                     agent.mainTarget = GameObject.FindGameObjectWithTag("Player").GetComponent<Spells.Target>();
                 }
 
-                agent.Awake();
+                agent.Start();
             }
             else
             {

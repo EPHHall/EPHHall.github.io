@@ -31,6 +31,14 @@ namespace SS.Spells
             style = Style.Utility;
         }
 
+        public override void Start()
+        {
+            base.Start();
+
+            animationToPlay = animationObjectManager.summonCreatureAnimation;
+            soundEffect = resources.GetSummonAudio();
+        }
+
         public override void InvokeEffect(List<Target> targets)
         {
             base.InvokeEffect(targets);

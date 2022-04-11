@@ -22,18 +22,42 @@ namespace SS.AI
         public List<AIBehavior> behaviors = new List<AIBehavior>();
         public List<BehaviorGroup> behaviorGroups = new List<BehaviorGroup>();
         public Vector2 position = Vector2.negativeInfinity;
+        public bool run;
+        public BehaviorGroup currentGroup;
+        public int index = 0;
+        public bool mainBehaviors;
+        public BehaviorGroup waitForAnimations;
 
         //[SerializeField]
         //private List<BehaviorToReachAndReturnTo> reachThenReturnTo = new List<BehaviorToReachAndReturnTo>();
 
         public virtual void Awake()
         {
-            
         }
 
         public virtual void Start()
         {
-            
+            waitForAnimations = new BehaviorGroup();
+            waitForAnimations.behaviors.Add(new Behavior_WaitForAnimations(attachedAgent));
+        }
+
+        private void Update()
+        {
+            if (run)
+            {
+                if (mainBehaviors)
+                {
+                    RunAI();
+                    mainBehaviors = false;
+                }
+                else
+                {
+                    if (RunCleanup())
+                    {
+                        mainBehaviors = true;
+                    }
+                }
+            }
         }
 
         public void SetAttachedAgent(Agent agent)
@@ -79,9 +103,12 @@ namespace SS.AI
 
         public virtual void InvokeAI(bool TESTING)
         {
-            int index = 0;
-            BehaviorGroup currentGroup = behaviorGroups[index];
-            while (currentGroup == null || currentGroup.turnOffGroupWhenCompleted && currentGroup.timesCompleted > 0)
+            run = true;
+            mainBehaviors = true;
+
+            index = 0;
+            currentGroup = behaviorGroups[index];
+            while (currentGroup == null || currentGroup.EvaluateCompletion())
             {
                 if (index < behaviorGroups.Count)
                 {
@@ -96,40 +123,98 @@ namespace SS.AI
                 currentGroup = behaviorGroups[index];
             }
 
-            int breakIfTooHigh = 0;
-            while (currentGroup != null)
+            //int breakIfTooHigh = 0;
+            //while (currentGroup != null)
+            //{
+            //    foreach (AIBehavior currentBehavior in currentGroup.behaviors)
+            //    {
+            //        currentBehavior.InvokeBehavior(attachedAgent.spells);
+            //    }
+
+            //    if (currentGroup.EvaluateGroup())
+            //    {
+            //        index++;
+            //        foreach (AIBehavior currentBehavior in currentGroup.behaviors)
+            //        {
+            //            currentBehavior.timesCompleted++;
+            //        }
+
+            //        if (index < behaviorGroups.Count)
+            //        {
+            //            currentGroup = behaviorGroups[index];
+            //        }
+            //        else
+            //        {
+            //            currentGroup = null;
+            //        }
+            //    }
+
+            //    if (breakIfTooHigh > 199)
+            //    {
+            //        Debug.Log("Had to break - Groups Version");
+
+            //        break;
+            //    }
+
+            //    breakIfTooHigh++;
+            //}
+        }
+
+        public virtual void RunAI()
+        {
+            //if tempBehavior != null, then run temp behavior instead of the behavior group
+            foreach (AIBehavior currentBehavior in currentGroup.behaviors)
             {
+                currentBehavior.InvokeBehavior(attachedAgent.spells);
+            }
+
+            if (currentGroup.EvaluateGroup())
+            {
+                index++;
+
                 foreach (AIBehavior currentBehavior in currentGroup.behaviors)
                 {
-                    currentBehavior.InvokeBehavior(attachedAgent.spells);
+                    currentBehavior.timesCompleted++;
                 }
 
-                if (currentGroup.EvaluateGroup())
+                currentGroup.EvaluateCompletion();
+            }
+
+            if (currentGroup.goTo >= 0 && !currentGroup.fullyCompleted)
+            {
+                index = currentGroup.goTo;
+
+                if (index < behaviorGroups.Count)
                 {
-                    index++;
-                    foreach (AIBehavior currentBehavior in currentGroup.behaviors)
-                    {
-                        currentBehavior.timesCompleted++;
-                    }
-
-                    if (index < behaviorGroups.Count)
-                    {
-                        currentGroup = behaviorGroups[index];
-                    }
-                    else
-                    {
-                        currentGroup = null;
-                    }
+                    currentGroup = behaviorGroups[index];
                 }
+            }
 
-                if (breakIfTooHigh > 199)
-                {
-                    Debug.Log("Had to break - Groups Version");
+            if (index < behaviorGroups.Count)
+            {
+                currentGroup = behaviorGroups[index];
+            }
+            else
+            {
+                currentGroup = null;
+                run = false;
+            }
+        }
 
-                    break;
-                }
+        public virtual bool RunCleanup()
+        {
+            foreach (AIBehavior currentBehavior in waitForAnimations.behaviors)
+            {
+                currentBehavior.InvokeBehavior(attachedAgent.spells);
+            }
 
-                breakIfTooHigh++;
+            if (waitForAnimations.EvaluateGroup())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

@@ -34,6 +34,11 @@ namespace SS.LevelDesign
                     zone.gameObject.SetActive(false);
                 }
             }
+
+            if(conBoxManager == null)
+            {
+                conBoxManager = FindObjectOfType<ConfirmationBoxManager>();
+            }
         }
 
         public virtual void Update()
@@ -95,6 +100,10 @@ namespace SS.LevelDesign
                     zone.gameObject.SetActive(false);
                 }
             }
+        }
+        public virtual void ActivateInteractableAlternate()
+        {
+            
         }
         public virtual void DeactivateInteractable()
         {

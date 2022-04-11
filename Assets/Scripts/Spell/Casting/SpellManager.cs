@@ -9,6 +9,9 @@ namespace SS.Spells
         public static Spell activeSpell;
         public bool displayActiveSpell;
 
+        public static List<Target> currentTargets = new List<Target>();
+        public static Transform caster;
+
         public static void CastActiveSpell()
         {
             if (activeSpell != null && Target.selectedTargets.Count > 0)
@@ -18,6 +21,12 @@ namespace SS.Spells
                 if(GameObject.FindObjectOfType<SS.UI.TargetMenu>() != null)
                     GameObject.FindObjectOfType<SS.UI.TargetMenu>().DeactivateMenu();
             }
+        }
+
+        public static void SetTargetsList(List<Target> targets)
+        {
+            currentTargets.Clear();
+            currentTargets = new List<Target>(targets);
         }
 
         public void Update()

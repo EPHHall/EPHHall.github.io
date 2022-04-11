@@ -29,6 +29,14 @@ namespace SS.Spells
             normallyValid = new TargetType(false, true, true, false);
         }
 
+        public override void Start()
+        {
+            base.Start();
+
+            animationToPlay = animationObjectManager.controlObjectAnimation;
+            soundEffect = resources.GetControlObjectAudio();
+        }
+
         public override void InvokeEffect(List<Target> targets)
         {
             base.InvokeEffect(targets);
@@ -42,12 +50,12 @@ namespace SS.Spells
                     StatusSpace.Status newStatus;
                     if (enemyVersion)
                     {
-                        Debug.Log("enemy version");
+                        //Debug.Log("enemy version");
                         newStatus = new StatusSpace.Status(StatusSpace.Status.StatusName.ControlledByEnemy, 1, duration, SS.GameController.TurnManager.currentTurnTaker);
                     }
                     else
                     {
-                        Debug.Log("regular version");
+                        //Debug.Log("regular version");
                         newStatus = new StatusSpace.Status(StatusSpace.Status.StatusName.Controlled, 1, duration, SS.GameController.TurnManager.currentTurnTaker);
                     }
 

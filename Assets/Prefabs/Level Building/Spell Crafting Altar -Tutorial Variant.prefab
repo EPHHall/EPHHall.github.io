@@ -53,21 +53,49 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 988546386749961870, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: m_TagString
+      value: Can Walk Through
+      objectReference: {fileID: 0}
     - target: {fileID: 988546386874789375, guid: cb157ae76011cc745ac93342be38908d, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546386874789375, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: m_TagString
+      value: Can Walk Through
       objectReference: {fileID: 0}
     - target: {fileID: 988546386927980086, guid: cb157ae76011cc745ac93342be38908d, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 988546386927980086, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: m_TagString
+      value: Can Walk Through
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546387242152543, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: m_TagString
+      value: Can Walk Through
+      objectReference: {fileID: 0}
     - target: {fileID: 988546387277512706, guid: cb157ae76011cc745ac93342be38908d, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 988546387277512706, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: m_TagString
+      value: Can Walk Through
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546387338783162, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: m_TagString
+      value: Can Walk Through
+      objectReference: {fileID: 0}
     - target: {fileID: 988546387392568894, guid: cb157ae76011cc745ac93342be38908d, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 988546387392568894, guid: cb157ae76011cc745ac93342be38908d, type: 3}
+      propertyPath: m_TagString
+      value: Can Walk Through
       objectReference: {fileID: 0}
     - target: {fileID: 988546388190957767, guid: cb157ae76011cc745ac93342be38908d, type: 3}
       propertyPath: m_IsActive

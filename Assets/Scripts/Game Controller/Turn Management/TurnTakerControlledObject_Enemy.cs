@@ -14,7 +14,7 @@ namespace SS.GameController
             agent = GetComponent<AI.Agent>();
 
             agent.enabled = true;
-            agent.Awake();
+            agent.Start();
         }
 
         public int EndControl()

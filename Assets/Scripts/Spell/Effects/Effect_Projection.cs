@@ -22,16 +22,75 @@ public class Effect_Projection : Effect
         package.targets = t;
     }
 
+    //public override void BehaviorWhenDelivered_Enchanting(BehaviorPackage package)
+    //{
+    //    base.BehaviorWhenDelivered_Enchanting(package);
+
+    //    Damage newDamage = new Damage(Damage.DamageType.Arcane, mainDamage.amount);
+
+    //    foreach (Target target in package.targets)
+    //    {
+    //        SS.Item.Weapon.CreateWeapon(0, 0, range, null, newDamage, 
+    //            true, target.GetComponent<CharacterStats>().meleeAttack, "Channel Bolt", null, null, 0, 0);
+    //    }
+    //}
+
+    //public override void BehaviorWhenDelivered_Mutation(BehaviorPackage package)
+    //{
+    //    base.BehaviorWhenDelivered_Mutation(package);
+
+    //    Damage newDamage = new Damage(Damage.DamageType.Arcane, mainDamage.amount);
+
+    //    foreach (Target target in package.targets)
+    //    {
+    //        SS.Item.Weapon.CreateWeapon(0, 0, range, null, newDamage,
+    //            true, target.GetComponent<CharacterStats>().meleeAttack, "Channel Bolt", null, null, 0, 0);
+    //    }
+    //}
+
+    //public override void BehaviorWhenDelivered_Possession(BehaviorPackage package)
+    //{
+    //    base.BehaviorWhenDelivered_Possession(package);
+
+    //    Damage newDamage = new Damage(Damage.DamageType.Arcane, mainDamage.amount);
+
+    //    foreach (Target target in package.targets)
+    //    {
+    //        SS.Item.Weapon.CreateWeapon(0, 0, range, null, newDamage,
+    //            true, target.GetComponent<CharacterStats>().meleeAttack, "Channel Bolt", null, null, 0, 0);
+    //    }
+    //}
+
+    //public override void BehaviorWhenDelivered_Projection(BehaviorPackage package)
+    //{
+    //    base.BehaviorWhenDelivered_Projection(package);
+
+    //    package.effect.AddToMainDamageList(mainDamage);
+    //}
+
+    //public override void BehaviorWhenDelivered_Summoning(BehaviorPackage package)
+    //{
+    //    base.BehaviorWhenDelivered_Summoning(package);
+
+    //    Effect_Summoning.BehaviorPackageSummoning bps =
+    //package as Effect_Summoning.BehaviorPackageSummoning;
+
+    //    Damage newDamage = new Damage(Damage.DamageType.Arcane, mainDamage.amount);
+
+    //    SS.Item.Weapon.CreateWeapon(0, 0, range, null, newDamage,
+    //        true, bps.toSummon.GetComponent<CharacterStats>().meleeAttack, "Channel Bolt", null, null, 0, 0);
+    //}
+
+
+
+
     public override void BehaviorWhenDelivered_Enchanting(BehaviorPackage package)
     {
         base.BehaviorWhenDelivered_Enchanting(package);
 
-        Damage newDamage = new Damage(Damage.DamageType.Arcane, mainDamage.amount);
-
         foreach (Target target in package.targets)
         {
-            SS.Item.Weapon.CreateWeapon(0, 0, range, null, newDamage, 
-                true, target.GetComponent<CharacterStats>().meleeAttack, "Channel Bolt", null, null, 0, 0);
+            SS.Util.TargetInterface.DamageTarget(target, mainDamage, this);
         }
     }
 
@@ -39,12 +98,9 @@ public class Effect_Projection : Effect
     {
         base.BehaviorWhenDelivered_Mutation(package);
 
-        Damage newDamage = new Damage(Damage.DamageType.Arcane, mainDamage.amount);
-
         foreach (Target target in package.targets)
         {
-            SS.Item.Weapon.CreateWeapon(0, 0, range, null, newDamage,
-                true, target.GetComponent<CharacterStats>().meleeAttack, "Channel Bolt", null, null, 0, 0);
+            SS.Util.TargetInterface.DamageTarget(target, mainDamage, this);
         }
     }
 
@@ -52,12 +108,9 @@ public class Effect_Projection : Effect
     {
         base.BehaviorWhenDelivered_Possession(package);
 
-        Damage newDamage = new Damage(Damage.DamageType.Arcane, mainDamage.amount);
-
         foreach (Target target in package.targets)
         {
-            SS.Item.Weapon.CreateWeapon(0, 0, range, null, newDamage,
-                true, target.GetComponent<CharacterStats>().meleeAttack, "Channel Bolt", null, null, 0, 0);
+            SS.Util.TargetInterface.DamageTarget(target, mainDamage, this);
         }
     }
 
@@ -65,68 +118,15 @@ public class Effect_Projection : Effect
     {
         base.BehaviorWhenDelivered_Projection(package);
 
-        package.effect.AddToMainDamageList(mainDamage);
+        foreach (Target target in package.targets)
+        {
+            SS.Util.TargetInterface.DamageTarget(target, mainDamage, this);
+        }
     }
 
     public override void BehaviorWhenDelivered_Summoning(BehaviorPackage package)
     {
         base.BehaviorWhenDelivered_Summoning(package);
-
-        Effect_Summoning.BehaviorPackageSummoning bps =
-    package as Effect_Summoning.BehaviorPackageSummoning;
-
-        Damage newDamage = new Damage(Damage.DamageType.Arcane, mainDamage.amount);
-
-        SS.Item.Weapon.CreateWeapon(0, 0, range, null, newDamage,
-            true, bps.toSummon.GetComponent<CharacterStats>().meleeAttack, "Channel Bolt", null, null, 0, 0);
-    }
-
-
-
-
-    public override void BehaviorWhenTargeting_Enchanting(BehaviorPackage package)
-    {
-        base.BehaviorWhenTargeting_Enchanting(package);
-
-        foreach (Target target in package.targets)
-        {
-            SS.Util.TargetInterface.DamageTarget(target, mainDamage, this);
-        }
-    }
-
-    public override void BehaviorWhenTargeting_Mutation(BehaviorPackage package)
-    {
-        base.BehaviorWhenTargeting_Mutation(package);
-
-        foreach (Target target in package.targets)
-        {
-            SS.Util.TargetInterface.DamageTarget(target, mainDamage, this);
-        }
-    }
-
-    public override void BehaviorWhenTargeting_Possession(BehaviorPackage package)
-    {
-        base.BehaviorWhenTargeting_Possession(package);
-
-        foreach (Target target in package.targets)
-        {
-            SS.Util.TargetInterface.DamageTarget(target, mainDamage, this);
-        }
-    }
-
-    public override void BehaviorWhenTargeting_Projection(BehaviorPackage package)
-    {
-        base.BehaviorWhenTargeting_Projection(package);
-
-        foreach (Target target in package.targets)
-        {
-            SS.Util.TargetInterface.DamageTarget(target, mainDamage, this);
-        }
-    }
-
-    public override void BehaviorWhenTargeting_Summoning(BehaviorPackage package)
-    {
-        base.BehaviorWhenTargeting_Summoning(package);
 
         Effect_Summoning.BehaviorPackageSummoning bps =
             package as Effect_Summoning.BehaviorPackageSummoning;
@@ -142,7 +142,7 @@ public class Effect_Projection : Effect
         {
             if (e == null) continue;
 
-            e.BehaviorWhenTargeting(package);
+            e.BehaviorWhenDelivered(package);
         }
         foreach (Effect e in deliveredEffects)
         {

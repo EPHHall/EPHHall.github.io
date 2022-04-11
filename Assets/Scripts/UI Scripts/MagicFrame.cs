@@ -111,7 +111,8 @@ namespace SS.UI
                 {
                     if (inventoryFrame)
                     {
-                        effect.SetInUse(false, this);
+
+                        //effect.SetInUse(false, this);
                         dontSetInUseFlags = true;
                     }
                     else
@@ -128,7 +129,7 @@ namespace SS.UI
                 {
                     if (inventoryFrame)
                     {
-                        mod.SetInUse(false, this);
+                        //mod.SetInUse(false, this);
                         dontSetInUseFlags = true;
                     }
                     else

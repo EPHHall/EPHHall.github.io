@@ -32,11 +32,94 @@ public class Effect_Summoning : Effect
     }
 
     //TODO: Maybe these behaviors could add a weapon that deals no damage butsummons a creature.
+    //public override void BehaviorWhenDelivered_Enchanting(BehaviorPackage package)
+    //{
+    //    base.BehaviorWhenDelivered_Enchanting(package);
+
+    //    for (int i = 0; i < package.targets.Count; i++)
+    //    {
+    //        Target target = package.targets[i];
+
+    //        List<Target> singleTarget = new List<Target>();
+    //        singleTarget.Add(target);
+
+    //        InvokeEffect(singleTarget);
+    //    }
+    //}
+
+    //public override void BehaviorWhenDelivered_Mutation(BehaviorPackage package)
+    //{
+    //    base.BehaviorWhenDelivered_Mutation(package);
+
+    //    for (int i = 0; i < package.targets.Count; i++)
+    //    {
+    //        Target target = package.targets[i];
+
+    //        List<Target> singleTarget = new List<Target>();
+    //        singleTarget.Add(target);
+
+    //        InvokeEffect(singleTarget);
+    //    }
+    //}
+
+    //public override void BehaviorWhenDelivered_Possession(BehaviorPackage package)
+    //{
+    //    base.BehaviorWhenDelivered_Possession(package);
+
+    //    for (int i = 0; i < package.targets.Count; i++)
+    //    {
+    //        Target target = package.targets[i];
+
+    //        List<Target> singleTarget = new List<Target>();
+    //        singleTarget.Add(target);
+
+    //        InvokeEffect(singleTarget);
+    //    }
+    //}
+
+    //public override void BehaviorWhenDelivered_Projection(BehaviorPackage package)
+    //{
+    //    base.BehaviorWhenDelivered_Projection(package);
+
+    //    for (int i = 0; i < package.targets.Count; i++)
+    //    {
+    //        Target target = package.targets[i];
+
+    //        List<Target> singleTarget = new List<Target>();
+    //        singleTarget.Add(target);
+
+    //        InvokeEffect(singleTarget);
+    //    }
+    //}
+
+    //public override void BehaviorWhenDelivered_Summoning(BehaviorPackage package)
+    //{
+    //    base.BehaviorWhenDelivered_Summoning(package);
+
+    //    Effect_Summoning.BehaviorPackageSummoning bps =
+    //package as Effect_Summoning.BehaviorPackageSummoning;
+
+    //    List<Target> singleTarget = new List<Target>();
+    //    singleTarget.Add(bps.toSummon);
+
+    //    if ((bps.effect as Teleport) != null)
+    //    {
+    //        useOverridePosition = true;
+    //        overridePosition = bps.toSummon.transform.position;
+    //    }
+    //    InvokeEffect(singleTarget);
+
+    //    useOverridePosition = false;
+    //}
+
+
+
+
     public override void BehaviorWhenDelivered_Enchanting(BehaviorPackage package)
     {
         base.BehaviorWhenDelivered_Enchanting(package);
 
-        for (int i = 0; i < package.targets.Count; i++)
+        for(int i = 0; i < package.targets.Count; i++)
         {
             Target target = package.targets[i];
 
@@ -81,89 +164,6 @@ public class Effect_Summoning : Effect
     {
         base.BehaviorWhenDelivered_Projection(package);
 
-        for (int i = 0; i < package.targets.Count; i++)
-        {
-            Target target = package.targets[i];
-
-            List<Target> singleTarget = new List<Target>();
-            singleTarget.Add(target);
-
-            InvokeEffect(singleTarget);
-        }
-    }
-
-    public override void BehaviorWhenDelivered_Summoning(BehaviorPackage package)
-    {
-        base.BehaviorWhenDelivered_Summoning(package);
-
-        Effect_Summoning.BehaviorPackageSummoning bps =
-    package as Effect_Summoning.BehaviorPackageSummoning;
-
-        List<Target> singleTarget = new List<Target>();
-        singleTarget.Add(bps.toSummon);
-
-        if ((bps.effect as Teleport) != null)
-        {
-            useOverridePosition = true;
-            overridePosition = bps.toSummon.transform.position;
-        }
-        InvokeEffect(singleTarget);
-
-        useOverridePosition = false;
-    }
-
-
-
-
-    public override void BehaviorWhenTargeting_Enchanting(BehaviorPackage package)
-    {
-        base.BehaviorWhenTargeting_Enchanting(package);
-
-        for(int i = 0; i < package.targets.Count; i++)
-        {
-            Target target = package.targets[i];
-
-            List<Target> singleTarget = new List<Target>();
-            singleTarget.Add(target);
-
-            InvokeEffect(singleTarget);
-        }
-    }
-
-    public override void BehaviorWhenTargeting_Mutation(BehaviorPackage package)
-    {
-        base.BehaviorWhenTargeting_Mutation(package);
-
-        for (int i = 0; i < package.targets.Count; i++)
-        {
-            Target target = package.targets[i];
-
-            List<Target> singleTarget = new List<Target>();
-            singleTarget.Add(target);
-
-            InvokeEffect(singleTarget);
-        }
-    }
-
-    public override void BehaviorWhenTargeting_Possession(BehaviorPackage package)
-    {
-        base.BehaviorWhenTargeting_Possession(package);
-
-        for (int i = 0; i < package.targets.Count; i++)
-        {
-            Target target = package.targets[i];
-
-            List<Target> singleTarget = new List<Target>();
-            singleTarget.Add(target);
-
-            InvokeEffect(singleTarget);
-        }
-    }
-
-    public override void BehaviorWhenTargeting_Projection(BehaviorPackage package)
-    {
-        base.BehaviorWhenTargeting_Projection(package);
-
         //TODO Come back and make the projectile phase through walls. First, walls have to 
         //block of course
 
@@ -178,9 +178,9 @@ public class Effect_Summoning : Effect
         }
     }
 
-    public override void BehaviorWhenTargeting_Summoning(BehaviorPackage package)
+    public override void BehaviorWhenDelivered_Summoning(BehaviorPackage package)
     {
-        base.BehaviorWhenTargeting_Summoning(package);
+        base.BehaviorWhenDelivered_Summoning(package);
 
         Effect_Summoning.BehaviorPackageSummoning bps =
             package as Effect_Summoning.BehaviorPackageSummoning;
@@ -208,7 +208,7 @@ public class Effect_Summoning : Effect
             if (e == null) continue;
 
             Debug.Log("In Summoning target me", gameObject);
-            e.BehaviorWhenTargeting(package);
+            e.BehaviorWhenDelivered(package);
         }
         foreach (Effect e in deliveredEffects)
         {

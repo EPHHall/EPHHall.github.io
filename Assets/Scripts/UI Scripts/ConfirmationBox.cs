@@ -26,6 +26,7 @@ namespace SS.UI
         }
         public void CancelAction()
         {
+            interactable.ActivateInteractableAlternate();
             gameObject.SetActive(false);
         }
     }

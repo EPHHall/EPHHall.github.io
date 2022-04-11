@@ -29,11 +29,13 @@ namespace SS.UI
 
                 if (inventoryFrame)
                 {
+                    ///Debug.Log(1);
                     effect = tempEffect;
                     base.SetContent(newContent);
                 }
                 else if (!tempEffect.inUse)
                 {
+                    //Debug.Log(2);
                     effect = tempEffect;
                     base.SetContent(newContent);
                 }

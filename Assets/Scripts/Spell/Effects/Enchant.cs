@@ -39,6 +39,14 @@ namespace SS.Spells
             style = Style.DamageOverTime;
         }
 
+        public override void Start()
+        {
+            base.Start();
+
+            animationToPlay = animationObjectManager.enchantAnimation;
+            soundEffect = resources.GetEnchantAudio();
+        }
+
         public override void InvokeEffect(List<Target> targets)
         {
             base.InvokeEffect(targets);

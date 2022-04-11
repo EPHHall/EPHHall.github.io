@@ -125,29 +125,7 @@ namespace SS.Pathfinding
         {
             Collider2D[] hits = Physics2D.OverlapCircleAll(node.position, nodeRadius / 2f, wallMask);
 
-            node.isWall = false;
-
-            foreach (Collider2D collider2D in hits)
-            {
-                if (collider2D.tag == "Bridge")
-                {
-                    //Debug.Log("Hit Bridge");
-
-                    node.isWall = false;
-                    break;
-                }
-                else if (collider2D.tag == "Player")
-                {
-                    //Debug.Log("Hit Player");
-
-                    node.isWall = false;
-                    break;
-                }
-                else
-                {
-                    node.isWall = true;
-                }
-            }
+            node.isWall = Util.CheckIfWayIsClear.Check(hits, true);
         }
 
         private void OnDrawGizmos()

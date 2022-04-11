@@ -76,13 +76,16 @@ namespace SS.Character
 
             spellInventory.AddEffect(0, mainEffect.GetComponent<Effect>());
             spellCraftingScreen.mainFrame.SetContent(mainEffect.GetComponent<Effect>());
+            mainEffect.GetComponent<Effect>().SetInUse(true, spellCraftingScreen.mainFrame);
 
-            for(int i = 0; i < secondaryEffectsForNewSpell.Count; i++)
+            for (int i = 0; i < secondaryEffectsForNewSpell.Count; i++)
             {
                 GameObject secondaryEffect = Instantiate(secondaryEffectsForNewSpell[i], spellInventory.inventoryParent);
 
                 spellInventory.AddEffect(i + 1, secondaryEffect.GetComponent<Effect>());
                 spellCraftingScreen.secondaryFrames[i].SetContent(secondaryEffect.GetComponent<Effect>());
+                secondaryEffect.GetComponent<Effect>().SetInUse(true, spellCraftingScreen.secondaryFrames[i]);
+                secondaryEffect.GetComponent<Effect>().SetInUse(true, spellCraftingScreen.secondaryFrames[i]);
             }
             for (int i = 0; i < modifiersForNewSpell.Count; i++)
             {
@@ -90,6 +93,7 @@ namespace SS.Character
 
                 spellInventory.AddModifier(i + 1, modifier.GetComponent<Modifier>());
                 spellCraftingScreen.modifierFrames[i].SetContent(modifier.GetComponent<Modifier>());
+                modifier.GetComponent<Modifier>().SetInUse(true, spellCraftingScreen.modifierFrames[i]);
             }
 
             spellCraftingScreen.spell.spellName = newSpellName;

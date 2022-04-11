@@ -45,7 +45,6 @@ namespace SS.LevelDesign
 
             if (altarActivated && !altarSpent)
             {
-                Debug.Log(Room.currentlyActive, Room.currentlyActive.gameObject);
 
                 if (room != Room.currentlyActive)
                 {
@@ -53,6 +52,8 @@ namespace SS.LevelDesign
 
                     foreach (UI.SpellCraftingScreen screen in screens)
                     {
+                        if (screen == null) continue;
+
                         screen.DeactivateFrames();
                     }
                 }
@@ -60,6 +61,8 @@ namespace SS.LevelDesign
                 {
                     foreach (UI.SpellCraftingScreen screen in screens)
                     {
+                        if (screen == null) continue;
+
                         screen.ActivateFrames();
                     }
                 }

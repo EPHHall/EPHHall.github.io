@@ -47,6 +47,7 @@ namespace SS.Character
         public List<Vector2> initialPositions;
         public List<Vector2> takenPositions;
         public CharacterFollower characterFollower;
+        public bool mayDie = false;
 
         private void Awake()
         {
@@ -68,7 +69,7 @@ namespace SS.Character
 
         private void Update()
         {
-            if (hp <= 0)
+            if (hp <= 0 && !Animation.AnimationManager.animationsRunning)
             {
                 if (name == "Player")
                 {
@@ -154,6 +155,21 @@ namespace SS.Character
         public void SetSpeed(int newSpeed)
         {
             speed = newSpeed;
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.tag == "Animation")
+            {
+                mayDie = true;
+            }
+        }
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            if (collision.tag == "Animation")
+            {
+                mayDie = false;
+            }
         }
     }
 }

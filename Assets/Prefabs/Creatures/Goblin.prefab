@@ -45,7 +45,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 8
   damage: 1
-  castSpeed: 1
   manaCost: 2
   apCost: 1
   currentSpellPoints: 8
@@ -60,9 +59,13 @@ MonoBehaviour:
   targetableTile: {fileID: 1103078107984049863, guid: c4b7b9f61b78f614c996d6b4be984425, type: 3}
   description: 
   statusesDescription: 
+  animationsToPlay: []
   spellName: 
   icon: {fileID: 5811675278147054703, guid: 90a2e7a07b31a8c478db8064de21d317, type: 3}
   caster: {fileID: 0}
+  timesCastThisRound: 0
+  animationManager: {fileID: 0}
+  animationObjectManager: {fileID: 0}
 --- !u!1 &5021173552345222858
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,7 +111,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 8
   damage: 1
-  castSpeed: 1
   manaCost: 2
   apCost: 1
   currentSpellPoints: 8
@@ -124,9 +126,13 @@ MonoBehaviour:
   targetableTile: {fileID: 1103078107984049863, guid: c4b7b9f61b78f614c996d6b4be984425, type: 3}
   description: 
   statusesDescription: 
+  animationsToPlay: []
   spellName: 
   icon: {fileID: 5811675278147054703, guid: 90a2e7a07b31a8c478db8064de21d317, type: 3}
   caster: {fileID: 0}
+  timesCastThisRound: 0
+  animationManager: {fileID: 0}
+  animationObjectManager: {fileID: 0}
 --- !u!1 &5021173552814874205
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,6 +212,22 @@ MonoBehaviour:
   attachedAgent: {fileID: 0}
   behaviorGroups: []
   position: {x: -Infinity, y: -Infinity}
+  run: 0
+  currentGroup:
+    timesCompleted: 0
+    timesTillFullyCompleted: -1
+    fullyCompleted: 0
+    goTo: -1
+    andOr: 1
+  index: 0
+  mainBehaviors: 0
+  waitForAnimations:
+    timesCompleted: 0
+    timesTillFullyCompleted: -1
+    fullyCompleted: 0
+    goTo: -1
+    andOr: 1
+  movementAnimation: {fileID: 0}
 --- !u!1 &5021173553723129331
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,6 +248,8 @@ GameObject:
   - component: {fileID: 5021173553723129335}
   - component: {fileID: 5021173553723129334}
   - component: {fileID: 5021173553723129333}
+  - component: {fileID: -2746543443982500427}
+  - component: {fileID: 4653366832082311605}
   m_Layer: 0
   m_Name: Goblin
   m_TagString: Enemy
@@ -450,6 +474,7 @@ MonoBehaviour:
   initialPositions: []
   takenPositions: []
   characterFollower: {fileID: 0}
+  mayDie: 0
 --- !u!114 &5021173553723129335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -513,6 +538,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f40ecf91114b6c498e156c02fe43afa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-2746543443982500427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5021173553723129331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd3bd1d7eb2e69143b0557274ba76118, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interval: 0.145
+--- !u!114 &4653366832082311605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5021173553723129331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61397d61e71e8b14ca4b9dd449beab35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprite2: {fileID: 21300000, guid: 4057f0b7ff487944b84453574ed81bd2, type: 3}
+  frequency: 0.25
 --- !u!1 &7697432466743382270
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,7 +612,23 @@ MonoBehaviour:
   attachedAgent: {fileID: 0}
   behaviorGroups: []
   position: {x: -Infinity, y: -Infinity}
+  run: 0
+  currentGroup:
+    timesCompleted: 0
+    timesTillFullyCompleted: -1
+    fullyCompleted: 0
+    goTo: -1
+    andOr: 1
+  index: 0
+  mainBehaviors: 0
+  waitForAnimations:
+    timesCompleted: 0
+    timesTillFullyCompleted: -1
+    fullyCompleted: 0
+    goTo: -1
+    andOr: 1
   target: {fileID: 0}
+  movementAnimation: {fileID: 0}
 --- !u!1001 &5021173552332986064
 PrefabInstance:
   m_ObjectHideFlags: 0

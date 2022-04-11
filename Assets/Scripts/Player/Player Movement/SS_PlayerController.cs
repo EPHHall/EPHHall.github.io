@@ -43,17 +43,7 @@ namespace SS.PlayerMovement
         {
             RaycastHit2D[] rays = Physics2D.LinecastAll(origin, destination, movementMask);
 
-            bool canMove = true;
-
-            foreach (RaycastHit2D ray in rays)
-            {
-                canMove = false;
-                if (ray.collider.tag == "Bridge")
-                {
-                    canMove = true;
-                    break;
-                }
-            }
+            bool canMove = Util.CheckIfWayIsClear.Check(rays, true);
 
             return canMove;
         }

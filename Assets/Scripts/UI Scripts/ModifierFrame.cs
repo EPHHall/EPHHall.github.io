@@ -27,7 +27,12 @@ namespace SS.UI
             { 
                 Modifier tempModifier = newContent as Modifier;
 
-                //if (!tempModifier.inUse || inventoryFrame)
+                if (inventoryFrame)
+                {
+                    modifier = tempModifier;
+                    base.SetContent(newContent);
+                }
+                else if (!tempModifier.inUse)
                 {
                     modifier = tempModifier;
                     base.SetContent(newContent);

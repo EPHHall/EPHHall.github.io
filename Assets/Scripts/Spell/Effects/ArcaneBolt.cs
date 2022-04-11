@@ -43,6 +43,14 @@ namespace SS.Spells
             ResetMainStatusList();
         }
 
+        public override void Start()
+        {
+            base.Start();
+
+            animationToPlay = animationObjectManager.arcaneBoltAnimation;
+            soundEffect = resources.GetArcaneBoltAudio();
+        }
+
         public override void InvokeEffect(List<Target> targets)
         {
             base.InvokeEffect(targets);

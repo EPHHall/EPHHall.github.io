@@ -9,6 +9,7 @@ namespace SS.AI
     {
         public Agent agent;
         public int timesCompleted = 0;
+        public AIPackage package;
 
         public AIBehavior(Agent agent)
         {

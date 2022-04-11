@@ -19,6 +19,24 @@ namespace SS.Spells
         private Target player;
         [SerializeField]
         private UI.UpdateText playerUpdateText;
+        [SerializeField]
+        private AudioClip spellAudio_Default;
+        [SerializeField]
+        private AudioClip spellAudio_Attack;
+        [SerializeField]
+        private AudioClip spellAudio_ArcaneBolt;
+        [SerializeField]
+        private AudioClip spellAudio_Enchant;
+        [SerializeField]
+        private AudioClip spellAudio_Inflame;
+        [SerializeField]
+        private AudioClip spellAudio_ControlObject;
+        [SerializeField]
+        private AudioClip spellAudio_Possess;
+        [SerializeField]
+        private AudioClip spellAudio_Teleport;
+        [SerializeField]
+        private AudioClip spellAudio_Summon;
 
         private void Start()
         {
@@ -32,5 +50,14 @@ namespace SS.Spells
         public GameObject GetTeleportTile() { return teleportTilePrefab; }
         public Target GetPlayer() { return player; }
         public UI.UpdateText GetPlayerUpdateText() { return playerUpdateText; }
+        public AudioClip GetDefaultSpellAudio() { return spellAudio_Default; }
+        public AudioClip GetArcaneBoltAudio() { return spellAudio_ArcaneBolt; }
+        public AudioClip GetAttackAudio() { return spellAudio_Attack; }
+        public AudioClip GetEnchantAudio() { return spellAudio_Enchant; }
+        public AudioClip GetInflameAudio() { return spellAudio_Inflame; }
+        public AudioClip GetControlObjectAudio() { return spellAudio_ControlObject; }
+        public AudioClip GetPossessAudio() { return spellAudio_Possess; }
+        public AudioClip GetTeleportAudio() { return spellAudio_Teleport; }
+        public AudioClip GetSummonAudio() { return spellAudio_Summon; }
     }
 }

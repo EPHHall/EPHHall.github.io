@@ -34,8 +34,10 @@ namespace SS.AI
 
         public SS.Character.CharacterStats characterStats;
 
-        public void Awake()
+        public override void Awake()
         {
+            base.Awake();
+
             InitializePackagesAndBehaviors();
 
             characterStats = GetComponent<SS.Character.CharacterStats>();
@@ -48,6 +50,7 @@ namespace SS.AI
         {
             if (activate)
             {
+
             }
         }
 
@@ -59,13 +62,48 @@ namespace SS.AI
 
         public void InitializePackagesAndBehaviors()
         {
+            if (name == "Ogre Room 1")
+            {
+                Debug.Log("In Thing");
+            }
+            
+            //well this is ugly
             foreach (AIPackage package in packages)
             {
+                if (name == "Ogre Room 1")
+                {
+                    Debug.Log("In Thing 2");
+                }
+
                 package.SetAttachedAgent(this);
 
                 foreach (AIBehavior behavior in package.behaviors)
                 {
+                    if (name == "Ogre Room 1")
+                    {
+                        Debug.Log("In Thing 3");
+                    }
+
                     behavior.agent = this;
+                    behavior.package = package;
+                }
+                foreach (BehaviorGroup group in package.behaviorGroups)
+                {
+                    if (name == "Ogre Room 1")
+                    {
+                        Debug.Log("In Thing 4");
+                    }
+
+                    foreach (AIBehavior behavior in group.behaviors)
+                    {
+                        if (name == "Ogre Room 1")
+                        {
+                            Debug.Log("In Thing 5");
+                        }
+
+                        behavior.package = package;
+                        behavior.agent = this;
+                    }
                 }
             }
         }

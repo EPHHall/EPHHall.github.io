@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SS.StatusSpace;
+using SS.Animation;
 
 namespace SS.Spells
 {
@@ -12,6 +13,14 @@ namespace SS.Spells
         {
             base.Awake();
             ResetStats();
+        }
+
+        public override void Start()
+        {
+            base.Start();
+
+            animationToPlay = animationObjectManager.attackAnimation;
+            soundEffect = resources.GetAttackAudio();
         }
 
         public override void ResetStats()
@@ -41,7 +50,7 @@ namespace SS.Spells
 
             foreach (Target target in targets)
             {
-                Debug.Log("Should be damaging. " + damageList.Count);
+                //Debug.Log("Should be damaging. " + damageList.Count);
 
                 DamageTarget(target, damageList);
 

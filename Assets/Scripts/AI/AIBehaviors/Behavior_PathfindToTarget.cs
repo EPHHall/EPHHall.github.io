@@ -17,7 +17,9 @@ namespace SS.AI
 
         private Transform target;
 
-        public bool foundIt = false;
+
+        public bool movementHappening;
+        public bool movementComplete;
 
         public Behavior_PathfindToTarget(Agent agent, Pathfinding.Grid grid, Pathfinding.AStar aStar) : base(agent)
         {
@@ -36,9 +38,9 @@ namespace SS.AI
 
         public override void InvokeBehavior(List<Spells.Spell> spells)
         {
-            base.InvokeBehavior(spells);
+            if (movementHappening || movementComplete) return;
 
-            foundIt = false;
+            base.InvokeBehavior(spells);
 
             spacesMoved = 0;
 
@@ -52,54 +54,72 @@ namespace SS.AI
             if (workingTarget == null) return;
 
             foundPath = aStar.FindPath(agent.positionAtStartofTurn, workingTarget.position);
-            //aStar.targetPos = agent.mainTarget.transform;
-            //aStar.startPos = agent.transform;
-            //foundPath = grid.path;
 
             if (foundPath != null)
             {
-                foundIt = true;
+                //movementHappening = true;
+                //agent.GetComponent<Character.NPCMovement>().StartMovement(foundPath, this, agent.characterStats.speed);
+                
+            
+            
+                //for (int i = 0; i < agent.characterStats.speed; i++)
+                //{
+                //    if (foundPath.Count == 0 || i >= foundPath.Count)
+                //    {
+                //        spacesMoved = agent.characterStats.speed;
+                //        break;
+                //    }
 
-                for (int i = 0; i < agent.characterStats.speed; i++)
-                {
-                    if (foundPath.Count == 0 || i >= foundPath.Count)
-                    {
-                        spacesMoved = agent.characterStats.speed;
-                        break;
-                    }
+                //    agent.transform.position = foundPath[i].position;
 
-                    agent.transform.position = foundPath[i].position;
-
-                    spacesMoved++;
-                    if (spacesMoved >= agent.characterStats.speed)
-                    {
-                        break;
-                    }
-                }
+                //    spacesMoved++;
+                //    if (spacesMoved >= agent.characterStats.speed)
+                //    {
+                //        break;
+                //    }
+                //}
             }
         }
 
         public override bool WasBehaviorFulfilled()
         {
-            List<Vector2> positionsToCheck = new List<Vector2>();
-            positionsToCheck.Add(agent.mainTarget.transform.position);
+            //bool result = movementComplete;
 
-            bool result = false;
-            foreach (Vector2 position in Util.SS_AStar.GetPositionsWithinRadius(positionsToCheck, withinXUnits))
-            {
-                if (position.Equals(agent.transform.position))
-                {
-                    result = true;
-                    break;
-                }
-            }
+            //if (result)
+            //{
+            //    movementComplete = false;
+            //}
 
-            if (spacesMoved >= agent.characterStats.speed)
-            {
-                result = true;
-            }
+            //return result;
 
-            return result;
+
+
+
+
+
+            //List<Vector2> positionsToCheck = new List<Vector2>();
+            //positionsToCheck.Add(agent.mainTarget.transform.position);
+
+            //bool result = false;
+            //foreach (Vector2 position in Util.SS_AStar.GetPositionsWithinRadius(positionsToCheck, withinXUnits))
+            //{
+            //    if (position.Equals(agent.transform.position))
+            //    {
+            //        result = true;
+            //        break;
+            //    }
+            //}
+
+            //if (spacesMoved >= agent.characterStats.speed)
+            //{
+            //    result = true;
+            //}
+
+            //return result;
+
+
+
+            return foundPath != null;
         }
     }
 }

@@ -41,6 +41,14 @@ namespace SS.Spells
             base.Awake();
         }
 
+        public override void Start()
+        {
+            base.Start();
+
+            animationToPlay = animationObjectManager.inflameAnimation;
+            soundEffect = resources.GetInflameAudio();
+        }
+
         public override void InvokeEffect(List<Target> targets)
         {
             base.InvokeEffect(targets);

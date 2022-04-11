@@ -7,8 +7,13 @@ namespace SS.AI
     [System.Serializable]
     public class BehaviorGroup
     {
-        public bool turnOffGroupWhenCompleted = false;
+        //public bool turnOffGroupWhenCompleted = false;
+        public BehaviorGroup turnOffWhenGroupCompleted = null;
         public int timesCompleted = 0;
+        public int timesTillFullyCompleted = -1;
+
+        public bool fullyCompleted = false;
+        public int goTo = -1;
 
         public enum AndOr
         {
@@ -45,6 +50,21 @@ namespace SS.AI
             }
 
             return result;
+        }
+
+        public bool EvaluateCompletion()
+        {
+            if (timesTillFullyCompleted >= 0 && timesCompleted >= timesTillFullyCompleted)
+            {
+                fullyCompleted = true;
+            }
+
+            if (turnOffWhenGroupCompleted != null && turnOffWhenGroupCompleted.fullyCompleted)
+            {
+                fullyCompleted = true;
+            }
+
+            return fullyCompleted;
         }
     }
 }

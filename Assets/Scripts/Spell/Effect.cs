@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SS.StatusSpace;
 using SS.Character;
+using SS.Animation;
 using UnityEngine.UI;
 
 namespace SS.Spells
@@ -75,6 +76,13 @@ namespace SS.Spells
         public Effect attachedEffect;
 
         [Space(5)]
+        [Header("Animation and Audio Stuff")]
+        public AnimationObject animationToPlay;
+        [System.NonSerialized]
+        public AnimationObjectManager animationObjectManager;
+        public AudioClip soundEffect;
+
+        [Space(5)]
         [Header("Misc")]
         public Sprite icon;
         public Style style;
@@ -91,6 +99,8 @@ namespace SS.Spells
             {
                 resources = GameObject.Find("Effect Resources").GetComponent<EffectResources>();
             }
+
+            animationObjectManager = FindObjectOfType<AnimationObjectManager>();
         }
 
         public virtual void ResetStats()
@@ -358,6 +368,11 @@ namespace SS.Spells
 
         public void SetInUse(bool setTo, UI.MagicFrame frame)
         {
+            if (name == "Effect_ Arcane Bolt(Clone)")
+            {
+                //Debug.Log("In Thing, setTo = " + setTo);
+            }
+
             inUse = setTo;
 
             if (!setTo)

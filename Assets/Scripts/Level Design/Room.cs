@@ -123,10 +123,8 @@ namespace SS.LevelDesign
         {
             currentlyActive = this;
 
-            if (!cleared && !dontActivate)
+            if (!dontActivate)
             {
-                doors.SetActive(true);
-
                 foreach (GameObject load in toLoad)
                 {
                     if (load != null)
@@ -134,6 +132,11 @@ namespace SS.LevelDesign
                         load.SetActive(true);
                     }
                 }
+            }
+
+            if (!cleared && !dontActivate)
+            {
+                doors.SetActive(true);
 
                 turnManager.SetTurnTakerList();
                 player.GetComponent<SS.PlayerMovement.SS_PlayerMoveRange>().ResetMoveRange(player.transform.position);

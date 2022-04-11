@@ -37,6 +37,14 @@ namespace SS.Spells
             style = Style.Utility;
         }
 
+        public override void Start()
+        {
+            base.Start();
+
+            animationToPlay = animationObjectManager.teleportAnimation;
+            soundEffect = resources.GetTeleportAudio();
+        }
+
         public override void Update()
         {
             base.Update();

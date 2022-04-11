@@ -22,19 +22,81 @@ public class Effect_Possession : Effect
         package.targets = t;
     }
 
+    //public override void BehaviorWhenDelivered_Enchanting(BehaviorPackage package)
+    //{
+    //    base.BehaviorWhenDelivered_Enchanting(package);
+
+    //    foreach (Target target in package.targets)
+    //    {
+    //        CharacterStats stats;
+    //        if (target.TryGetComponent<CharacterStats>(out stats) && stats.meleeAttack != null)
+    //        {
+    //            //the first wepaon is always the melee attack
+    //            stats.meleeAttack.activeWeapons[0].AddStatusToInflict(mainStatus);
+    //        }
+    //    }
+    //}
+
+    //public override void BehaviorWhenDelivered_Mutation(BehaviorPackage package)
+    //{
+    //    base.BehaviorWhenDelivered_Mutation(package);
+
+    //    foreach (Target target in package.targets)
+    //    {
+    //        CharacterStats stats;
+    //        if (target.TryGetComponent<CharacterStats>(out stats) && stats.meleeAttack != null)
+    //        {
+    //            //the first wepaon is always the melee attack
+    //            stats.meleeAttack.activeWeapons[0].AddStatusToInflict(mainStatus);
+    //        }
+    //    }
+    //}
+
+    //public override void BehaviorWhenDelivered_Possession(BehaviorPackage package)
+    //{
+    //    base.BehaviorWhenDelivered_Possession(package);
+
+    //    foreach (Target target in package.targets)
+    //    {
+    //        CharacterStats stats;
+    //        if (target.TryGetComponent<CharacterStats>(out stats) && stats.meleeAttack != null)
+    //        {
+    //            //the first wepaon is always the melee attack
+    //            stats.meleeAttack.activeWeapons[0].AddStatusToInflict(mainStatus);
+    //        }
+    //    }
+    //}
+
+    //public override void BehaviorWhenDelivered_Projection(BehaviorPackage package)
+    //{
+    //    base.BehaviorWhenDelivered_Projection(package);
+
+    //    //TODO
+    //}
+
+    //public override void BehaviorWhenDelivered_Summoning(BehaviorPackage package)
+    //{
+    //    base.BehaviorWhenDelivered_Summoning(package);
+
+    //    Effect_Summoning.BehaviorPackageSummoning bps =
+    //package as Effect_Summoning.BehaviorPackageSummoning;
+
+    //    CharacterStats stats;
+    //    if (bps.toSummon.TryGetComponent<CharacterStats>(out stats) && stats.meleeAttack != null)
+    //    {
+    //        //the first wepaon is always the melee attack
+    //        stats.meleeAttack.activeWeapons[0].AddStatusToInflict(mainStatus);
+    //    }
+    //}
+
+
+
+
     public override void BehaviorWhenDelivered_Enchanting(BehaviorPackage package)
     {
         base.BehaviorWhenDelivered_Enchanting(package);
 
-        foreach (Target target in package.targets)
-        {
-            CharacterStats stats;
-            if (target.TryGetComponent<CharacterStats>(out stats) && stats.meleeAttack != null)
-            {
-                //the first wepaon is always the melee attack
-                stats.meleeAttack.activeWeapons[0].AddStatusToInflict(mainStatus);
-            }
-        }
+        package.effect.AddToMainStatusList(mainStatus);
     }
 
     public override void BehaviorWhenDelivered_Mutation(BehaviorPackage package)
@@ -43,12 +105,7 @@ public class Effect_Possession : Effect
 
         foreach (Target target in package.targets)
         {
-            CharacterStats stats;
-            if (target.TryGetComponent<CharacterStats>(out stats) && stats.meleeAttack != null)
-            {
-                //the first wepaon is always the melee attack
-                stats.meleeAttack.activeWeapons[0].AddStatusToInflict(mainStatus);
-            }
+            target.ApplyStatus(mainStatus, this);
         }
     }
 
@@ -58,12 +115,7 @@ public class Effect_Possession : Effect
 
         foreach (Target target in package.targets)
         {
-            CharacterStats stats;
-            if (target.TryGetComponent<CharacterStats>(out stats) && stats.meleeAttack != null)
-            {
-                //the first wepaon is always the melee attack
-                stats.meleeAttack.activeWeapons[0].AddStatusToInflict(mainStatus);
-            }
+            target.ApplyStatus(mainStatus, this);
         }
     }
 
@@ -71,64 +123,12 @@ public class Effect_Possession : Effect
     {
         base.BehaviorWhenDelivered_Projection(package);
 
-        //TODO
+        package.effect.AddToMainStatusList(mainStatus);
     }
 
     public override void BehaviorWhenDelivered_Summoning(BehaviorPackage package)
     {
         base.BehaviorWhenDelivered_Summoning(package);
-
-        Effect_Summoning.BehaviorPackageSummoning bps =
-    package as Effect_Summoning.BehaviorPackageSummoning;
-
-        CharacterStats stats;
-        if (bps.toSummon.TryGetComponent<CharacterStats>(out stats) && stats.meleeAttack != null)
-        {
-            //the first wepaon is always the melee attack
-            stats.meleeAttack.activeWeapons[0].AddStatusToInflict(mainStatus);
-        }
-    }
-
-
-
-
-    public override void BehaviorWhenTargeting_Enchanting(BehaviorPackage package)
-    {
-        base.BehaviorWhenTargeting_Enchanting(package);
-
-        package.effect.AddToMainStatusList(mainStatus);
-    }
-
-    public override void BehaviorWhenTargeting_Mutation(BehaviorPackage package)
-    {
-        base.BehaviorWhenTargeting_Mutation(package);
-
-        foreach (Target target in package.targets)
-        {
-            target.ApplyStatus(mainStatus, this);
-        }
-    }
-
-    public override void BehaviorWhenTargeting_Possession(BehaviorPackage package)
-    {
-        base.BehaviorWhenTargeting_Possession(package);
-
-        foreach (Target target in package.targets)
-        {
-            target.ApplyStatus(mainStatus, this);
-        }
-    }
-
-    public override void BehaviorWhenTargeting_Projection(BehaviorPackage package)
-    {
-        base.BehaviorWhenTargeting_Projection(package);
-
-        package.effect.AddToMainStatusList(mainStatus);
-    }
-
-    public override void BehaviorWhenTargeting_Summoning(BehaviorPackage package)
-    {
-        base.BehaviorWhenTargeting_Summoning(package);
 
         Effect_Summoning.BehaviorPackageSummoning bps =
             package as Effect_Summoning.BehaviorPackageSummoning;
@@ -144,7 +144,7 @@ public class Effect_Possession : Effect
         {
             if (e == null) continue;
 
-            e.BehaviorWhenTargeting(package);
+            e.BehaviorWhenDelivered(package);
         }
         foreach (Effect e in deliveredEffects)
         {

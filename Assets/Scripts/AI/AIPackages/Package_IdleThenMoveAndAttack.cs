@@ -10,10 +10,11 @@ namespace SS.AI
         [Header("Can Modify")]
         public int radius = 1;
         public Transform target;
+        public Animation.MovementAnimation movementAnimation; //Child of teh package object.
 
-        public override void Awake()
+        public override void Start()
         {
-            base.Awake();
+            base.Start();
 
             groupsVersion = true;
 

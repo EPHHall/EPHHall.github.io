@@ -15,6 +15,8 @@ namespace SS.AI
         {
             this.agent = agent;
 
+            //Debug.Log(agent);
+
             prevHP = agent.characterStats.hp;
         }
 

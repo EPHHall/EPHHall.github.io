@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SS.Character;
 using SS.Util;
+using SS.Animation;
 
 namespace SS.Spells
 {
@@ -43,11 +44,17 @@ namespace SS.Spells
         public string statusesDescription;
 
         [Space(5)]
+        [Header("Animation Stuff")]
+        public List<AnimationObject> animationsToPlay;
+
+        [Space(5)]
         [Header("Misc")]
         public string spellName;
         public Sprite icon;
         public CharacterStats caster;
         public int timesCastThisRound = 0;
+        public Animation.AnimationManager animationManager;
+        public Animation.AnimationObjectManager animationObjectManager;
 
         public virtual void Start()
         {
@@ -83,6 +90,9 @@ namespace SS.Spells
             er = GameObject.FindGameObjectWithTag("Effect Resources").GetComponent<EffectResources>();
 
             targetableTile = er.GetCastingTile();
+
+            animationObjectManager = FindObjectOfType<Animation.AnimationObjectManager>();
+            animationManager = FindObjectOfType<Animation.AnimationManager>();
         }
 
         public virtual void Update()
@@ -177,36 +187,68 @@ namespace SS.Spells
 
         public virtual void CastSpell(bool overrideTileRequirement)
         {
-            //SS.GameController.TurnManager.staticPrintTurnTaker = true;
-            SS.Character.CharacterStats character = SS.GameController.TurnManager.currentTurnTaker.GetComponent<SS.Character.CharacterStats>();
+            caster = SS.GameController.TurnManager.currentTurnTaker.GetComponent<SS.Character.CharacterStats>();
 
-            if (character.actionPoints < apCost)
+            animationsToPlay = new List<AnimationObject>();
+            foreach (Effect e in deliveredByMain)
+            {
+                if (e == null) continue;
+
+                animationsToPlay.Add(e.animationToPlay);
+            }
+            animationsToPlay.Insert(0, main.animationToPlay);
+
+            //SS.GameController.TurnManager.staticPrintTurnTaker = true;
+            SS.Character.CharacterStats character = caster;
+
+            int cost = 0;
+            if (apCost < 1)
+            {
+                if (timesCastThisRound < Mathf.Abs(1 - apCost))
+                {
+                    cost = 0;
+                }
+                else
+                {
+                    cost = 1;
+                }
+            }
+            else
+            {
+                cost = apCost;
+            }
+
+            if (character.actionPoints < cost)
             {
                 GameObject.FindObjectOfType<SS.UI.UpdateText>().SetMessage("Too few action points!", Color.red);
             }
 
-            if ((CastingTile.selectedTiles.Count > 0 || overrideTileRequirement) && character != null && character.mana >= manaCost && character.actionPoints >= apCost)
+            if ((CastingTile.selectedTiles.Count > 0 || overrideTileRequirement) && character != null && character.mana >= manaCost && character.actionPoints >= cost)
             {
                 CAST_WAS_SUCCESSFUL.Set(true);
 
-                SS.Util.CharacterStatsInterface.DamageMana(character, manaCost);
-
-                int cost = 0;
-                if (apCost < 1)
+                if (GetComponent<AudioSource>() != null)
                 {
-                    if (timesCastThisRound < Mathf.Abs(1 - apCost))
+                    if (main.soundEffect == null)
                     {
-                        cost = 0;
+                        GetComponent<AudioSource>().clip = er.GetDefaultSpellAudio();
                     }
                     else
                     {
-                        cost = 1;
+                        GetComponent<AudioSource>().clip = main.soundEffect;
                     }
+                    GetComponent<AudioSource>().Play();
                 }
                 else
                 {
-                    cost = apCost;
+                    Debug.Log("It was null");
                 }
+
+                SpellManager.SetTargetsList(Target.selectedTargets);
+                SpellManager.caster = caster.transform;
+
+                SS.Util.CharacterStatsInterface.DamageMana(character, manaCost);
+
                 SS.Util.CharacterStatsInterface.DamageActionPoints(character, cost);
 
                 timesCastThisRound++;
@@ -230,6 +272,16 @@ namespace SS.Spells
                     Damage newDamage = new Damage(Damage.DamageType.Arcane, modifiedDamage);
 
                     TargetInterface.DamageTarget(target, newDamage, main);
+
+                    foreach (AnimationObject animation in animationsToPlay)
+                    {
+                        animationManager.AddAnimation(new AnimationPlusObject(animation, target.transform, "Play"));
+                    }
+                }
+
+                if(caster.tag == "Player")
+                {
+                    animationManager.RunAnimations();
                 }
             }
         }
@@ -336,7 +388,7 @@ namespace SS.Spells
         public void RemoveModifier(Modifier modifier)
         {
             //
-            Debug.Log("In Remove Modidifer");
+            //Debug.Log("In Remove Modidifer");
 
             modifiers.Remove(modifier);
 

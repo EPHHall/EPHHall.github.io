@@ -77,7 +77,23 @@ MonoBehaviour:
   attachedAgent: {fileID: 0}
   behaviorGroups: []
   position: {x: -Infinity, y: -Infinity}
+  run: 0
+  currentGroup:
+    timesCompleted: 0
+    timesTillFullyCompleted: -1
+    fullyCompleted: 0
+    goTo: -1
+    andOr: 1
+  index: 0
+  mainBehaviors: 0
+  waitForAnimations:
+    timesCompleted: 0
+    timesTillFullyCompleted: -1
+    fullyCompleted: 0
+    goTo: -1
+    andOr: 1
   target: {fileID: 0}
+  movementAnimation: {fileID: 0}
 --- !u!1 &8172245870127337797
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,6 +141,22 @@ MonoBehaviour:
   attachedAgent: {fileID: 0}
   behaviorGroups: []
   position: {x: -Infinity, y: -Infinity}
+  run: 0
+  currentGroup:
+    timesCompleted: 0
+    timesTillFullyCompleted: -1
+    fullyCompleted: 0
+    goTo: -1
+    andOr: 1
+  index: 0
+  mainBehaviors: 0
+  waitForAnimations:
+    timesCompleted: 0
+    timesTillFullyCompleted: -1
+    fullyCompleted: 0
+    goTo: -1
+    andOr: 1
+  movementAnimation: {fileID: 0}
 --- !u!1 &8172245870512394692
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,6 +178,8 @@ GameObject:
   - component: {fileID: 8172245870512394689}
   - component: {fileID: 8172245870512394690}
   - component: {fileID: 625416542}
+  - component: {fileID: -8333720460282943177}
+  - component: {fileID: 129894620914785763}
   m_Layer: 0
   m_Name: Vampire
   m_TagString: Enemy
@@ -371,6 +405,7 @@ MonoBehaviour:
   initialPositions: []
   takenPositions: []
   characterFollower: {fileID: 0}
+  mayDie: 0
 --- !u!114 &8172245870512394688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -446,6 +481,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8df008484652b3a488882bcec1b5baad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-8333720460282943177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8172245870512394692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd3bd1d7eb2e69143b0557274ba76118, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interval: 0.145
+--- !u!114 &129894620914785763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8172245870512394692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61397d61e71e8b14ca4b9dd449beab35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprite2: {fileID: 21300000, guid: d5684aa11e143df47ba90164efd1935d, type: 3}
+  frequency: 0.25
 --- !u!1 &8172245871491143381
 GameObject:
   m_ObjectHideFlags: 0
@@ -505,10 +567,13 @@ MonoBehaviour:
   targetableTile: {fileID: 1103078107984049863, guid: c4b7b9f61b78f614c996d6b4be984425, type: 3}
   description: 
   statusesDescription: 
+  animationsToPlay: []
   spellName: 
   icon: {fileID: 5811675278147054703, guid: 90a2e7a07b31a8c478db8064de21d317, type: 3}
   caster: {fileID: 0}
   timesCastThisRound: 0
+  animationManager: {fileID: 0}
+  animationObjectManager: {fileID: 0}
 --- !u!1 &8172245871557370621
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,10 +634,13 @@ MonoBehaviour:
   targetableTile: {fileID: 1103078107984049863, guid: c4b7b9f61b78f614c996d6b4be984425, type: 3}
   description: 
   statusesDescription: 
+  animationsToPlay: []
   spellName: 
   icon: {fileID: 5811675278147054703, guid: 90a2e7a07b31a8c478db8064de21d317, type: 3}
   caster: {fileID: 0}
   timesCastThisRound: 0
+  animationManager: {fileID: 0}
+  animationObjectManager: {fileID: 0}
 --- !u!1 &8172245872027251306
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,23 +11,28 @@ namespace SS.Misc
         //for the most part (I think) this dictionary will only have 1 entry.
         private Dictionary<CastingTile, bool> castingTilesDetected = new Dictionary<CastingTile, bool>();
 
+        public SS.UI.StatsCard statsCard;
+
         private void FixedUpdate()
         {
             Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, transform.lossyScale.x);
             foreach (Collider2D hit in hits)
             {
-                if (hit.GetComponent<CastingTile>())
+                if (statsCard != null)
                 {
-                    CastingTile tile = hit.GetComponent<CastingTile>();
-                    tile.PointerEntered();
+                    if (hit.GetComponent<CastingTile>() && !statsCard.pointerIsOver)
+                    {
+                        CastingTile tile = hit.GetComponent<CastingTile>();
+                        tile.PointerEntered();
 
-                    if (castingTilesDetected.ContainsKey(tile))
-                    {
-                        castingTilesDetected[tile] = true;
-                    }
-                    else
-                    {
-                        castingTilesDetected.Add(tile, true);
+                        if (castingTilesDetected.ContainsKey(tile))
+                        {
+                            castingTilesDetected[tile] = true;
+                        }
+                        else
+                        {
+                            castingTilesDetected.Add(tile, true);
+                        }
                     }
                 }
                 
