@@ -10,6 +10,23 @@ namespace SS.Spells
     public class Target : MonoBehaviour
     {
         //SS.Util.TargetInterface TargetInterface;
+        [System.Serializable]
+        public class DamageStuff
+        {
+            public Spells.Target target;
+            public Character.Damage damage;
+            public Spells.Effect inflictor;
+
+            public DamageStuff(Spells.Target target, Character.Damage damage, Spells.Effect inflictor)
+            {
+                this.target = target;
+                this.damage = damage;
+                this.inflictor = inflictor;
+            }
+        }
+
+        public List<DamageStuff> inflictAtEndOfTur = new List<DamageStuff>();
+        public List<DamageStuff> inflictWhenAnimationReaches = new List<DamageStuff>();
 
         public TargetType targetType;
         public int hp;
@@ -45,6 +62,28 @@ namespace SS.Spells
             }
         }
 
+        public void InflictEndOfTurnDamage()
+        {
+            foreach (DamageStuff damageStuff in inflictAtEndOfTur)
+            {
+                Util.TargetInterface.DamageTarget(damageStuff.target, damageStuff.damage, damageStuff.inflictor);
+            }
+
+            inflictAtEndOfTur.Clear();
+        }
+
+        public void InflictOnAnimationHitDamage()
+        {
+            Debug.Log("In AnimationReached");
+            foreach (DamageStuff damageStuff in inflictWhenAnimationReaches)
+            {
+                Debug.Log("In AnimationReached Loop");
+                Util.TargetInterface.DamageTarget(damageStuff.target, damageStuff.damage, damageStuff.inflictor);
+            }
+
+            inflictWhenAnimationReaches.Clear();
+        }
+
         public virtual void TakeDamage(int damage)
         {
             hp -= damage;
@@ -52,11 +91,6 @@ namespace SS.Spells
 
         public void HandleStatuses(bool newRound, bool preventDecrement)
         {
-            //if (name == "Table Piece (8)")
-            //{
-            //    Debug.Log(preventDecrement);
-            //}
-
             if (preventDecrement)
             {
                 StatusInterpreter.InterpretStatuses(this, StatusInterpreter.DecrementBehavior.Dont, statuses);

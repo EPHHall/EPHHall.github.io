@@ -45,11 +45,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 8
   damage: 1
-  castSpeed: 1
   manaCost: 2
   apCost: 1
   currentSpellPoints: 8
   maxSpellPoints: 10
+  modifiedDamage: 0
   main: {fileID: 0}
   targetMain: []
   deliveredByMain: []
@@ -59,8 +59,13 @@ MonoBehaviour:
   targetableTile: {fileID: 1103078107984049863, guid: c4b7b9f61b78f614c996d6b4be984425, type: 3}
   description: 
   statusesDescription: 
+  animationsToPlay: []
   spellName: 
   icon: {fileID: 5811675278147054703, guid: 90a2e7a07b31a8c478db8064de21d317, type: 3}
+  caster: {fileID: 0}
+  timesCastThisRound: 0
+  animationManager: {fileID: 0}
+  animationObjectManager: {fileID: 0}
 --- !u!1 &4085296905628478144
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,11 +111,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 0
   damage: 0
-  castSpeed: 0
   manaCost: 0
   apCost: 0
   currentSpellPoints: 10
   maxSpellPoints: 10
+  modifiedDamage: 0
   main: {fileID: 0}
   targetMain: []
   deliveredByMain: []
@@ -120,8 +125,13 @@ MonoBehaviour:
   targetableTile: {fileID: 0}
   description: 
   statusesDescription: 
+  animationsToPlay: []
   spellName: 
   icon: {fileID: 0}
+  caster: {fileID: 0}
+  timesCastThisRound: 0
+  animationManager: {fileID: 0}
+  animationObjectManager: {fileID: 0}
   activeWeapons: []
   unarmedWeapon: {fileID: 0}
   weaponBeingUsed: -1
@@ -144,6 +154,7 @@ GameObject:
   - component: {fileID: 4085296905716029961}
   - component: {fileID: 4085296905716029962}
   - component: {fileID: 4085296905716029963}
+  - component: {fileID: -5379037146119983892}
   m_Layer: 0
   m_Name: Friendly Vampire
   m_TagString: Untagged
@@ -364,9 +375,12 @@ MonoBehaviour:
   moveTile: {fileID: 1103078107984049863, guid: 263d992086af3b34c9357f5f95978c04, type: 3}
   abilityTile: {fileID: 6753667278753664400, guid: 26d1fb1e2ccf63f41adc7faf60a39d85, type: 3}
   meleeAttack: {fileID: 859123287370490459}
+  characterDeath: {fileID: 0}
   initialPositions: []
   takenPositions: []
   characterFollower: {fileID: 0}
+  mayDie: 0
+  className: 
 --- !u!114 &4085296905716029962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -379,6 +393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 676ffc63b72f993439385f8075f51cb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dontAutomaticallyAdd: 0
   packages:
   - {fileID: 4085296906244549452}
   activate: 0
@@ -398,9 +413,11 @@ MonoBehaviour:
   mainTarget: {fileID: 0}
   targetFaction: 1
   previousTargetFaction: 1
+  defaultTarget: {fileID: 0}
   spells:
   - {fileID: 859123287370490459}
   spellToCast: {fileID: 0}
+  positionAtStartofTurn: {x: 0, y: 0}
   characterStats: {fileID: 0}
 --- !u!114 &4085296905716029963
 MonoBehaviour:
@@ -415,6 +432,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   factionName: 0
+--- !u!114 &-5379037146119983892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4085296905716029972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61397d61e71e8b14ca4b9dd449beab35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprite2: {fileID: 21300000, guid: d5684aa11e143df47ba90164efd1935d, type: 3}
+  frequency: 0.25
 --- !u!1 &4085296906244549453
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,7 +489,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97e1aa72e5308c64eb44f07f14203585, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groupsVersion: 0
   attachedAgent: {fileID: 0}
+  behaviorGroups: []
+  position: {x: -Infinity, y: -Infinity}
+  run: 0
+  currentGroup:
+    timesCompleted: 0
+    timesTillFullyCompleted: -1
+    fullyCompleted: 0
+    goTo: -1
+    andOr: 1
+  index: 0
+  mainBehaviors: 0
+  waitForAnimations:
+    timesCompleted: 0
+    timesTillFullyCompleted: -1
+    fullyCompleted: 0
+    goTo: -1
+    andOr: 1
+  movementAnimation: {fileID: 0}
 --- !u!1 &4085296906499855632
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,7 +566,13 @@ MonoBehaviour:
     amount: 0
     statusesToInflict: []
     weapon: {fileID: 0}
+    temporary: 0
+  spellObject: {fileID: 0}
+  spellToCast: {fileID: 0}
+  spellUses: 0
+  spellUsesMax: 0
   unarmed: 0
+  weaponName: 
 --- !u!58 &4085296906499855636
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -650,6 +706,10 @@ PrefabInstance:
       propertyPath: range
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 466735156509912314, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
+      propertyPath: soundEffect
+      value: 
+      objectReference: {fileID: 8300000, guid: 568b45ba361aee84eb367c12ea366389, type: 3}
     - target: {fileID: 3656605557539978194, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: rangeMod
       value: 1

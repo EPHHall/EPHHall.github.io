@@ -17,9 +17,18 @@ namespace SS.GameController
         public int turnNumber;
         public int roundNumber;
 
+        public bool newRound;
+
         private Transform marker;
 
         private TurnTakerPlayer player;
+
+        private bool animateTurnIndicator;
+        private float t;
+        private Vector2 markerOGPos;
+        private Vector2 markerOffset;
+        public float turnIndicatorSpeed;
+        public float pauseAfterMarkerAnimation;
 
         [Space(5)]
         [Header("Controls")]
@@ -41,6 +50,9 @@ namespace SS.GameController
             marker = GameObject.Find("Turn Marker").transform;
 
             ChangeTurnTaker();
+
+            markerOffset.y = marker.localPosition.y;
+            markerOffset.x = marker.localPosition.x;
         }
 
         public void Update()
@@ -50,6 +62,19 @@ namespace SS.GameController
                 PrintCurrentTurnTaker();
                 printTurnTaker = false;
                 staticPrintTurnTaker = false;
+            }
+
+            if(animateTurnIndicator && t < 1 + pauseAfterMarkerAnimation)
+            {
+                t += Time.deltaTime * turnIndicatorSpeed;
+
+                marker.transform.position = Vector2.Lerp(markerOGPos, (Vector2)turnTakers[turnTakersIndex].transform.position + markerOffset, t);
+            }
+            else if(animateTurnIndicator)
+            {
+                animateTurnIndicator = false;
+                marker.position = (Vector2)turnTakers[turnTakersIndex].transform.position + markerOffset;
+                FinishChangingTurnTaker();
             }
         }
 
@@ -115,9 +140,14 @@ namespace SS.GameController
             Debug.Log(currentTurnTaker.name);
         }
 
+        bool changingTurnTaker;
         public void ChangeTurnTaker()
         {
-            bool newRound = false;
+            if (changingTurnTaker) return;
+
+            changingTurnTaker = true;
+
+            newRound = false;
             turnTakersIndex++;
 
             if (currentTurnTaker != null)
@@ -148,6 +178,14 @@ namespace SS.GameController
                 package.run = false;
             }
 
+            markerOGPos = marker.transform.position;
+            t = 0;
+
+            animateTurnIndicator = true;
+        }
+
+        public void FinishChangingTurnTaker()
+        {
             StartTurn(turnTakers[turnTakersIndex]);
 
             SS.Spells.Target[] targets = FindObjectsOfType<SS.Spells.Target>();
@@ -164,7 +202,11 @@ namespace SS.GameController
             {
                 currentTurnTaker.GetComponent<SS.Spells.Target>().HandleStatuses(newRound, false);
             }
+
+            changingTurnTaker = false;
         }
+
+
 
         public void EndTurn(TurnTaker turnTaker)
         {

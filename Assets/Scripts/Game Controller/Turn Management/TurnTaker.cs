@@ -6,8 +6,11 @@ namespace SS.GameController
 {
     public class TurnTaker : MonoBehaviour
     {
+        //These damage handling variables and functions should be in Target instead. TODO
+        //Also, DamageStuff should probably be in Damage or TargetInterface, that would make more sense.
+
         public bool dontAutomaticallyAdd = false;
-        
+
         public virtual void Awake()
         {
         }
@@ -19,6 +22,8 @@ namespace SS.GameController
         public virtual void EndTurn()
         {
             SS.Util.SpawnRange.DespawnRange();
+
+            GetComponent<Spells.Target>().InflictEndOfTurnDamage();
         }
 
         public virtual void StartTurn()

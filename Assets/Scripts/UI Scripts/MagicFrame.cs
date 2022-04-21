@@ -172,14 +172,17 @@ namespace SS.UI
 
         public virtual void OnPointerUp(PointerEventData eventData)
         {
-            //pointerIsDown = false;
-
-            if (currentDragObject != null)
+            if (SS.GameController.NoInteractableIfObjectsAreActive.noInteract == null || SS.GameController.NoInteractableIfObjectsAreActive.noInteract.CanInteract())
             {
-                currentDragObject.GetComponent<FrameDragObject>().FillCurrentFrame();
+                    //pointerIsDown = false;
 
-                Destroy(currentDragObject);
-                currentDragObject = null;
+                if (currentDragObject != null)
+                {
+                    currentDragObject.GetComponent<FrameDragObject>().FillCurrentFrame();
+
+                    Destroy(currentDragObject);
+                    currentDragObject = null;
+                }
             }
         }
 
@@ -190,60 +193,72 @@ namespace SS.UI
 
         public virtual void OnPointerClick(PointerEventData eventData)
         {
-            if (eventData.button == PointerEventData.InputButton.Right)
+            if (SS.GameController.NoInteractableIfObjectsAreActive.noInteract == null || SS.GameController.NoInteractableIfObjectsAreActive.noInteract.CanInteract())
             {
-                ResetFrame();
+                if (eventData.button == PointerEventData.InputButton.Right)
+                {
+                    ResetFrame();
+                }
             }
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            pointerOver = true;
-
-            lineRenderer.gameObject.SetActive(true);
-
-            Effect contentEffect = content as Effect;
-            Modifier contentMod = content as Modifier;
-
-            if (content != null)
+            if (SS.GameController.NoInteractableIfObjectsAreActive.noInteract == null || SS.GameController.NoInteractableIfObjectsAreActive.noInteract.CanInteract())
             {
-                if (contentEffect != null && contentEffect.inventoryFrame != null && contentEffect.activeFrame != null)
-                {
-                    Vector2 pos1 = contentEffect.inventoryFrame.transform.position;
-                    Vector2 pos2 = contentEffect.activeFrame.transform.position;
+                pointerOver = true;
 
-                    lineRenderer.SetPosition(0, pos1);
-                    lineRenderer.SetPosition(1, pos2);
-                }
-                else if (contentMod != null && contentMod.inventoryFrame != null && contentMod.activeFrame != null)
-                {
-                    Vector2 pos1 = contentMod.inventoryFrame.transform.position;
-                    Vector2 pos2 = contentMod.activeFrame.transform.position;
+                lineRenderer.gameObject.SetActive(true);
 
-                    lineRenderer.SetPosition(0, pos1);
-                    lineRenderer.SetPosition(1, pos2);
+                Effect contentEffect = content as Effect;
+                Modifier contentMod = content as Modifier;
+
+                if (content != null)
+                {
+                    if (contentEffect != null && contentEffect.inventoryFrame != null && contentEffect.activeFrame != null)
+                    {
+                        Vector2 pos1 = contentEffect.inventoryFrame.transform.position;
+                        Vector2 pos2 = contentEffect.activeFrame.transform.position;
+
+                        lineRenderer.SetPosition(0, pos1);
+                        lineRenderer.SetPosition(1, pos2);
+                    }
+                    else if (contentMod != null && contentMod.inventoryFrame != null && contentMod.activeFrame != null)
+                    {
+                        Vector2 pos1 = contentMod.inventoryFrame.transform.position;
+                        Vector2 pos2 = contentMod.activeFrame.transform.position;
+
+                        lineRenderer.SetPosition(0, pos1);
+                        lineRenderer.SetPosition(1, pos2);
+                    }
                 }
             }
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            pointerOver = false;
+            if (SS.GameController.NoInteractableIfObjectsAreActive.noInteract == null || SS.GameController.NoInteractableIfObjectsAreActive.noInteract.CanInteract())
+            {
+                pointerOver = false;
 
-            lineRenderer.gameObject.SetActive(false);
-            lineRenderer.SetPosition(0, Vector2.zero);
-            lineRenderer.SetPosition(1, Vector2.zero);
+                lineRenderer.gameObject.SetActive(false);
+                lineRenderer.SetPosition(0, Vector2.zero);
+                lineRenderer.SetPosition(1, Vector2.zero);
+            }
         }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            //TODO: If there are any issues with spawning the dragobject, it could be because this code was moved from 
-            //OnPointerDown
-            if (activeFrame && dragObject != null && eventData.button != PointerEventData.InputButton.Right)
+            if (SS.GameController.NoInteractableIfObjectsAreActive.noInteract == null || SS.GameController.NoInteractableIfObjectsAreActive.noInteract.CanInteract())
             {
-                currentDragObject = Instantiate(dragObject, GameObject.Find("Drag Box Parent").transform);
-                currentDragObject.GetComponent<FrameDragObject>().createdFrom = this;
-                currentDragObject.GetComponent<FrameDragObject>().SetIcon();
+                    //TODO: If there are any issues with spawning the dragobject, it could be because this code was moved from 
+                    //OnPointerDown
+                if (activeFrame && dragObject != null && eventData.button != PointerEventData.InputButton.Right)
+                {
+                    currentDragObject = Instantiate(dragObject, GameObject.Find("Drag Box Parent").transform);
+                    currentDragObject.GetComponent<FrameDragObject>().createdFrom = this;
+                    currentDragObject.GetComponent<FrameDragObject>().SetIcon();
+                }
             }
         }
 

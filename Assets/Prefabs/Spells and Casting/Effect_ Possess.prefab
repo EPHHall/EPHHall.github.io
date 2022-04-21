@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetable: 0
-  speed: 1
   manaCost: 5
   spellPointCost: 4
   actionPointCost: 1
@@ -54,16 +53,19 @@ MonoBehaviour:
     amount: 0
     statusesToInflict: []
     weapon: {fileID: 0}
+    temporary: 0
   damageList:
   - type: 4
     amount: 0
     statusesToInflict: []
     weapon: {fileID: 0}
+    temporary: 0
   originalDamageList:
   - type: 4
     amount: 0
     statusesToInflict: []
     weapon: {fileID: 0}
+    temporary: 0
   mainStatus:
     statusName: 4
     magnitude: 1
@@ -123,6 +125,12 @@ MonoBehaviour:
   deliveredEffects: []
   targetMeEffects: []
   attachedEffect: {fileID: 0}
+  animationToPlay: {fileID: 0}
+  soundEffect: {fileID: 0}
   icon: {fileID: 21300000, guid: c8324ff34b683d24a8669a14fb3a03bc, type: 3}
   style: 2
   type: 4
+  inUse: 0
+  inventoryFrame: {fileID: 0}
+  activeFrame: {fileID: 0}
+  description: Force a target to fight for you on their turn.

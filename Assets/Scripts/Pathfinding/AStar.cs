@@ -37,9 +37,7 @@ namespace SS.Pathfinding
             Node startNode = grid.NodeFromWorldPosition(start);
             Node endNode = grid.NodeFromWorldPosition(end);
 
-
-
-            List<Node> openList = new List<Node>();
+            List < Node > openList = new List<Node>();
             HashSet<Node> closedList = new HashSet<Node>();
 
             openList.Add(startNode);
@@ -64,7 +62,7 @@ namespace SS.Pathfinding
                 if (currentNode == endNode)
                 {
                     //Debug.Log("Did reach end node");
-                    return GetFinalPath(startNode, endNode);
+                    return GetFinalPath(startNode, endNode, end);
                 }
 
                 foreach (Node neighborNode in grid.GetNeighboringNodes(currentNode))
@@ -78,7 +76,7 @@ namespace SS.Pathfinding
                             //Debug.Log("Did reach end node 2");
                             neighborNode.previous = currentNode;
 
-                            return GetFinalPath(startNode, endNode);
+                            return GetFinalPath(startNode, endNode, end);
                         }
 
                         continue;
@@ -107,14 +105,17 @@ namespace SS.Pathfinding
             return null;
         }
 
-        private List<Node> GetFinalPath(Node startNode, Node endNode)
+        private List<Node> GetFinalPath(Node startNode, Node endNode, Vector2 end)
         {
             List<Node> finalPath = new List<Node>();
             Node currentNode = endNode;
+            finalPath.Add(currentNode);
 
             while (currentNode != startNode)
             {
-                finalPath.Add(currentNode);
+                if(!finalPath.Contains(currentNode))
+                    finalPath.Add(currentNode);
+
                 currentNode = currentNode.previous;
             }
 

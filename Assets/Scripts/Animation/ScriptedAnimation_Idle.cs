@@ -7,7 +7,8 @@ public class ScriptedAnimation_Idle : MonoBehaviour
     public Sprite sprite2;
     public float frequency;
 
-    private Sprite sprite1;
+    [System.NonSerialized]
+    public Sprite sprite1;
     private SpriteRenderer spriteRenderer;
     private bool reverse;
 

@@ -14,12 +14,32 @@ namespace SS.Util
 
             SS.Character.CharacterStats stats;
 
+            if (GameObject.FindObjectOfType<SS.Animation.ScreenShake>() != null && damage.amount > 0)
+            {
+                GameObject.FindObjectOfType<SS.Animation.ScreenShake>().Run();
+            }
 
             if (target.TryGetComponent(out stats))
             {
                 damage.InflictOnTarget(target, stats, inflictor);
                 return;
             }
+        }
+
+        public static void DamageTargetAtEndOfTurn(Target target, Damage damage, Effect inflictor)
+        {
+            if (target == null) return;
+
+            target.inflictAtEndOfTur.Add(
+                new Target.DamageStuff(target, damage, inflictor));
+        }
+
+        public static void DamageTargetWhenAnimationHits(Target target, Damage damage, Effect inflictor)
+        {
+            if (target == null) return;
+
+            target.inflictWhenAnimationReaches.Add(
+                new Target.DamageStuff(target, damage, inflictor));
         }
     }
 }

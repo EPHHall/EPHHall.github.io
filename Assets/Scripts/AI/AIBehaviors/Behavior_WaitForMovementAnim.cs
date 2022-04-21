@@ -45,7 +45,7 @@ namespace SS.AI
 
             if (result)
             {
-                Debug.Log("");
+                //Debug.Log("");
 
                 movementComplete = false;
                 ranOnce = false;

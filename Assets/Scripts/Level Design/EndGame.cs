@@ -7,18 +7,25 @@ namespace SS.LevelDesign
 {
     public class EndGame : Interactable 
     {
+        public int confirmScene;
+        public int denyScene;
+
         public override void ActivateInteractable()
         {
             base.ActivateInteractable();
 
-            FindObjectOfType<SS.GameController.SS_SceneManager>().ChangeScene(1);
+            if (confirmScene < 0) return;
+
+            FindObjectOfType<SS.GameController.SS_SceneManager>().ChangeScene(confirmScene);
         }
 
         public override void ActivateInteractableAlternate()
         {
             base.ActivateInteractableAlternate();
 
-            FindObjectOfType<SS.GameController.SS_SceneManager>().ChangeScene(0);
+            if (denyScene < 0) return;
+
+            FindObjectOfType<SS.GameController.SS_SceneManager>().ChangeScene(denyScene);
         }
     }
 }

@@ -13,7 +13,7 @@ public class SetDoneFlags : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Debug.Log("SetDoneFlags.Enter");
+        //Debug.Log("SetDoneFlags.Enter");
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -25,7 +25,7 @@ public class SetDoneFlags : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Debug.Log("SetDoneFlags.Exit");
+        //Debug.Log("SetDoneFlags.Exit");
         timesRun++;
 
         if (runHowManyTimes != -1)

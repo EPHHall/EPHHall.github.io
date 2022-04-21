@@ -53,5 +53,5 @@ MonoBehaviour:
   inUse: 0
   inventoryFrame: {fileID: 0}
   activeFrame: {fileID: 0}
-  modifierName: 
-  description: 
+  modifierName: Damage Up
+  description: Increases the damage dealt by a spell's main effect by 1.

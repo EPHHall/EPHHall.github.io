@@ -26,12 +26,18 @@ namespace SS.UI
 
         void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
         {
-            displayer.pointerIsOver = true;
+            if (SS.GameController.NoInteractableIfObjectsAreActive.noInteract == null || SS.GameController.NoInteractableIfObjectsAreActive.noInteract.CanInteract())
+            {
+                displayer.pointerIsOver = true;
+            }
         }
 
         void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
         {
-            displayer.pointerIsOver = false;
+            if (SS.GameController.NoInteractableIfObjectsAreActive.noInteract == null || SS.GameController.NoInteractableIfObjectsAreActive.noInteract.CanInteract())
+            {
+                displayer.pointerIsOver = false;
+            }
         }
 
         private void Update()

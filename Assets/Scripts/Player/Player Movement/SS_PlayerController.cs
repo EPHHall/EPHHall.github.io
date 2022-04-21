@@ -13,6 +13,7 @@ namespace SS.PlayerMovement
 
         public bool pauseMovementForCutscene = false;
         public bool pauseMovementBecauseRangeWasShown = false;
+        public bool pauseMovementForConfirmation = false;
 
         public float cooldownBeforeNextMove;
         public float firstCooldownBeforeNextMove;
@@ -50,15 +51,16 @@ namespace SS.PlayerMovement
 
         void Update()
         {
-            bool result;
+
+            bool result = !pauseMovementForCutscene && !pauseMovementBecauseRangeWasShown && !pauseMovementForConfirmation;
 
             if (tag == "Player")
             {
-                result = !pauseMovementForCutscene && !pauseMovementBecauseRangeWasShown && SS.GameController.TurnManager.currentTurnTaker == GetComponent<SS.GameController.TurnTaker>();
+                result = result && SS.GameController.TurnManager.currentTurnTaker == GetComponent<SS.GameController.TurnTaker>();
             }
             else
             {
-                result = !pauseMovementForCutscene && !pauseMovementBecauseRangeWasShown && SS.GameController.TurnManager.currentTurnTaker == GetComponent<SS.GameController.TurnTakerControlledObject>();
+                result = result && SS.GameController.TurnManager.currentTurnTaker == GetComponent<SS.GameController.TurnTakerControlledObject>();
             }
 
             if (result)
@@ -196,6 +198,14 @@ namespace SS.PlayerMovement
         public void UnPauseMovement_ForCutscene()
         {
             pauseMovementForCutscene = false;
+        }
+        public void PauseMovement_Confirmation()
+        {
+            pauseMovementForConfirmation = true;
+        }
+        public void UnPauseMovement_Confirmation()
+        {
+            pauseMovementForConfirmation = false;
         }
     }
 }

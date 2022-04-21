@@ -13,15 +13,32 @@ namespace SS.UI
         public Transform lowerBound;
         public Transform player;
 
-        public void BringUpBox(string conBoxContent, Interactable interactable)
+        /// <summary>
+        /// Either or both of interactable and action can be null, or they could both be non-null.
+        /// </summary>
+        /// <param name="conBoxContent"></param>
+        /// <param name="interactable"></param>
+        /// <param name="action"></param>
+        public void BringUpBox(string conBoxContent, Interactable interactable, ConfirmationAction action, bool restrictMovement)
         {
+            Debug.Log(action);
             if (player.position.y < lowerBound.position.y)
             {
-                top.ActivateConfirmationBox(conBoxContent, interactable);
+                top.ActivateConfirmationBox(conBoxContent, interactable, action);
+
+                if (restrictMovement)
+                {
+                    top.RestrictPlayerMovement();
+                }
             }
             else
             {
-                bottom.ActivateConfirmationBox(conBoxContent, interactable);
+                bottom.ActivateConfirmationBox(conBoxContent, interactable, action);
+
+                if (restrictMovement)
+                {
+                    bottom.RestrictPlayerMovement();
+                }
             }
         }
     }

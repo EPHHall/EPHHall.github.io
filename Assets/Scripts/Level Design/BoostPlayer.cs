@@ -7,35 +7,90 @@ namespace SS.LevelDesign
     public class BoostPlayer : MonoBehaviour
     {
         public bool vertical;
+        private Transform player;
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        public virtual void Start()
+        {
+            player = GameObject.FindGameObjectWithTag("Player").transform;
+        }
+
+        public virtual void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.tag == "Player")
             {
-                //Debug.Log("Buh");
+                Boost();
+            }
+        }
 
-                if (vertical)
-                {
-                    if (collision.transform.position.y < transform.position.y)
-                    {
-                        collision.transform.position += new Vector3(0, 3, 0);
-                    }
-                    else if (collision.transform.position.y > transform.position.y)
-                    {
-                        collision.transform.position += new Vector3(0, -3, 0);
-                    }
-                }
-                else
-                {
-                    if (collision.transform.position.x < transform.position.x)
-                    {
-                        collision.transform.position += new Vector3(3, 0, 0);
-                    }
-                    else if (collision.transform.position.x > transform.position.x)
-                    {
-                        collision.transform.position += new Vector3(-3, 0, 0);
-                    }
-                }
+        public virtual void Boost()
+        {
+            if (vertical)
+            {
+                BoostVertical();
+            }
+            else
+            {
+                BoostHorizontal();
+            }
+        }
+
+        public virtual void Repel()
+        {
+            if (vertical)
+            {
+                BoostVertical();
+            }
+            else
+            {
+                BoostHorizontal();
+            }
+        }
+
+        public virtual void BoostVertical()
+        {
+            if (player.position.y < transform.position.y)
+            {
+                player.position += new Vector3(0, 3, 0);
+            }
+            else if (player.position.y > transform.position.y)
+            {
+                player.position += new Vector3(0, -3, 0);
+            }
+        }
+
+        public virtual void BoostHorizontal()
+        {
+            if (player.position.x < transform.position.x)
+            {
+                player.position += new Vector3(3, 0, 0);
+            }
+            else if (player.position.x > transform.position.x)
+            {
+                player.position += new Vector3(-3, 0, 0);
+            }
+        }
+
+        public virtual void RepelVertical()
+        {
+            if (player.position.y < transform.position.y)
+            {
+                player.position += new Vector3(0, -1, 0);
+            }
+            else if (player.position.y > transform.position.y)
+            {
+                player.position += new Vector3(0, 1, 0);
+            }
+        }
+
+        public virtual void RepelHorizontal()
+        {
+            if (player.position.x < transform.position.x)
+            {
+                player.position += new Vector3(-1, 0, 0);
+            }
+            else if (player.position.x > transform.position.x)
+            {
+                player.position += new Vector3(1, 0, 0);
             }
         }
     }

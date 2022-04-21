@@ -134,11 +134,17 @@ namespace SS.UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            pointerIsOver = true;
+            if (SS.GameController.NoInteractableIfObjectsAreActive.noInteract == null || SS.GameController.NoInteractableIfObjectsAreActive.noInteract.CanInteract())
+            {
+                pointerIsOver = true;
+            }
         }
         public void OnPointerExit(PointerEventData eventData)
         {
-            pointerIsOver = false;
+            if (SS.GameController.NoInteractableIfObjectsAreActive.noInteract == null || SS.GameController.NoInteractableIfObjectsAreActive.noInteract.CanInteract())
+            {
+                pointerIsOver = false;
+            }
         }
     }
 }

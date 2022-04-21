@@ -41,7 +41,7 @@ namespace SS.UI
             if (status == null || target == null) return;
 
             Start();
-            text.text = status.GetName() + "\n" + status.magnitude + " dmg";
+            text.text = status.GetName() + "\n" + status.magnitude + " dmg, " + status.duration + " rounds left";
 
             if (target.targetType.obj)
             {
@@ -93,36 +93,45 @@ namespace SS.UI
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            //Debug.Log("In Thing");
-
-            bigInfoBox.card = this;
-
-            bigInfoBox.gameObject.SetActive(true);
-
-            if (statusBuiltFrom != null)
-            {    
-                bigInfoBox.BuildFromStatus(statusBuiltFrom, currentTarget);
-            }
-            else if(spellBuiltFrom != null)
+            if (SS.GameController.NoInteractableIfObjectsAreActive.noInteract == null || SS.GameController.NoInteractableIfObjectsAreActive.noInteract.CanInteract())
             {
-                bigInfoBox.BuildFromSpell(spellBuiltFrom, currentTarget);
-            }
-            else if(weaponBuiltFrom != null)
-            {
-                bigInfoBox.BuildFromWeapon(weaponBuiltFrom, currentTarget);
-            }
+                //Debug.Log("In Thing");
 
-            bigInfoBox.DisplayBox();
+                bigInfoBox.card = this;
+
+                bigInfoBox.gameObject.SetActive(true);
+
+                if (statusBuiltFrom != null)
+                {    
+                    bigInfoBox.BuildFromStatus(statusBuiltFrom, currentTarget);
+                }
+                else if(spellBuiltFrom != null)
+                {
+                    bigInfoBox.BuildFromSpell(spellBuiltFrom, currentTarget);
+                }
+                else if(weaponBuiltFrom != null)
+                {
+                    bigInfoBox.BuildFromWeapon(weaponBuiltFrom, currentTarget);
+                }
+
+                bigInfoBox.DisplayBox();
+            }
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            pointerIsOver = true;
+            if (SS.GameController.NoInteractableIfObjectsAreActive.noInteract == null || SS.GameController.NoInteractableIfObjectsAreActive.noInteract.CanInteract())
+            {
+                pointerIsOver = true;
+            }
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            pointerIsOver = false;
+            if (SS.GameController.NoInteractableIfObjectsAreActive.noInteract == null || SS.GameController.NoInteractableIfObjectsAreActive.noInteract.CanInteract())
+            {
+                pointerIsOver = false;
+            }
         }
     }
 }

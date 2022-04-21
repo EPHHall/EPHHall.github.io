@@ -47,10 +47,6 @@ namespace SS.AI
             stage1.andOr = BehaviorGroup.AndOr.Or;
             stage1.goTo = 0;
 
-            //stage1InBetween1.behaviors.Add(new Behavior_WaitForAnimations(attachedAgent));
-            //stage1InBetween1.goTo = 0;
-            //stage1InBetween1.turnOffWhenGroupCompleted = stage1;
-
             stage2.behaviors.Add(new Behavior_PathfindToTarget(attachedAgent, FindObjectOfType<Pathfinding.Grid>(), FindObjectOfType<Pathfinding.AStar>(), target));
 
             stage2AndAQuarter.behaviors.Add(new Behavior_WaitForMovementAnim(attachedAgent, grid));

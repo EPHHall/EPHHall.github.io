@@ -16,6 +16,8 @@ TagManager:
   - Pit
   - Can Walk Through
   - Animation
+  - Player Update Text
+  - Next Turn Button
   layers:
   - Default
   - TransparentFX

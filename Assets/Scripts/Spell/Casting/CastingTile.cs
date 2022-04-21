@@ -56,54 +56,64 @@ namespace SS.Spells
             CheckToDeactivateAll = true;
             PointerWasOverAtLeastOne = false;
 
-            if (mouseIsOver)
+            if (SS.GameController.NoInteractableIfObjectsAreActive.noInteract == null || SS.GameController.NoInteractableIfObjectsAreActive.noInteract.CanInteract())
             {
-                PointerOverAtLeastOne = true;
-
-                if (Input.GetKeyDown(KeyCode.Mouse0))
+                if (mouseIsOver)
                 {
-                    if (selectedTiles.Contains(this))
+                    PointerOverAtLeastOne = true;
+
+                    if (Input.GetKeyDown(KeyCode.Mouse0))
                     {
-                        DeselectTile();
+                        if (selectedTiles.Contains(this))
+                        {
+                            DeselectTile();
+                        }
+                        else
+                        {
+                            SelectTile();
+                        }
                     }
-                    else
+
+                    if (Input.GetKeyDown(KeyCode.Mouse1))
                     {
-                        SelectTile();
+                        if (selectedTiles.Contains(this))
+                        { }
+                        else
+                        {
+                            SelectTile();
+                        }
                     }
                 }
-
-                if (Input.GetKeyDown(KeyCode.Mouse1))
-                {
-                    if (selectedTiles.Contains(this))
-                    { }
-                    else
-                    {
-                        SelectTile();
-                    }
-                }
+            }
+            else
+            {
+                
             }
         }
 
         private void LateUpdate()
         {
             //this should only need to run once since Pointer... is static, so resetting the variable shouldn't be an issue
-            if (CheckToDeactivateAll && !PointerOverAtLeastOne && Input.GetKeyDown(KeyCode.Mouse0) && !statsCard.pointerIsOver)
+            if (SS.GameController.NoInteractableIfObjectsAreActive.noInteract == null || SS.GameController.NoInteractableIfObjectsAreActive.noInteract.CanInteract())
             {
-                while (selectedTiles.Count > 0)
+                if (CheckToDeactivateAll && !PointerOverAtLeastOne && Input.GetKeyDown(KeyCode.Mouse0) && !statsCard.pointerIsOver)
                 {
-                    selectedTiles[0].DeselectTile();
+                    while (selectedTiles.Count > 0)
+                    {
+                        selectedTiles[0].DeselectTile();
+                    }
+
+                    statsCard.DeactivateStatsCard();
                 }
 
-                statsCard.DeactivateStatsCard();
-            }
+                if (PointerOverAtLeastOne)
+                {
+                    PointerWasOverAtLeastOne = true;
+                }
 
-            if (PointerOverAtLeastOne)
-            {
-                PointerWasOverAtLeastOne = true;
+                PointerOverAtLeastOne = false;
+                CheckToDeactivateAll = false;
             }
-
-            PointerOverAtLeastOne = false;
-            CheckToDeactivateAll = false;
         }
 
         public virtual void SelectTile()
@@ -219,27 +229,33 @@ namespace SS.Spells
 
         public void PointerEntered()
         {
-            if (!selectedTiles.Contains(this))
+            if (SS.GameController.NoInteractableIfObjectsAreActive.noInteract == null || SS.GameController.NoInteractableIfObjectsAreActive.noInteract.CanInteract())
             {
-                GetComponent<SpriteRenderer>().color = highlightColor;
-            }
+                if (!selectedTiles.Contains(this))
+                {
+                    GetComponent<SpriteRenderer>().color = highlightColor;
+                }
 
-            underFollower = false;
-            if (GetFollowers())
-            {
-                underFollower = true;
-            }
+                underFollower = false;
+                if (GetFollowers())
+                {
+                    underFollower = true;
+                }
 
-            mouseIsOver = true;
+                mouseIsOver = true;
+            }
         }
 
         public void PointerExited()
         {
-            if (!selectedTiles.Contains(this))
-            {
-                GetComponent<SpriteRenderer>().color = defaultColor;
-            }
-            mouseIsOver = false;
+                if (!selectedTiles.Contains(this))
+                {
+                    GetComponent<SpriteRenderer>().color = defaultColor;
+                }
+                mouseIsOver = false;
+            //if (SS.GameController.NoInteractableIfObjectsAreActive.noInteract == null || SS.GameController.NoInteractableIfObjectsAreActive.noInteract.CanInteract())
+            //{
+            //}
         }
     }
 }

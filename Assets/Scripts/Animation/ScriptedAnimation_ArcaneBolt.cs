@@ -17,6 +17,7 @@ namespace SS.Animation
         private float t;
         private bool play;
         private Animator animator;
+        private Target target;
 
         private void Start()
         {
@@ -32,13 +33,21 @@ namespace SS.Animation
                 t = Mathf.Clamp(t, 0, 1);
                 speed += acceleration * Time.deltaTime;
             }
-            else if(animator != null)
+            else if(play)
             {
-                animator.SetTrigger("End");
-                animator = null;
-                play = false;
+                if (target != null)
+                {
+                    target.InflictOnAnimationHitDamage();
+                }
 
-                transform.position = new Vector2(int.MinValue, int.MinValue);
+                if (animator != null)
+                {
+                    animator.SetTrigger("End");
+                    animator = null;
+                    play = false;
+
+                    transform.position = new Vector2(int.MinValue, int.MinValue);
+                }
             }
         }
 
@@ -55,7 +64,7 @@ namespace SS.Animation
         {
             startPoint = SpellManager.caster.position;
 
-            Target target = SpellManager.currentTargets[0];
+            target = SpellManager.currentTargets[0];
             endPoint = target.transform.position;
             speed = defaultSpeed;
             this.animator = animator;

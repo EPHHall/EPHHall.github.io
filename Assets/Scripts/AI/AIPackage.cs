@@ -122,42 +122,6 @@ namespace SS.AI
 
                 currentGroup = behaviorGroups[index];
             }
-
-            //int breakIfTooHigh = 0;
-            //while (currentGroup != null)
-            //{
-            //    foreach (AIBehavior currentBehavior in currentGroup.behaviors)
-            //    {
-            //        currentBehavior.InvokeBehavior(attachedAgent.spells);
-            //    }
-
-            //    if (currentGroup.EvaluateGroup())
-            //    {
-            //        index++;
-            //        foreach (AIBehavior currentBehavior in currentGroup.behaviors)
-            //        {
-            //            currentBehavior.timesCompleted++;
-            //        }
-
-            //        if (index < behaviorGroups.Count)
-            //        {
-            //            currentGroup = behaviorGroups[index];
-            //        }
-            //        else
-            //        {
-            //            currentGroup = null;
-            //        }
-            //    }
-
-            //    if (breakIfTooHigh > 199)
-            //    {
-            //        Debug.Log("Had to break - Groups Version");
-
-            //        break;
-            //    }
-
-            //    breakIfTooHigh++;
-            //}
         }
 
         public virtual void RunAI()
@@ -216,6 +180,22 @@ namespace SS.AI
             {
                 return false;
             }
+        }
+
+        public bool EvaluatePackageCompletion()
+        {
+            bool result = true;
+            
+            foreach(BehaviorGroup group in behaviorGroups)
+            {
+                if(!group.EvaluateCompletion())
+                {
+                    result = false;
+                    break;
+                }
+            }
+
+            return result;
         }
     }
 }

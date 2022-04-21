@@ -34,6 +34,10 @@ namespace SS.AI
 
         public SS.Character.CharacterStats characterStats;
 
+        private GameController.TurnManager turnManager;
+
+        private bool running = false;
+
         public override void Awake()
         {
             base.Awake();
@@ -44,6 +48,8 @@ namespace SS.AI
 
             defaultFaction = targetFaction;
             defaultTarget = mainTarget;
+
+            turnManager = FindObjectOfType<GameController.TurnManager>();
         }
 
         private void Update()
@@ -52,6 +58,31 @@ namespace SS.AI
             {
 
             }
+
+            if (running)
+            {
+                bool completed = true;
+
+                foreach(AIPackage pack in packages)
+                {
+                    if(pack.run)
+                    {
+                        completed = false;
+                        break;
+                    }
+                }
+
+                if(completed)
+                {
+                    running = false;
+                    turnManager.ChangeTurnTaker();
+                }
+            }
+        }
+
+        public void FinishedOverride()
+        {
+            turnManager.ChangeTurnTaker();
         }
 
         public void ResetFactionsAndTargets()
@@ -110,7 +141,10 @@ namespace SS.AI
 
         public override void StartTurn()
         {
+            Debug.Log("In Start Turn");
+
             base.StartTurn();
+            GameObject.FindGameObjectWithTag("Next Turn Button").GetComponent<UnityEngine.UI.Button>().interactable = false;
 
             SS.Util.CharacterStatsInterface.ResetAP(characterStats);
             SS.Util.CharacterStatsInterface.ResetMana(characterStats);
@@ -129,6 +163,7 @@ namespace SS.AI
                 }
             }
 
+            running = true;
             EndTurn();
         }
 

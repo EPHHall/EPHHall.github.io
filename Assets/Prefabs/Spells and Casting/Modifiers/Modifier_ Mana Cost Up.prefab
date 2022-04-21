@@ -43,7 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bced45eac4cd6249a8907aa5197d32c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
   manaCost: 1
   spellPointCost: -1
   actionPointCost: 0
@@ -51,3 +50,8 @@ MonoBehaviour:
   range: 0
   duration: 0
   icon: {fileID: -4520620222646238168, guid: 2d3f80f0aab906b44aae73585a00a19a, type: 3}
+  inUse: 0
+  inventoryFrame: {fileID: 0}
+  activeFrame: {fileID: 0}
+  modifierName: Mana Cost Up
+  description: Increases the mana cost of a spell.

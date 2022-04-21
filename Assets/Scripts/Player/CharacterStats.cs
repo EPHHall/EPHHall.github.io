@@ -48,6 +48,7 @@ namespace SS.Character
         public List<Vector2> takenPositions;
         public CharacterFollower characterFollower;
         public bool mayDie = false;
+        public string className = "";
 
         private void Awake()
         {
@@ -159,6 +160,7 @@ namespace SS.Character
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
+
             if (collision.tag == "Animation")
             {
                 mayDie = true;
@@ -168,6 +170,17 @@ namespace SS.Character
         {
             if (collision.tag == "Animation")
             {
+                //this needs to be here to give the attack time to add a damage object to the list
+                if (collision.GetComponent<Animation.ScriptedAnimation_ArcaneBolt>() == null)
+                {
+                    Debug.Log("In Exit");
+                    Spells.Target target = GetComponent<Spells.Target>();
+                    if (target != null)
+                    {
+                        target.InflictOnAnimationHitDamage();
+                    }
+                }
+
                 mayDie = false;
             }
         }

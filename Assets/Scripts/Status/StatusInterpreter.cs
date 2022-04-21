@@ -170,7 +170,7 @@ namespace SS.StatusSpace
                 if (characterStatsPresent && turnTakerPresent && GameController.TurnManager.currentTurnTaker == turnTaker)
                 {
                     //TODO: I think these damages should probably be flagged as temporary but im not sure. If it gets to be an issue ill come back to it.
-                    SS.Util.TargetInterface.DamageTarget(target, new Damage(Damage.DamageType.Fire, status.magnitude, false), status.applyingEffect);
+                    SS.Util.TargetInterface.DamageTargetAtEndOfTurn(target, new Damage(Damage.DamageType.Fire, status.magnitude, false), status.applyingEffect);
                 }
             }
             else if (status.statusName == Status.StatusName.Possessed)
@@ -188,7 +188,7 @@ namespace SS.StatusSpace
             {
                 if (characterStatsPresent && turnTakerPresent && GameController.TurnManager.currentTurnTaker == turnTaker)
                 {
-                    SS.Util.TargetInterface.DamageTarget(target, new Damage(Damage.DamageType.Arcane, status.magnitude, false), status.applyingEffect);
+                    SS.Util.TargetInterface.DamageTargetAtEndOfTurn(target, new Damage(Damage.DamageType.Arcane, status.magnitude, false), status.applyingEffect);
                 }
             }
         }

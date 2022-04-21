@@ -38,6 +38,15 @@ namespace SS.Character
         public List<GameObject> modifiersForNewSpell;
         public string newSpellName;
 
+        [Space(5)]
+        [Header("Fill In - Class Sprites")]
+        public Sprite sprite1;
+        public Sprite sprite2;
+
+        [Space(5)]
+        [Header("Fill In - Extra Spell Components")]
+        public List<GameObject> fillInventoryWith;
+
         public void ApplyClass()
         {
             ApplyStats();
@@ -45,6 +54,22 @@ namespace SS.Character
             ApplyEquipment();
 
             ApplySpell();
+
+            if (GameObject.FindGameObjectWithTag("Player Update Text") != null)
+            {
+                SS.UI.UpdateText updateText = GameObject.FindGameObjectWithTag("Player Update Text").GetComponent<SS.UI.UpdateText>();
+                if(updateText != null)
+                {
+                    updateText.SetMessage("Class changed: " + className, Color.green);
+                }
+            }
+
+            characterStats.className = className;
+
+            if (characterStats.GetComponent<Animation.PlayerIdle>() != null)
+            {
+                characterStats.GetComponent<Animation.PlayerIdle>().SetSprites(sprite1, sprite2);
+            }
         }
 
         private void ApplyStats()
@@ -100,6 +125,11 @@ namespace SS.Character
             spellCraftingScreen.spell.name = newSpellName;
 
             spellCraftingScreen.ResetScreen();
+        }
+
+        private void FillInventory()
+        {
+
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

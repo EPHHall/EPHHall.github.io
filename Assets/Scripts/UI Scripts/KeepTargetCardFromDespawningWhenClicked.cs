@@ -14,14 +14,20 @@ namespace SS.UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            card.pointerIsOver = true;
-            pointerIsOver = true;
+            if (SS.GameController.NoInteractableIfObjectsAreActive.noInteract == null || SS.GameController.NoInteractableIfObjectsAreActive.noInteract.CanInteract())
+            {
+                card.pointerIsOver = true;
+                pointerIsOver = true;
+            }
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            card.pointerIsOver = false;
-            pointerIsOver = false;
+            if (SS.GameController.NoInteractableIfObjectsAreActive.noInteract == null || SS.GameController.NoInteractableIfObjectsAreActive.noInteract.CanInteract())
+            {
+                card.pointerIsOver = false;
+                pointerIsOver = false;
+            }
         }
 
         private void OnDisable()

@@ -17,7 +17,7 @@ namespace SS.Animation
 
         public void RunAnimation(string triggerName, float speed)
         {
-            Debug.Log("In RunAnimation()", animator.gameObject);
+            //Debug.Log("In RunAnimation()", animator.gameObject);
 
             animator.speed = speed;
             animator.GetBehaviour<SetDoneFlags>().animObject = this;

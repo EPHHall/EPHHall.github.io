@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetable: 0
-  speed: 1
   manaCost: 5
   spellPointCost: 4
   actionPointCost: 1
@@ -54,6 +53,7 @@ MonoBehaviour:
     amount: 0
     statusesToInflict: []
     weapon: {fileID: 0}
+    temporary: 0
   damageList: []
   originalDamageList: []
   mainStatus:
@@ -89,9 +89,16 @@ MonoBehaviour:
   deliveredEffects: []
   targetMeEffects: []
   attachedEffect: {fileID: 0}
+  animationToPlay: {fileID: 0}
+  soundEffect: {fileID: 0}
   icon: {fileID: 21300000, guid: fd03a5d7e03cb824dbe5746ec4c2df77, type: 3}
   style: 2
   type: 1
+  inUse: 0
+  inventoryFrame: {fileID: 0}
+  activeFrame: {fileID: 0}
+  description: Summon a friendly creature that fights for you and takes its turn
+    directly after yours.
   toSummon: {fileID: 0}
   overridePosition: {x: 0, y: 0}
   useOverridePosition: 0

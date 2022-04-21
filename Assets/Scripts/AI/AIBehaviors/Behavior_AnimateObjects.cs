@@ -67,6 +67,7 @@ namespace SS.AI
             {
                 if (agent.characterStats.mana < agent.spellToCast.manaCost || agent.characterStats.actionPoints < agent.spellToCast.apCost)
                 {
+                    agent.FinishedOverride();
                     return;
                 }
 

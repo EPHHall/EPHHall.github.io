@@ -43,7 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bced45eac4cd6249a8907aa5197d32c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
   manaCost: 0
   spellPointCost: -1
   actionPointCost: 1
@@ -54,5 +53,5 @@ MonoBehaviour:
   inUse: 0
   inventoryFrame: {fileID: 0}
   activeFrame: {fileID: 0}
-  modifierName: 
-  description: 
+  modifierName: Speed Down
+  description: Decreases the action point cost of a spell.

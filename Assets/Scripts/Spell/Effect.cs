@@ -252,13 +252,13 @@ namespace SS.Spells
 
         public void DamageTarget(Target target, Character.Damage damage)
         {
-            SS.Util.TargetInterface.DamageTarget(target, damage, this);
+            SS.Util.TargetInterface.DamageTargetWhenAnimationHits(target, damage, this);
         }
         public void DamageTarget(Target target, List<Character.Damage> damages)
         {
             foreach (Character.Damage damage in damages)
             {
-                SS.Util.TargetInterface.DamageTarget(target, damage, this);
+                SS.Util.TargetInterface.DamageTargetWhenAnimationHits(target, damage, this);
             }
         }
 

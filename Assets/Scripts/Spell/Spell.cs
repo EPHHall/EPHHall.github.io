@@ -19,6 +19,7 @@ namespace SS.Spells
         public int damage;
         public int manaCost;
         public int apCost;
+        public int duration;
 
         public int currentSpellPoints = 10;
         public int maxSpellPoints = 10;
@@ -139,6 +140,7 @@ namespace SS.Spells
                 damage = main.GetTotalDamage();
                 manaCost = main.manaCost;
                 apCost = main.actionPointCost;
+                duration = main.duration;
 
                 currentSpellPoints = maxSpellPoints - main.spellPointCost;
 
@@ -160,6 +162,7 @@ namespace SS.Spells
             damage = newValue;
             manaCost = newValue;
             apCost = newValue;
+            duration = newValue;
 
             currentSpellPoints = maxSpellPoints;
         }
@@ -181,6 +184,8 @@ namespace SS.Spells
                     apCost += modifier.actionPointCost;
 
                     currentSpellPoints -= modifier.spellPointCost;
+
+                    duration += modifier.duration;
                 }
             }
         }
@@ -271,7 +276,7 @@ namespace SS.Spells
                 {
                     Damage newDamage = new Damage(Damage.DamageType.Arcane, modifiedDamage);
 
-                    TargetInterface.DamageTarget(target, newDamage, main);
+                    TargetInterface.DamageTargetWhenAnimationHits(target, newDamage, main);
 
                     foreach (AnimationObject animation in animationsToPlay)
                     {

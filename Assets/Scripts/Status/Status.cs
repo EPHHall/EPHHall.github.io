@@ -192,13 +192,13 @@ namespace SS.StatusSpace
             switch (statusName)
             {
                 case StatusName.ArcaneDamage:
-                    toReturn = "infuses the target with arcane energy. The target takes damage, and its unarmed attacks deal additional arcane damage.";
+                    toReturn = "infuses the target with arcane energy. The target takes damage.";
                     break;
                 case StatusName.Controlled:
                     toReturn = "allows you to control the target's movements.";
                     break;
                 case StatusName.FireDamage:
-                    toReturn = "sets the target on fire. The target takes damage, and its unarmed attacks deal additional fire damage.";
+                    toReturn = "sets the target on fire. The target takes damage.";
                     break;
                 case StatusName.Possessed:
                     toReturn = "makes the target fight for you.";

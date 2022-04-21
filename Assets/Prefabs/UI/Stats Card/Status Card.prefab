@@ -247,8 +247,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 619585556}
   contentName: {fileID: 1745189578}
-  defaultPos: {x: -163, y: -39}
+  bigInfoBoxPositionLeft: {fileID: 0}
+  bigInfoBoxPositionRight: {fileID: 0}
   card: {fileID: 1005627879}
+  pointerIsOver: 0
 --- !u!1 &1745189576
 GameObject:
   m_ObjectHideFlags: 0
@@ -470,7 +472,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 652f7165b7c30ab46af6c4aad90a639b, type: 2}
-    m_FontSize: 10
+    m_FontSize: 8
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -636,5 +638,9 @@ MonoBehaviour:
     unarmedOnly: 0
     applyingEffect: {fileID: 0}
     explanation_DealsDamage: 
+    explanation_Main: 
+    explanation_Main_Base: 
+    explanation_Main_Name: 
   spellBuiltFrom: {fileID: 0}
+  weaponBuiltFrom: {fileID: 0}
   currentTarget: {fileID: 0}

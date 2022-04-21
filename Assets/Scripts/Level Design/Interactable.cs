@@ -7,6 +7,7 @@ namespace SS.LevelDesign
 {
     public class Interactable : MonoBehaviour
     {
+        public bool noNeedForRoom;
         public Room room;
         public bool noUseUntilRoomClear;
         public bool deactivateAfterUse;
@@ -47,7 +48,7 @@ namespace SS.LevelDesign
             {
                 if (bringUpConfirmationBoxFirst)
                 {
-                    conBoxManager.BringUpBox(textForConBox, this);
+                    conBoxManager.BringUpBox(textForConBox, this, null, false);
                 }
                 else
                 {
@@ -55,14 +56,17 @@ namespace SS.LevelDesign
                 }
             }
 
-            if (room.cleared && !roomClearHandled)
+            if (!noNeedForRoom)
             {
-                roomClearHandled = true;
-
-                foreach (ActivationZone zone in activationZones)
+                if (room.cleared && !roomClearHandled)
                 {
-                    if(!zone.disable)
-                        zone.gameObject.SetActive(true);
+                    roomClearHandled = true;
+
+                    foreach (ActivationZone zone in activationZones)
+                    {
+                        if(!zone.disable)
+                            zone.gameObject.SetActive(true);
+                    }
                 }
             }
         }

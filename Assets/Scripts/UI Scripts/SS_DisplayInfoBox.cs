@@ -79,14 +79,20 @@ namespace SS.UI
 
         void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
         {
-            pointerIsOver = true;
-            delayTimer = Time.time + showDelay;
+            if (SS.GameController.NoInteractableIfObjectsAreActive.noInteract == null || SS.GameController.NoInteractableIfObjectsAreActive.noInteract.CanInteract())
+            {
+                pointerIsOver = true;
+                delayTimer = Time.time + showDelay;
+            }
         }
 
         void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
         {
-            pointerIsOver = false;
-            delayTimer = Time.time + hideDelay;
+            if (SS.GameController.NoInteractableIfObjectsAreActive.noInteract == null || SS.GameController.NoInteractableIfObjectsAreActive.noInteract.CanInteract())
+            {
+                pointerIsOver = false;
+                delayTimer = Time.time + hideDelay;
+            }
         }
     }
 }

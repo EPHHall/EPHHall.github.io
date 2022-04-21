@@ -147,7 +147,12 @@ namespace SS.Spells
 
             Debug.Log("In Delivered");
 
-            package.effect.AddToMainDamageList(new SS.Character.Damage(mainStatus.GetDamageType(), mainStatus.magnitude));
+            //package.effect.AddToMainDamageList(new SS.Character.Damage(mainStatus.GetDamageType(), mainStatus.magnitude));
+
+            foreach (Target target in package.targets)
+            {
+                target.ApplyStatus(mainStatus, this);
+            }
         }
 
         public override void BehaviorWhenDelivered_Summoning(BehaviorPackage package)

@@ -52,15 +52,18 @@ namespace SS.UI
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (eventData.button == PointerEventData.InputButton.Right)
+            if (SS.GameController.NoInteractableIfObjectsAreActive.noInteract == null || SS.GameController.NoInteractableIfObjectsAreActive.noInteract.CanInteract())
             {
-                ShowRange(eventData);
-            }
+                if (eventData.button == PointerEventData.InputButton.Right)
+                {
+                    ShowRange(eventData);
+                }
 
-            //There shouldn't need to be anything in here that deactivate the stats card, that's handled in CastingTile
-            if (eventData.button == PointerEventData.InputButton.Left)
-            {
-                tryToShowStatsCard = true;
+                //There shouldn't need to be anything in here that deactivate the stats card, that's handled in CastingTile
+                if (eventData.button == PointerEventData.InputButton.Left)
+                {
+                    tryToShowStatsCard = true;
+                }
             }
         }
 
