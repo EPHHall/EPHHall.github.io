@@ -14,6 +14,8 @@ namespace SS.LevelDesign
 
         public bool switchActive = false;
 
+        public PlayerMovement.SS_PlayerMoveRange playerMoveRange;
+
         public override void Start()
         {
             base.Start();
@@ -29,6 +31,8 @@ namespace SS.LevelDesign
             {
                 DeactivateInteractable();
             }
+
+            //playerMoveRange = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement.SS_PlayerMoveRange>();
         }
 
         public override void Update()
@@ -66,6 +70,13 @@ namespace SS.LevelDesign
                     go.SetActive(false);
                 }
             }
+
+            if (playerMoveRange != null)
+            {
+                playerMoveRange.SpawnRange();
+            }
+
+            Tutorial.TutorialHandler.switchWasActivated = true;
         }
 
         public override void DeactivateInteractable()
@@ -80,6 +91,8 @@ namespace SS.LevelDesign
             {
                 go.SetActive(true);
             }
+
+            playerMoveRange.SpawnRange();
         }
     }
 }

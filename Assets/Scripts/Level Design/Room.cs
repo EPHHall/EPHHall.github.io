@@ -9,6 +9,7 @@ namespace SS.LevelDesign
     {
         public bool dontActivate = false;
         public bool displayCurrentlyActive = false;
+        private int updatePlayerRange = 0;
         public static Room currentlyActive = null;
 
         public Vector3 cameraPosition;
@@ -101,6 +102,15 @@ namespace SS.LevelDesign
             }
         }
 
+        private void LateUpdate()
+        {
+            if(updatePlayerRange > 0)
+            {
+                player.GetComponent<SS.PlayerMovement.SS_PlayerMoveRange>().SpawnRange();
+                updatePlayerRange--;
+            }
+        }
+
         public void ClearRoom()
         {
             doors.SetActive(false);
@@ -141,6 +151,8 @@ namespace SS.LevelDesign
                 turnManager.SetTurnTakerList();
                 player.GetComponent<SS.PlayerMovement.SS_PlayerMoveRange>().ResetMoveRange(player.transform.position);
             }
+
+            updatePlayerRange = 3;
         }
 
         public void MoveToThisRoom()

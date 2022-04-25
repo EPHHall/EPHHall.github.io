@@ -46,6 +46,15 @@ namespace SS.AI
 
             characterStats = GetComponent<SS.Character.CharacterStats>();
 
+            if (targetFaction == Faction.FactionName.PlayerFaction)
+            {
+                mainTarget = GameObject.FindGameObjectWithTag("Player").GetComponent<Target>();
+            }
+            else
+            {
+                mainTarget = null;
+            }
+
             defaultFaction = targetFaction;
             defaultTarget = mainTarget;
 

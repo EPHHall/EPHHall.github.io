@@ -11,6 +11,12 @@ namespace SS.Spells
         public bool reset;
         public int resetCounter = 0;
 
+        public Animation.AnimationManager animationManager;
+
+        bool checkTeleporteePosition = false;
+        Target teleportee;
+        Vector2 teleporteePosOG;
+
         public override void Awake()
         {
             base.Awake();
@@ -43,6 +49,8 @@ namespace SS.Spells
 
             animationToPlay = animationObjectManager.teleportAnimation;
             soundEffect = resources.GetTeleportAudio();
+
+            animationManager = FindObjectOfType<Animation.AnimationManager>();
         }
 
         public override void Update()
@@ -62,6 +70,25 @@ namespace SS.Spells
             else
             {
                 resetCounter = 0;
+            }
+
+            if (checkTeleporteePosition && (Vector2)teleportee.transform.position != teleporteePosOG)
+            {
+                if (teleportee.GetComponent<AI.Agent>() != null)
+                {
+                    teleportee.GetComponent<AI.Agent>().positionAtStartofTurn = teleportee.transform.position;
+                }
+
+                if (teleportee.GetComponent<PlayerMovement.SS_PlayerController>() != null)
+                {
+                    teleportee.GetComponent<PlayerMovement.SS_PlayerMoveRange>().origin = teleportee.transform.position;
+                }
+
+                animationManager.AddAnimation(new Animation.AnimationPlusObject(animationToPlay, teleportee.transform, "Play"));
+                animationManager.RunAnimations();
+
+                teleportee = null;
+                checkTeleporteePosition = false;
             }
         }
 
@@ -87,6 +114,9 @@ namespace SS.Spells
 
         public Target GetTeleportee(List<Target> targets)
         {
+            animationManager.AddAnimation(new Animation.AnimationPlusObject(animationToPlay, targets[0].transform, "Play"));
+            animationManager.RunAnimations();
+
             return targets[0];
         }
 
@@ -97,6 +127,10 @@ namespace SS.Spells
 
         public void ChooseWhereToTeleport(Target toTeleport, Vector2 origin)
         {
+            teleportee = toTeleport;
+            teleporteePosOG = teleportee.transform.position;
+            checkTeleporteePosition = true;
+
             resources.GetPlayerUpdateText().SetMessage("Choose new location");
 
             Util.SpawnRange.DespawnRange();

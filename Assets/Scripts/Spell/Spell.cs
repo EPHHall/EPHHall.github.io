@@ -203,6 +203,8 @@ namespace SS.Spells
             }
             animationsToPlay.Insert(0, main.animationToPlay);
 
+
+
             //SS.GameController.TurnManager.staticPrintTurnTaker = true;
             SS.Character.CharacterStats character = caster;
 

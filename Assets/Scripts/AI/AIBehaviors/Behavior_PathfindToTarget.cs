@@ -49,7 +49,36 @@ namespace SS.AI
             Transform workingTarget = target;
             if (workingTarget == null && agent != null)
             {
-                workingTarget = agent.mainTarget.transform;
+                if (agent.mainTarget != null)
+                {
+                    workingTarget = agent.mainTarget.transform;
+                }
+                else
+                {
+                    Spells.Target closestTarget = null;
+
+                    foreach (Spells.Target target in GameObject.FindObjectsOfType<Spells.Target>())
+                    {
+                        if (target.tag == "Player" || target.gameObject == agent.gameObject) continue;
+                        if (target.GetComponent<Faction>() != null && target.GetComponent<Faction>().factionName == Faction.FactionName.PlayerFaction) continue;
+                        if (!target.targetType.creature) continue;
+
+                        if (closestTarget == null)
+                        {
+                            closestTarget = target;
+                        }
+                        else if (Vector2.Distance(agent.transform.position, closestTarget.transform.position) >
+                            Vector2.Distance(agent.transform.position, target.transform.position))
+                        {
+                            closestTarget = target;
+                        }
+                    }
+
+                    if (closestTarget != null)
+                    {
+                        workingTarget = closestTarget.transform;
+                    }
+                }
             }
             if (workingTarget == null) return;
 

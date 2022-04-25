@@ -78,7 +78,7 @@ MonoBehaviour:
   keywords: []
   spellAttachedTo: {fileID: 0}
   effectName: Summon Creature
-  toInstantiate: {fileID: 4085296905716029972, guid: 8459e72158224c14aa765f05662d3aa5, type: 3}
+  toInstantiate: {fileID: 8009841677378646760, guid: b5ab65bcc48cc734c9c8a615a4a4a501, type: 3}
   normallyValid:
     toggleNone: 0
     toggleAll: 0

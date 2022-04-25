@@ -91,7 +91,7 @@ MonoBehaviour:
   attachedEffect: {fileID: 0}
   animationToPlay: {fileID: 0}
   soundEffect: {fileID: 0}
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: e612f1f8a13c720498fb909021564c1f, type: 3}
   style: 2
   type: 1
   inUse: 0
