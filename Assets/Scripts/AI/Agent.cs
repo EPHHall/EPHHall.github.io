@@ -153,7 +153,6 @@ namespace SS.AI
             Debug.Log("In Start Turn");
 
             base.StartTurn();
-            GameObject.FindGameObjectWithTag("Next Turn Button").GetComponent<UnityEngine.UI.Button>().interactable = false;
 
             SS.Util.CharacterStatsInterface.ResetAP(characterStats);
             SS.Util.CharacterStatsInterface.ResetMana(characterStats);

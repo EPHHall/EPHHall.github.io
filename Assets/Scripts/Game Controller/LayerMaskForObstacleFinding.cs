@@ -18,6 +18,11 @@ namespace SS.GameController
             }
             if(lmof != this)
             {
+                if(GetComponent<Util.ID>() != null)
+                {
+                    DestroyedTracker.instance.TrackDestroyedObject(GetComponent<Util.ID>().id);
+                }
+
                 Destroy(this);
             }
         }

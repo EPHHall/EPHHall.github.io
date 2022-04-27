@@ -16,13 +16,11 @@ namespace SS.GameController
 
             ToggleButtons(false);
 
-            GameObject.FindGameObjectWithTag("Next Turn Button").GetComponent<UnityEngine.UI.Button>().interactable = false;
         }
 
         public override void StartTurn()
         {
             base.StartTurn();
-            GameObject.FindGameObjectWithTag("Next Turn Button").GetComponent<UnityEngine.UI.Button>().interactable = true;
 
             //Debug.Log(GetComponent<CharacterStats>().mana);
             GetComponent<SS.PlayerMovement.SS_PlayerMoveRange>().ResetMoveRange(transform.position);

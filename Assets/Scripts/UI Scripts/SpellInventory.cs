@@ -97,6 +97,11 @@ namespace SS.UI
                 Transform formerChild = inventoryParent.transform.GetChild(0);
                 formerChild.parent = null;
 
+                if (formerChild.GetComponent<SS.Util.ID>() != null)
+                {
+                    SS.GameController.DestroyedTracker.instance.TrackDestroyedObject(formerChild.GetComponent<SS.Util.ID>().id);
+                }
+
                 Destroy(formerChild.gameObject);
 
                 if (breakInt == 100)

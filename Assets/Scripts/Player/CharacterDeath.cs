@@ -38,12 +38,16 @@ namespace SS.Character
             if (bringUpConfirmationBoxFirst)
             {
                 string textToUse = textForConBox;
-                if(deathMessage != "")
+                if (deathMessage != "")
                 {
                     textToUse = deathMessage;
                 }
 
                 conBoxManager.BringUpBox(textToUse, this, null, false);
+            }
+            else
+            {
+                ActivateInteractable();
             }
         }
 

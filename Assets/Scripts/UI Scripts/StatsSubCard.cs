@@ -86,6 +86,11 @@ namespace SS.UI
         {
             if (shouldDestroy)
             {
+                if (GetComponent<SS.Util.ID>() != null)
+                {
+                    SS.GameController.DestroyedTracker.instance.TrackDestroyedObject(GetComponent<SS.Util.ID>().id);
+                }
+
                 //probably should make the number a variable. This is fine for testing
                 Destroy(gameObject, 5);
             }

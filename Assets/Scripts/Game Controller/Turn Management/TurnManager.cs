@@ -235,6 +235,8 @@ namespace SS.GameController
 
         public void EndTurn(TurnTakerPlayer turnTaker)
         {
+            GameObject.FindGameObjectWithTag("Next Turn Button").GetComponent<UnityEngine.UI.Button>().interactable = false;
+
             turnTaker.EndTurn();
         }
 
@@ -255,11 +257,25 @@ namespace SS.GameController
                     turnTaker.StartTurn();
                     break;
             }
+
+            if (currentTurnTaker.GetComponent<PlayerMovement.SS_PlayerController>() != null)
+            {
+                GameObject.FindGameObjectWithTag("Next Turn Button").GetComponent<UnityEngine.UI.Button>().interactable = true;
+            }
+            else
+            {
+                GameObject.FindGameObjectWithTag("Next Turn Button").GetComponent<UnityEngine.UI.Button>().interactable = false;
+            }
         }
 
         public void StartTurn(TurnTakerPlayer turnTaker)
         {
             turnTaker.StartTurn();
+        }
+
+        public void ResetTurnManager()
+        {
+            Start();
         }
     }
 }

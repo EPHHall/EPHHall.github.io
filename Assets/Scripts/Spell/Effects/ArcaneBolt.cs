@@ -63,7 +63,7 @@ namespace SS.Spells
             //    effect.InvokeEffect(targets);
             //}
 
-            foreach (Target target in targets)
+            foreach (Target target in targetsCopy)
             {
                 DamageTarget(target, damageList);
 

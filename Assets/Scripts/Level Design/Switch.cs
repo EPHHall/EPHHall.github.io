@@ -71,8 +71,11 @@ namespace SS.LevelDesign
                 }
             }
 
+
+            Debug.Log("Switch ActivateInteractable");
             if (playerMoveRange != null)
             {
+                Debug.Log("Switch ActivateInteractable in If");
                 playerMoveRange.SpawnRange();
             }
 

@@ -36,6 +36,11 @@ namespace SS.UI
 
             if (toFollow == null)
             {
+                if (GetComponent<SS.Util.ID>() != null)
+                {
+                    SS.GameController.DestroyedTracker.instance.TrackDestroyedObject(GetComponent<SS.Util.ID>().id);
+                }
+
                 Destroy(gameObject);
             }
 

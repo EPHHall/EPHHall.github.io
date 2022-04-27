@@ -35,6 +35,8 @@ namespace Tutorial
         public bool trigger_RangeWasShown;
         public bool trigger_AltarActivation;
         public bool trigger_SwitchActivation;
+        public string trigger_TargetWithIDSelected;
+        public string trigger_TargetWithIDDestroyed;
 
         public int numberOfFramesMustBeFilled;
         public List<SS.UI.MagicFrame> trigger_FramesToFill = new List<SS.UI.MagicFrame>();

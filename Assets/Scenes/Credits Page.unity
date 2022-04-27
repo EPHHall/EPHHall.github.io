@@ -159,7 +159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.0000076293945}
+  m_AnchoredPosition: {x: 0, y: 159.12498}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &102806065
@@ -407,7 +407,7 @@ MonoBehaviour:
   m_Text: "\nThank you for playing the SPell Sculptor Demo!\n\nA game by: Ethan Hall\n\nSpecial
     Thanks: Dr. Stephen Ware\nCouldn't have done it without you!\n\nArt obtained
     in part from: \n\tOryx 16 Bit Fantasy, www.oryxdesignlab.com\n\nSound effects
-    and music obtained from https://www.zapsplat.com\n\n"
+    and music obtained from https://www.zapsplat.com\n\nFont: Thalea Fat, from https://www.dafont.com/thaleahfat.font\n"
 --- !u!222 &191723669
 CanvasRenderer:
   m_ObjectHideFlags: 0

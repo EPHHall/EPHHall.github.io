@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7232511993617821906}
   - component: {fileID: 7232511993617821901}
   - component: {fileID: 7232511993617821910}
+  - component: {fileID: 4311724010266667406}
   m_Layer: 10
   m_Name: Effect Pickup Arcane Bolt
   m_TagString: Can Walk Through
@@ -151,3 +152,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f40ecf91114b6c498e156c02fe43afa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4311724010266667406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7232511993617821900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dcf5ccdbf69ffd4c958832a220f4422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: Effect Pickup Arcane Bolt

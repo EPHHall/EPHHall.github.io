@@ -28,6 +28,7 @@ namespace Tutorial
         [TextArea(6,6)]
         public string text;
         public List<Button> toActivate;
+        public List<Button> toDeactivate;
         public GreyOutObjectScript greyOut;
         public GreyOutObjectScript.GreyOutSprite emphasize;
         public string title;
@@ -75,7 +76,12 @@ namespace Tutorial
 
             foreach (Button button in toActivate)
             {
-                button.interactable = true;
+                button.gameObject.SetActive(true);
+            }
+
+            foreach (Button button in toDeactivate)
+            {
+                button.gameObject.SetActive(false);
             }
 
             if (greyOut != null)

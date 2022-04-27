@@ -12,6 +12,11 @@ namespace SS
         {
             if (!dontDespawn)
             {
+                if (GetComponent<SS.Util.ID>() != null)
+                {
+                    SS.GameController.DestroyedTracker.instance.TrackDestroyedObject(GetComponent<SS.Util.ID>().id);
+                }
+
                 Destroy(gameObject, .1f);
             }
         }

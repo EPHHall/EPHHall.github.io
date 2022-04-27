@@ -52,8 +52,9 @@ namespace SS.Spells
             base.InvokeEffect(targets);
 
             HandleDeliveredAndTargeting(targets);
+            //Use targetsCopy form now on. Sometimes the original list gets reset after HandleDeliveredAndTargeting. Using the copy is the workaround.
 
-            foreach (Target target in targets)
+            foreach (Target target in targetsCopy)
             {
                 foreach (Status status in statusList)
                 {
@@ -68,53 +69,5 @@ namespace SS.Spells
 
             EndInvoke();
         }
-
-        /*public override void HandleDeliveredEffects(Target target, List<Status> statusesMainStatusShouldApply)
-        {
-            Item.Weapon weapon = null;
-            Character.CharacterStats creature = null;
-
-            if (target.targetType.weapon)
-            {
-                //If the target is a weapon it should have the weapon script
-                weapon = target.GetComponent<Item.Weapon>();
-            }
-            //currently multiple target types is not supported
-            else if (target.targetType.creature)
-            {
-                creature = target.GetComponent<Character.CharacterStats>();
-            }
-
-            foreach (Effect effect in deliveredEffects)
-            {
-                if (effect == null) continue;
-
-                foreach (Status status in effect.statusList)
-                {
-                    target.ApplyStatus(status, this);
-                }
-
-                if (weapon != null)
-                {
-                    foreach (Status status in effect.statusList)
-                    {
-                        weapon.AddStatusToInflict(status);
-                    }
-                }
-            }
-        }
-
-        public override void HandleTargetingEffects(Target target)
-        {
-            base.HandleTargetingEffects(target);
-
-            foreach (Effect effect in deliveredEffects)
-            {
-                foreach (Status status in effect.statusList)
-                {
-                    target.ApplyStatus(status, this);
-                }
-            }
-        }*/
     }
 }

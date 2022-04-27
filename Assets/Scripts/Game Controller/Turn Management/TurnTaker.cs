@@ -45,6 +45,12 @@ namespace SS.GameController
             }
 
             TurnManager.tm.RemoveTurnTakerFromPlay(this);
+
+            if (GetComponent<Util.ID>() != null)
+            {
+                if(GameController.DestroyedTracker.instance != null)
+                    DestroyedTracker.instance.TrackDestroyedObject(GetComponent<Util.ID>().id);
+            }
         }
     }
 }

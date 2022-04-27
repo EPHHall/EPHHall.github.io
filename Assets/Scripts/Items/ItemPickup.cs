@@ -16,6 +16,12 @@ namespace SS.Item
             if (collision.tag == "Player")
             {
                 BePickedUp();
+
+                if (GetComponent<Util.ID>() != null)
+                {
+                    GameController.DestroyedTracker.instance.TrackDestroyedObject(GetComponent<Util.ID>().id);
+                }
+
                 Destroy(gameObject);
             }
         }

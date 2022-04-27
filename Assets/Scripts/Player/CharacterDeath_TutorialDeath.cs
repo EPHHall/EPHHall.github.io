@@ -9,8 +9,11 @@ namespace SS.Character
         public override void Death(CharacterStats stats)
         {
             base.Death(stats);
+        }
 
-
+        public override void ActivateInteractable()
+        {
+            LevelDesign.Room.currentlyActive.Reset();
         }
     }
 }

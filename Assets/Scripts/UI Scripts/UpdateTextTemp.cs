@@ -32,6 +32,11 @@ namespace SS.UI
 
             if (text.color.a == 0)
             {
+                if (GetComponent<SS.Util.ID>() != null)
+                {
+                    SS.GameController.DestroyedTracker.instance.TrackDestroyedObject(GetComponent<SS.Util.ID>().id);
+                }
+
                 Destroy(gameObject);
             }
         }

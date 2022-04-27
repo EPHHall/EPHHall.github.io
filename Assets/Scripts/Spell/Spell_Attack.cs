@@ -118,6 +118,11 @@ namespace SS.Spells
                 toRemove.Remove(temp);
                 activeWeapons.Remove(temp);
 
+                if (temp.GetComponent<SS.Util.ID>() != null)
+                {
+                    SS.GameController.DestroyedTracker.instance.TrackDestroyedObject(temp.GetComponent<SS.Util.ID>().id);
+                }
+
                 Destroy(temp.gameObject);
 
                 if (breakInt == 100)

@@ -85,6 +85,14 @@ namespace SS.Character
                 }
                 else
                 {
+                    if (GetComponent<SS.Util.ID>() != null)
+                    {
+                        if (SS.GameController.DestroyedTracker.instance != null)
+                        {
+                            SS.GameController.DestroyedTracker.instance.TrackDestroyedObject(GetComponent<SS.Util.ID>().id);
+                        }
+                    }
+
                     Destroy(gameObject);
                 }
             }

@@ -166,6 +166,20 @@ namespace Tutorial
                         StartCurrentScene(14);
                     }
                 }
+                if (scenes[currentScene].trigger_TargetWithIDSelected != "" && selectedTarget != null && selectedTarget.id == scenes[currentScene].trigger_TargetWithIDSelected)
+                {
+                    selectedTarget = null;
+
+                    StartCurrentScene(15);
+                }
+                if (scenes[currentScene].trigger_TargetWithIDDestroyed != "")
+                {
+                    if (SS.GameController.DestroyedTracker.instance.ListContainsID(scenes[currentScene].trigger_TargetWithIDDestroyed))
+                    {
+                        StartCurrentScene(16);
+                    }
+                }
+
             }
         }
 

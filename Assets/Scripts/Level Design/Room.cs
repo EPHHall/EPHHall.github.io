@@ -24,27 +24,38 @@ namespace SS.LevelDesign
         bool firstFrame = true;
 
         Collider2D col;
+        public Tutorial.TutorialHandler tutorialHandler;
 
         [Space(5)]
         [Header("Rewards")]
         public List<GameObject> rewards = new List<GameObject>();
         public bool rewardsWereSpawned = false;
 
+        [Space(5)]
+        [Header("Reset Stuff")]
+        public Vector2 playerDefaultPos;
+        private List<GameObject> toDestroy = new List<GameObject>();
+        public Transform actualParent;
+        int preventClearing = 0;
+
         private void Awake()
         {
             cam = Camera.main;
 
-            toLoad = new List<GameObject>();
-            if (toLoadParent == null)
+            if (toLoad != null && toLoad.Count == 0)
             {
-                toLoadParent = transform.Find("To Load");
-            }
-
-            if (toLoadParent != null)
-            {
-                foreach (Transform child in toLoadParent.GetComponentsInChildren<Transform>())
+                toLoad = new List<GameObject>();
+                if (toLoadParent == null)
                 {
-                    toLoad.Add(child.gameObject);
+                    toLoadParent = transform.Find("To Load");
+                }
+
+                if (toLoadParent != null)
+                {
+                    foreach (Transform child in toLoadParent.GetComponentsInChildren<Transform>())
+                    {
+                        toLoad.Add(child.gameObject);
+                    }
                 }
             }
 
@@ -62,7 +73,13 @@ namespace SS.LevelDesign
 
             foreach (GameObject unload in toLoad)
             {
+                if (unload == null) continue;
+
                 unload.SetActive(false);
+
+                GameObject actualObject = Instantiate(unload, unload.transform.position, Quaternion.identity, actualParent);
+                toDestroy.Add(actualObject);
+                actualObject.SetActive(false);
             }
 
             cameraPosition = transform.position;
@@ -72,11 +89,49 @@ namespace SS.LevelDesign
             {
                 reward.SetActive(false);
             }
+
+            tutorialHandler = FindObjectOfType<Tutorial.TutorialHandler>();
+        }
+
+        public void Reset()
+        {
+            while (toDestroy.Count > 0)
+            {
+                GameObject current = toDestroy[0];
+                toDestroy.RemoveAt(0);
+
+                if (current.GetComponent<SS.Util.ID>() != null)
+                {
+                    SS.GameController.DestroyedTracker.instance.TrackDestroyedObject(current.GetComponent<Util.ID>().id);
+                }
+
+                Destroy(current);
+            }
+
+            Awake();
+
+            player.transform.position = playerDefaultPos;
+            player.GetComponent<Character.CharacterStats>().ResetAP();
+            player.GetComponent<Character.CharacterStats>().ResetHealth();
+            player.GetComponent<Character.CharacterStats>().ResetMana();
+            player.GetComponent<PlayerMovement.SS_PlayerController>().pauseMovementForCutscene = false;
+
+
+            GameController.TurnManager.tm.ResetTurnManager();
+
+            MoveToThisRoom();
+
+            preventClearing = 2;
+
+            if(tutorialHandler != null)
+            {
+                //tutorialHandler.
+            }
         }
 
         private void Update()
         {
-            if (currentlyActive == this)
+            if (currentlyActive == this && preventClearing <= 0)
             {
                 if (FindObjectOfType<SS.GameController.TurnManager>().turnTakers.Count == 1 && FindObjectOfType<SS.GameController.TurnManager>().turnTakers.Contains(player.GetComponent<SS.GameController.TurnTaker>()))
                 {
@@ -100,6 +155,8 @@ namespace SS.LevelDesign
 
                 Debug.Log(currentlyActive.name);
             }
+
+            if (preventClearing > 0) preventClearing--;
         }
 
         private void LateUpdate()
@@ -120,6 +177,14 @@ namespace SS.LevelDesign
             {
                 if (creature != null && creature.GetComponent<Character.CharacterStats>() != null && creature.tag != "Player")
                 {
+                    if (creature.GetComponent<SS.Util.ID>() != null)
+                    {
+                        if (GameController.DestroyedTracker.instance != null)
+                        {
+                            SS.GameController.DestroyedTracker.instance.TrackDestroyedObject(creature.GetComponent<SS.Util.ID>().id);
+                        }
+                    }
+
                     Destroy(creature.gameObject);
                 }
             }
@@ -135,7 +200,7 @@ namespace SS.LevelDesign
 
             if (!dontActivate)
             {
-                foreach (GameObject load in toLoad)
+                foreach (GameObject load in toDestroy)
                 {
                     if (load != null)
                     {

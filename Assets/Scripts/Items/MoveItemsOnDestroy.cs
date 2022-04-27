@@ -29,6 +29,12 @@ namespace SS.Item
                 child.position = transform.position;
                 child.parent = null;
             }
+
+            if (GetComponent<Util.ID>() != null)
+            {
+                if(GameController.DestroyedTracker.instance != null)
+                    GameController.DestroyedTracker.instance.TrackDestroyedObject(GetComponent<Util.ID>().id);
+            }
         }
     }
 }

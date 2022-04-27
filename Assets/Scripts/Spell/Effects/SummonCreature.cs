@@ -114,45 +114,5 @@ namespace SS.Spells
 
             EndInvoke();
         }
-
-        /*public override void HandleDeliveredEffects(Target target, List<Status> statusesMainStatusShouldApply)
-        {
-            foreach (Effect effect in deliveredEffects)
-            {
-                if (effect == null) continue;
-
-                Effect melee = null;
-                if (target.transform.Find("Melee Attack") != null && target.transform.Find("Melee Attack").GetComponent<Spell>() != null)
-                {
-                    melee = target.transform.Find("Melee Attack").GetComponent<Spell>().main;
-                }
-
-                foreach (Status status in effect.statusList)
-                {
-                    Status newStatus = new Status(status);
-                    newStatus.unarmedOnly = true;
-
-                    if (melee != null)
-                        melee.AddToMainStatusList(newStatus);
-                }
-            }
-        }
-
-        public override void HandleTargetingEffects(Target target)
-        {
-            base.HandleTargetingEffects(target);
-
-            foreach (Effect effect in targetMeEffects)
-            {
-                if (effect == null) continue;
-
-                foreach (Status status in effect.statusList)
-                {
-                    Status newStatus = new Status(status);
-
-                    target.ApplyStatus(newStatus, this);
-                }
-            }
-        }*/
     }
 }

@@ -24,6 +24,11 @@ namespace SS.Spells
 
             actionPointCost = 2;
 
+            mainStatus = new StatusSpace.Status(StatusSpace.Status.StatusName.Controlled, 1, duration, SS.GameController.TurnManager.currentTurnTaker);
+            originalStatusList.Clear();
+            AddToOriginalStatusList(mainStatus);
+            ResetMainStatusList();
+
             //duration = 2;
 
             normallyValid = new TargetType(false, true, true, false);
@@ -43,7 +48,8 @@ namespace SS.Spells
 
             HandleDeliveredAndTargeting(targets);
 
-            foreach (Target target in targets)
+            //use targetsCopy from now on
+            foreach (Target target in targetsCopy)
             {
                 if (target.targetType.obj)
                 {

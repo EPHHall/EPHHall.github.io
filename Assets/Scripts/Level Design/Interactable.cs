@@ -46,6 +46,8 @@ namespace SS.LevelDesign
         {
             if (mayBeActivated && Input.GetKeyDown(activationKey))
             {
+                Debug.Log("Interactable Update");
+
                 if (bringUpConfirmationBoxFirst)
                 {
                     conBoxManager.BringUpBox(textForConBox, this, null, false);
@@ -77,6 +79,7 @@ namespace SS.LevelDesign
             {
                 if (collision.tag == tag)
                 {
+                    Debug.Log("Interactable OnTrigger");
                     mayBeActivated = true;
                     break;
                 }

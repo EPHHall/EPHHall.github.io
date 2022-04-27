@@ -180,6 +180,11 @@ namespace SS.UI
                 {
                     currentDragObject.GetComponent<FrameDragObject>().FillCurrentFrame();
 
+                    if (currentDragObject.GetComponent<SS.Util.ID>() != null)
+                    {
+                        SS.GameController.DestroyedTracker.instance.TrackDestroyedObject(currentDragObject.GetComponent<SS.Util.ID>().id);
+                    }
+
                     Destroy(currentDragObject);
                     currentDragObject = null;
                 }
@@ -195,7 +200,7 @@ namespace SS.UI
         {
             if (SS.GameController.NoInteractableIfObjectsAreActive.noInteract == null || SS.GameController.NoInteractableIfObjectsAreActive.noInteract.CanInteract())
             {
-                if (eventData.button == PointerEventData.InputButton.Right)
+                if (!inventoryFrame && activeFrame && eventData.button == PointerEventData.InputButton.Right)
                 {
                     ResetFrame();
                 }

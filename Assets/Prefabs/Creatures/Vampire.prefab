@@ -180,6 +180,7 @@ GameObject:
   - component: {fileID: 625416542}
   - component: {fileID: -8333720460282943177}
   - component: {fileID: 129894620914785763}
+  - component: {fileID: 4383073176474760888}
   m_Layer: 0
   m_Name: Vampire
   m_TagString: Enemy
@@ -286,6 +287,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 425c3c1c56439f341a5387918a11f94b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inflictAtEndOfTur: []
+  inflictWhenAnimationReaches: []
   targetType:
     toggleNone: 0
     toggleAll: 0
@@ -295,6 +298,7 @@ MonoBehaviour:
     tile: 0
   hp: 0
   targetName: 
+  id: 
   statuses: []
   displaySelectedTargets: 0
 --- !u!61 &8172245870512394811
@@ -406,6 +410,7 @@ MonoBehaviour:
   takenPositions: []
   characterFollower: {fileID: 0}
   mayDie: 0
+  className: 
 --- !u!114 &8172245870512394688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -508,6 +513,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite2: {fileID: 21300000, guid: d5684aa11e143df47ba90164efd1935d, type: 3}
   frequency: 0.25
+--- !u!114 &4383073176474760888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8172245870512394692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dcf5ccdbf69ffd4c958832a220f4422, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: Vampire
 --- !u!1 &8172245871491143381
 GameObject:
   m_ObjectHideFlags: 0
@@ -555,6 +573,7 @@ MonoBehaviour:
   damage: 1
   manaCost: 2
   apCost: 1
+  duration: 0
   currentSpellPoints: 8
   maxSpellPoints: 10
   modifiedDamage: 0
@@ -621,6 +640,7 @@ MonoBehaviour:
   damage: 1
   manaCost: 2
   apCost: 1
+  duration: 0
   currentSpellPoints: 8
   maxSpellPoints: 10
   modifiedDamage: 0
@@ -708,6 +728,10 @@ PrefabInstance:
       propertyPath: originalDamageList.Array.data[1].amount
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 466735156509912314, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
+      propertyPath: soundEffect
+      value: 
+      objectReference: {fileID: 8300000, guid: 568b45ba361aee84eb367c12ea366389, type: 3}
     - target: {fileID: 3656605557539978194, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: toInflict.amount
       value: 1

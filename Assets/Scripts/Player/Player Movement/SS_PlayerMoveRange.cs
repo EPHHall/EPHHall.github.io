@@ -30,6 +30,10 @@ namespace SS.PlayerMovement
             {
                 mainPlayerMoveRange = this;
             }
+            else
+            {
+                room = mainPlayerMoveRange.room;
+            }
 
             player = transform;
             origin = transform.position;
@@ -89,6 +93,7 @@ namespace SS.PlayerMovement
 
         public void SpawnRange()
         {
+
             GetComponent<SS_PlayerController>().pauseMovementBecauseRangeWasShown = false;
 
             Util.SpawnRange.DespawnRange();
@@ -104,6 +109,8 @@ namespace SS.PlayerMovement
 
         public void ResetMoveRange(Vector2 origin)
         {
+            Debug.Log("MoveRange ResetMoveRange");
+
             spawnMoveRange = true;
             this.origin = origin;
 
@@ -114,6 +121,8 @@ namespace SS.PlayerMovement
         {
             if (collision.GetComponent<LevelDesign.Room>() != null)
             {
+                Debug.Log("MoveRange OnTrigger");
+
                 room = collision.GetComponent<LevelDesign.Room>();
             }
         }

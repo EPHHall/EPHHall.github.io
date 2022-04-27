@@ -20,6 +20,11 @@ namespace SS.Spells
 
                 DisplayMessage("Modifier picked up.");
 
+                if (GetComponent<SS.Util.ID>() != null)
+                {
+                    SS.GameController.DestroyedTracker.instance.TrackDestroyedObject(GetComponent<SS.Util.ID>().id);
+                }
+
                 Destroy(gameObject);
             }
             else

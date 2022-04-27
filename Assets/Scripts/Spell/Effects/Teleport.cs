@@ -133,6 +133,7 @@ namespace SS.Spells
 
             resources.GetPlayerUpdateText().SetMessage("Choose new location");
 
+            //Target.preventClearingTargetsOnce = true;
             Util.SpawnRange.DespawnRange();
 
             List<TeleportTile> teleportTiles = Util.SpawnRange.SpawnTargetingRange<TeleportTile>(origin, spellAttachedTo.range, resources.GetTeleportTile(), resources.GetTeleportTile());

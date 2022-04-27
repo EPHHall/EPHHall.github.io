@@ -274,6 +274,11 @@ namespace SS.UI
         {
             foreach (AbilityButton abilityButton in FindObjectsOfType<AbilityButton>())
             {
+                if (abilityButton.GetComponent<SS.Util.ID>() != null)
+                {
+                    SS.GameController.DestroyedTracker.instance.TrackDestroyedObject(abilityButton. GetComponent<SS.Util.ID>().id);
+                }
+
                 Destroy(abilityButton.gameObject);
             }
 

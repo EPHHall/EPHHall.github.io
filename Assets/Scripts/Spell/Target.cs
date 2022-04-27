@@ -10,6 +10,8 @@ namespace SS.Spells
     public class Target : MonoBehaviour
     {
         //SS.Util.TargetInterface TargetInterface;
+        public static bool preventClearingTargetsOnce;
+
         [System.Serializable]
         public class DamageStuff
         {
@@ -31,11 +33,13 @@ namespace SS.Spells
         public TargetType targetType;
         public int hp;
         public string targetName;
+        public string id;
 
         public List<Status> statuses = new List<Status>();
 
         public static List<Target> selectedTargets = new List<Target>();
         public bool displaySelectedTargets;
+
 
         private void Update()
         {
@@ -229,7 +233,14 @@ namespace SS.Spells
         {
             //Debug.Log("In Clear");
 
-            selectedTargets.Clear();
+            if (preventClearingTargetsOnce)
+            {
+                preventClearingTargetsOnce = false;
+            }
+            else
+            {
+                selectedTargets.Clear();
+            }
         }
     }
 }

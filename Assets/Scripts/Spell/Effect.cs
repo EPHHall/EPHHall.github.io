@@ -71,6 +71,8 @@ namespace SS.Spells
         public List<Effect> deliveredEffects = new List<Effect>();
         public List<Effect> targetMeEffects = new List<Effect>();
 
+        public List<Target> targetsCopy = new List<Target>();
+
         [Space(5)]
         [Header("If Being Delivered")]
         public Effect attachedEffect;
@@ -178,6 +180,7 @@ namespace SS.Spells
 
         public virtual void InvokeEffect(List<Target> targets)
         {
+            targetsCopy = new List<Target>(targets);
         }
 
         public void EndInvoke()

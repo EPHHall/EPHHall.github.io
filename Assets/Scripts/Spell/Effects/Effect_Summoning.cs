@@ -201,6 +201,8 @@ public class Effect_Summoning : Effect
     public virtual void HandleDeliveredAndTargeting(List<Target> targets, GameObject summoned)
     {
         BuildPackage_Summoning(targets, summoned.GetComponent<Target>());
+        Debug.Log("1. Package Count: " + package.targets.Count);
+
         Debug.Log("In Summoning Handler", gameObject);
 
         foreach (Effect e in targetMeEffects)
@@ -210,11 +212,16 @@ public class Effect_Summoning : Effect
             Debug.Log("In Summoning target me", gameObject);
             e.BehaviorWhenDelivered(package);
         }
+
+        Debug.Log("2. Package Count: " + package.targets.Count);
+
         foreach (Effect e in deliveredEffects)
         {
             if (e == null) continue;
 
             e.BehaviorWhenDelivered(package);
         }
+
+        Debug.Log("3. Package Count: " + package.targets.Count);
     }
 }

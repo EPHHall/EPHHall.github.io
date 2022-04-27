@@ -37,6 +37,11 @@ namespace SS.UI
 
         private void OnDestroy()
         {
+            if (GetComponent<SS.Util.ID>() != null)
+            {
+                SS.GameController.DestroyedTracker.instance.TrackDestroyedObject(GetComponent<SS.Util.ID>().id);
+            }
+
             card.pointerIsOver = false;
         }
     }
