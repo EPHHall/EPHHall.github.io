@@ -116,7 +116,7 @@ namespace SS.Character
             {
                 GameObject modifier = Instantiate(modifiersForNewSpell[i], spellInventory.inventoryParent);
 
-                spellInventory.AddModifier(i + 1, modifier.GetComponent<Modifier>());
+                spellInventory.AddModifier(i, modifier.GetComponent<Modifier>());
                 spellCraftingScreen.modifierFrames[i].SetContent(modifier.GetComponent<Modifier>());
                 modifier.GetComponent<Modifier>().SetInUse(true, spellCraftingScreen.modifierFrames[i]);
             }

@@ -72,7 +72,7 @@ namespace SS.StatusSpace
                 if (decrementBehavior == DecrementBehavior.CheckApplier)
                 {
                     TurnTaker tt = null;
-                    if (status.applier.TryGetComponent<TurnTaker>(out tt) && tt == TurnManager.currentTurnTaker)
+                    if (status.applier != null && status.applier.TryGetComponent<TurnTaker>(out tt) && tt == TurnManager.currentTurnTaker)
                     {
                         decrementBehavior = DecrementBehavior.Do;
                     }

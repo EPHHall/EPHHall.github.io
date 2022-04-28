@@ -744,6 +744,10 @@ PrefabInstance:
       propertyPath: rangeMod
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3656605557539978222, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
+      propertyPath: m_Name
+      value: Unarmed
+      objectReference: {fileID: 0}
     - target: {fileID: 4413687577028108883, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

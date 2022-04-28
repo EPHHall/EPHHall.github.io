@@ -37,6 +37,7 @@ namespace SS.LevelDesign
         private List<GameObject> toDestroy = new List<GameObject>();
         public Transform actualParent;
         int preventClearing = 0;
+        int suspendUpdate = 0;
 
         private void Awake()
         {
@@ -78,8 +79,17 @@ namespace SS.LevelDesign
                 unload.SetActive(false);
 
                 GameObject actualObject = Instantiate(unload, unload.transform.position, Quaternion.identity, actualParent);
+                actualObject.name = unload.name;
                 toDestroy.Add(actualObject);
-                actualObject.SetActive(false);
+
+                if (this == currentlyActive)
+                {
+                    actualObject.SetActive(true);
+                }
+                else
+                {
+                    actualObject.SetActive(false);
+                }
             }
 
             cameraPosition = transform.position;
@@ -109,6 +119,10 @@ namespace SS.LevelDesign
             }
 
             Awake();
+            if (doors != null)
+            {
+                doors.SetActive(true);
+            }
 
             player.transform.position = playerDefaultPos;
             player.GetComponent<Character.CharacterStats>().ResetAP();
@@ -116,12 +130,12 @@ namespace SS.LevelDesign
             player.GetComponent<Character.CharacterStats>().ResetMana();
             player.GetComponent<PlayerMovement.SS_PlayerController>().pauseMovementForCutscene = false;
 
-
             GameController.TurnManager.tm.ResetTurnManager();
 
             MoveToThisRoom();
 
             preventClearing = 2;
+            suspendUpdate = 2;
 
             if(tutorialHandler != null)
             {
@@ -131,6 +145,13 @@ namespace SS.LevelDesign
 
         private void Update()
         {
+            if (suspendUpdate > 0)
+            {
+                suspendUpdate--;
+
+                return;
+            }
+
             if (currentlyActive == this && preventClearing <= 0)
             {
                 if (FindObjectOfType<SS.GameController.TurnManager>().turnTakers.Count == 1 && FindObjectOfType<SS.GameController.TurnManager>().turnTakers.Contains(player.GetComponent<SS.GameController.TurnTaker>()))
@@ -163,7 +184,7 @@ namespace SS.LevelDesign
         {
             if(updatePlayerRange > 0)
             {
-                player.GetComponent<SS.PlayerMovement.SS_PlayerMoveRange>().SpawnRange();
+                player.GetComponent<SS.PlayerMovement.SS_PlayerMoveRange>().SpawnRange("Room, Late Update");
                 updatePlayerRange--;
             }
         }
@@ -214,7 +235,7 @@ namespace SS.LevelDesign
                 doors.SetActive(true);
 
                 turnManager.SetTurnTakerList();
-                player.GetComponent<SS.PlayerMovement.SS_PlayerMoveRange>().ResetMoveRange(player.transform.position);
+                player.GetComponent<SS.PlayerMovement.SS_PlayerMoveRange>().ResetMoveRange(player.transform.position, "Room, ActivateRoom");
             }
 
             updatePlayerRange = 3;
@@ -222,6 +243,8 @@ namespace SS.LevelDesign
 
         public void MoveToThisRoom()
         {
+            if (this == currentlyActive) return;
+
             MoveCamera();
             ActivateRoom();
         }
@@ -235,8 +258,6 @@ namespace SS.LevelDesign
         {
             if (collision.tag == "Player")
             {
-                //Debug.Log("Here", gameObject);
-
                 MoveToThisRoom();
             }
         }

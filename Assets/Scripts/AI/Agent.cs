@@ -84,14 +84,14 @@ namespace SS.AI
                 if(completed)
                 {
                     running = false;
-                    turnManager.ChangeTurnTaker();
+                    turnManager.ChangeTurnTaker(-1);
                 }
             }
         }
 
         public void FinishedOverride()
         {
-            turnManager.ChangeTurnTaker();
+            turnManager.ChangeTurnTaker(-1);
         }
 
         public void ResetFactionsAndTargets()

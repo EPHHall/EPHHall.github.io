@@ -125,7 +125,7 @@ namespace SS.UI
 
                     if (GameController.TurnManager.currentTurnTaker.tag == "Player")
                     {
-                        GameController.TurnManager.currentTurnTaker.GetComponent<PlayerMovement.SS_PlayerMoveRange>().SpawnRange();
+                        GameController.TurnManager.currentTurnTaker.GetComponent<PlayerMovement.SS_PlayerMoveRange>().SpawnRange("Character Follower, ShowRange");
                         showing = false;
                     }
                 }

@@ -65,6 +65,9 @@ TextureImporter:
   - first:
       213: 5584559894294573485
     second: PM2 Effect Card 2 Text Area
+  - first:
+      213: -8397517142951828675
+    second: PM2 Info Marker
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -604,7 +607,7 @@ TextureImporter:
         width: 97
         height: 82
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -612,6 +615,27 @@ TextureImporter:
       bones: []
       spriteID: da13256b2a7508d40800000000000000
       internalID: 5584559894294573485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PM2 Info Marker
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 359
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d336a1386a6067b80800000000000000
+      internalID: -8397517142951828675
       vertices: []
       indices: 
       edges: []

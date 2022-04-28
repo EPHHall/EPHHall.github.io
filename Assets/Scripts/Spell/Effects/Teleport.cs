@@ -61,7 +61,7 @@ namespace SS.Spells
             {
                 if (resetCounter >= 1)
                 {
-                    resources.GetPlayer().GetComponent<PlayerMovement.SS_PlayerMoveRange>().SpawnRange();
+                    resources.GetPlayer().GetComponent<PlayerMovement.SS_PlayerMoveRange>().SpawnRange("Teleport, Update");
                     reset = false;
                 }
 

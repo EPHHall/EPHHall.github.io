@@ -660,6 +660,7 @@ MonoBehaviour:
     tile: 0
   hp: 0
   targetName: 
+  id: 
   statuses: []
   displaySelectedTargets: 0
 --- !u!61 &8009841677378646295
@@ -959,11 +960,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 466735156509912314, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: damageList.Array.data[1].amount
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 466735156509912314, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: originalDamageList.Array.data[1].amount
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 466735156509912314, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: animationToPlay
@@ -995,7 +996,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3656605557539978194, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: toInflict.amount
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3656605557539978194, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: weaponName
@@ -1007,7 +1008,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3656605557539978222, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: m_Name
-      value: Club
+      value: Mace
       objectReference: {fileID: 0}
     - target: {fileID: 4413687577028108883, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1059,7 +1060,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4413687577028108893, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: damage
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4413687577028108893, guid: 774d4d84f09c6e545a2fa44b3604b053, type: 3}
       propertyPath: castSpeed

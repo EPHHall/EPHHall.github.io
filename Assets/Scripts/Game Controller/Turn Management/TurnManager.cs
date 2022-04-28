@@ -34,6 +34,10 @@ namespace SS.GameController
         [Header("Controls")]
         public bool printTurnTaker;
 
+        [Space(5)]
+        [Header("Moving on if Current Target is null")]
+        public int delay = 5; //in frames
+
         public void Start()
         {
             if (tm == null)
@@ -49,12 +53,13 @@ namespace SS.GameController
 
             marker = GameObject.Find("Turn Marker").transform;
 
-            ChangeTurnTaker();
+            ChangeTurnTaker(0);
 
             markerOffset.y = marker.localPosition.y;
             markerOffset.x = marker.localPosition.x;
         }
 
+        int moveOnTimer;
         public void Update()
         {
             if (printTurnTaker || staticPrintTurnTaker)
@@ -75,6 +80,21 @@ namespace SS.GameController
                 animateTurnIndicator = false;
                 marker.position = (Vector2)turnTakers[turnTakersIndex].transform.position + markerOffset;
                 FinishChangingTurnTaker();
+            }
+
+            if(currentTurnTaker == null)
+            {
+                moveOnTimer++;
+
+                if (moveOnTimer >= delay)
+                {
+                    //StartTurn(GetNextTurnTaker());
+                    ChangeTurnTaker(-1);
+                }
+            }
+            else
+            {
+                moveOnTimer = 0;
             }
         }
 
@@ -141,14 +161,22 @@ namespace SS.GameController
         }
 
         bool changingTurnTaker;
-        public void ChangeTurnTaker()
+        public void ChangeTurnTaker(int ttIndex)
         {
             if (changingTurnTaker) return;
 
             changingTurnTaker = true;
 
             newRound = false;
-            turnTakersIndex++;
+
+            if (ttIndex == -1)
+            {
+                turnTakersIndex++;
+            }
+            else
+            {
+                turnTakersIndex = ttIndex;
+            }
 
             if (currentTurnTaker != null)
             {

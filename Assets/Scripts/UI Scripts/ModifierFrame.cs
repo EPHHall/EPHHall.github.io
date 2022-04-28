@@ -24,7 +24,7 @@ namespace SS.UI
         public override void SetContent(Object newContent)
         {
             if (newContent is Modifier)
-            { 
+            {
                 Modifier tempModifier = newContent as Modifier;
 
                 if (inventoryFrame)

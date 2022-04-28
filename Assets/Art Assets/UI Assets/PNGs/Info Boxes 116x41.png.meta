@@ -14,6 +14,9 @@ TextureImporter:
   - first:
       213: -494788222948204719
     second: Info Boxes 116x41_3
+  - first:
+      213: 1280893942180440314
+    second: Info Box Pointing Right
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -204,6 +207,27 @@ TextureImporter:
       bones: []
       spriteID: 15f10249bb82229f0800000000000000
       internalID: -494788222948204719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Info Box Pointing Right
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 4
+        width: 120
+        height: 74
+      alignment: 9
+      pivot: {x: 0.88793105, y: 0.9268292}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af86d920146a6c110800000000000000
+      internalID: 1280893942180440314
       vertices: []
       indices: 
       edges: []

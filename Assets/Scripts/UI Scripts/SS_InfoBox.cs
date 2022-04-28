@@ -18,6 +18,7 @@ namespace SS.UI
         public RectTransform viewport;
 
         public Text text;
+        public bool dontClearText = false;
 
         private void Start()
         {

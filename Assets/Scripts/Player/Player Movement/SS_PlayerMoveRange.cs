@@ -76,7 +76,7 @@ namespace SS.PlayerMovement
             if (spawnMoveRange)
             {
 
-                SpawnRange();
+                SpawnRange("PlayerMoveRange, Update");
                 spawnMoveRange = false;
             }
 
@@ -91,8 +91,9 @@ namespace SS.PlayerMovement
             }
         }
 
-        public void SpawnRange()
+        public void SpawnRange(string caller)
         {
+            //Debug.Log("MoveRange SpawnRange, Name fo caller = " + caller);
 
             GetComponent<SS_PlayerController>().pauseMovementBecauseRangeWasShown = false;
 
@@ -107,22 +108,18 @@ namespace SS.PlayerMovement
             }
         }
 
-        public void ResetMoveRange(Vector2 origin)
+        public void ResetMoveRange(Vector2 origin, string caller)
         {
-            Debug.Log("MoveRange ResetMoveRange");
-
             spawnMoveRange = true;
             this.origin = origin;
 
-            SpawnRange();
+            SpawnRange(caller);
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.GetComponent<LevelDesign.Room>() != null)
             {
-                Debug.Log("MoveRange OnTrigger");
-
                 room = collision.GetComponent<LevelDesign.Room>();
             }
         }

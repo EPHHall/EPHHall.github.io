@@ -13,9 +13,19 @@ namespace SS.GameController
 
         public bool enemyVersion;
 
+        private bool wasObject;
+
         public void Initialize(bool appliedByEnemy)
         {
             enemyVersion = appliedByEnemy;
+
+            if (GetComponent<Spells.Target>() != null)
+            {
+                wasObject = GetComponent<Spells.Target>().targetType.obj;
+
+                GetComponent<Spells.Target>().targetType.creature = true;
+                GetComponent<Spells.Target>().targetType.obj = false;
+            }
 
             if (enemyVersion)
             {
@@ -62,7 +72,7 @@ namespace SS.GameController
 
             if (!enemyVersion)
             {
-                moveRange.ResetMoveRange(transform.position);
+                moveRange.ResetMoveRange(transform.position, "TurnTakerControlledObject, StartTurn");
             }
             else
             {
@@ -83,6 +93,15 @@ namespace SS.GameController
             if (enemyVersion)
             {
                 agent.enabled = false;
+            }
+
+            if (GetComponent<Spells.Target>() != null)
+            {
+                if (wasObject)
+                {
+                    GetComponent<Spells.Target>().targetType.creature = false;
+                    GetComponent<Spells.Target>().targetType.obj = false;
+                }
             }
 
             return previousIndex;

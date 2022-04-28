@@ -76,7 +76,7 @@ namespace SS.LevelDesign
             if (playerMoveRange != null)
             {
                 Debug.Log("Switch ActivateInteractable in If");
-                playerMoveRange.SpawnRange();
+                playerMoveRange.SpawnRange("Switch, ActivateInteractable");
             }
 
             Tutorial.TutorialHandler.switchWasActivated = true;
@@ -95,7 +95,7 @@ namespace SS.LevelDesign
                 go.SetActive(true);
             }
 
-            playerMoveRange.SpawnRange();
+            playerMoveRange.SpawnRange("Switch, DeactivateInteractable");
         }
     }
 }

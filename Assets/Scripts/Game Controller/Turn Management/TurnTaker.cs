@@ -28,6 +28,38 @@ namespace SS.GameController
 
         public virtual void StartTurn()
         {
+            Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, .1f);
+            bool shouldDestroy = false;
+            foreach (Collider2D col in cols)
+            {
+                if (col.tag == "Pit")
+                {
+                    shouldDestroy = true;
+                }
+            }
+
+            if (shouldDestroy)
+            {
+                foreach(Collider2D col in cols)
+                {
+                    if(col.tag == "Bridge")
+                    {
+                        shouldDestroy = false;
+                    }
+                }
+            }
+
+            if(shouldDestroy)
+            {
+                if (GetComponent<Util.ID>() != null && GameController.DestroyedTracker.instance != null)
+                {
+                    GameController.DestroyedTracker.instance.TrackDestroyedObject(GetComponent<Util.ID>().id);
+                }
+
+                Destroy(gameObject);
+                return;
+            }
+
             SS.Util.SpawnRange.DespawnRange();
 
             SS.Spells.Target target = null;

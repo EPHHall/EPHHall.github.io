@@ -6,6 +6,8 @@ namespace SS.Item
 {
     public class MoveItemsOnDestroy : MonoBehaviour
     {
+
+
         private void Start()
         {
             Transform toMoveParent = transform.Find("Move To Position");

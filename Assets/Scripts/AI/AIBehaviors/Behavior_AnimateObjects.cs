@@ -44,6 +44,15 @@ namespace SS.AI
             currentTarget = null;
             for (int i = 0; i < objectsToControl.Count; i++)
             {
+                if (objectsToControl[i] == null)
+                {
+                    objectsToControl.RemoveAt(i);
+                    i--;
+                }
+            }
+
+            for (int i = 0; i < objectsToControl.Count; i++)
+            {
                 //skip if the previous object is still around and not yet controlled
                 if (i != 0 && !objectsControlled.Contains(objectsToControl[i - 1]) && objectsToControl[i - 1] != null)
                 {
@@ -104,6 +113,11 @@ namespace SS.AI
                         agent.spellToCast.CastSpell(true);
 
                         objectsControlled.Add(target);
+                    }
+                    else
+                    {
+                        agent.characterStats.mana = 0;
+                        agent.characterStats.actionPoints = 0;
                     }
                 }
             }
