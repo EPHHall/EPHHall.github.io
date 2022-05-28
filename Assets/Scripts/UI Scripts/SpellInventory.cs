@@ -48,6 +48,7 @@ namespace SS.UI
         {
 
 
+
             Effect tempEffect = toRemove as Effect;
             Modifier tempMod = toRemove as Modifier;
 

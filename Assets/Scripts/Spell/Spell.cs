@@ -56,6 +56,7 @@ namespace SS.Spells
         public int timesCastThisRound = 0;
         public Animation.AnimationManager animationManager;
         public Animation.AnimationObjectManager animationObjectManager;
+        public Item.Weapon wand;
 
         public virtual void Start()
         {

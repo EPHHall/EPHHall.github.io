@@ -14,7 +14,18 @@ namespace SS.UI
         {
             if (SpellManager.activeSpell != null && SpellManager.activeSpell is Spell_Attack)
             {
-                castButtonText.text = "Attack";
+                Spell_Attack spellAttack = SpellManager.activeSpell as Spell_Attack;
+                Item.Weapon weapon = spellAttack.activeWeapons[spellAttack.weaponBeingUsed];
+
+                if (weapon.spellToCast != null && weapon.spellToCast.wand != null)
+                {
+                    castButtonText.text = "Cast " + weapon.spellToCast.wand.spellUses + "/" + weapon.spellToCast.wand.spellUsesMax;
+                }
+                else
+                {
+                    castButtonText.text = "Attack";
+                }
+
             }
             else
             {

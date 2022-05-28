@@ -140,6 +140,11 @@ namespace SS.Item
                 Debug.Log(rangeMod);
             }
 
+            if (spellToCast != null)
+            {
+                spellToCast.wand = this;
+            }
+
             attack.main.ResetStats();
 
             if (attack.activeWeapons.Contains(this) &&

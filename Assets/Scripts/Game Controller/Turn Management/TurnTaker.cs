@@ -56,7 +56,11 @@ namespace SS.GameController
                     GameController.DestroyedTracker.instance.TrackDestroyedObject(GetComponent<Util.ID>().id);
                 }
 
-                Destroy(gameObject);
+                if (GetComponent<Character.CharacterStats>() != null)
+                {
+                    GetComponent<Character.CharacterStats>().hp = 0;
+                }
+
                 return;
             }
 

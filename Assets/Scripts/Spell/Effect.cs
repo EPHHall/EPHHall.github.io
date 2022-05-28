@@ -80,9 +80,12 @@ namespace SS.Spells
         [Space(5)]
         [Header("Animation and Audio Stuff")]
         public AnimationObject animationToPlay;
+        public AnimationObject animationToPlayOverride;
         [System.NonSerialized]
         public AnimationObjectManager animationObjectManager;
         public AudioClip soundEffect;
+        public AudioClip soundEffectOverride;
+        private int framesPassed = 2;
 
         [Space(5)]
         [Header("Misc")]
@@ -126,6 +129,24 @@ namespace SS.Spells
                 {
                     normallyValid = new TargetType(false);
                 }
+            }
+
+            if (framesPassed > 0)
+            {
+                framesPassed--;
+            }
+            else if (framesPassed == 0)
+            {
+                if (animationToPlayOverride != null)
+                {
+                    animationToPlay = animationToPlayOverride;
+                }
+                if (soundEffectOverride != null)
+                {
+                    soundEffect = soundEffectOverride;
+                }
+
+                framesPassed = -1;
             }
         }
 

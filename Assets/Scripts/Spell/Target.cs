@@ -71,6 +71,44 @@ namespace SS.Spells
             foreach (DamageStuff damageStuff in inflictAtEndOfTur)
             {
                 Util.TargetInterface.DamageTarget(damageStuff.target, damageStuff.damage, damageStuff.inflictor);
+
+                if (damageStuff.damage.type == Character.Damage.DamageType.Arcane)
+                {
+                    Animation.AnimationManager animationManager = FindObjectOfType<Animation.AnimationManager>();
+                    Animation.AnimationObjectManager objectManager = FindObjectOfType<Animation.AnimationObjectManager>();
+
+                    if (animationManager != null && objectManager != null)
+                    {
+                        animationManager.AddAnimation(new Animation.AnimationPlusObject(objectManager.enchantAnimation, transform, "Play"));
+                        animationManager.RunAnimations();
+                        Sound.SoundManager soundManager = FindObjectOfType<Sound.SoundManager>();
+
+                        Debug.Log(soundManager != null);
+                        if (soundManager != null )
+                        {
+                            soundManager.source.clip = soundManager.enchantSound;
+                            soundManager.source.Play();
+                        }
+                    }
+                }
+                else if (damageStuff.damage.type == Character.Damage.DamageType.Fire)
+                {
+                    Animation.AnimationManager animationManager = FindObjectOfType<Animation.AnimationManager>();
+                    Animation.AnimationObjectManager objectManager = FindObjectOfType<Animation.AnimationObjectManager>();
+                    Sound.SoundManager soundManager = FindObjectOfType<Sound.SoundManager>();
+
+                    if (animationManager != null && objectManager != null)
+                    {
+                        animationManager.AddAnimation(new Animation.AnimationPlusObject(objectManager.inflameAnimation, transform, "Play"));
+                        animationManager.RunAnimations();
+
+                        if (soundManager != null)
+                        {
+                            soundManager.source.clip = soundManager.enchantSound;
+                            soundManager.source.Play();
+                        }
+                    }
+                }
             }
 
             inflictAtEndOfTur.Clear();
