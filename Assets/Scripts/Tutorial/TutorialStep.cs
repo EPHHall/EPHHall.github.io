@@ -52,8 +52,8 @@ namespace Tutorial
         {
             scene = partOf;
 
-            if (preventPlayerMovement)
-                player.PauseMovement_ForCutscene();
+            //if (preventPlayerMovement)
+            //    player.PauseMovement_ForCutscene();
 
             if (deactivateAllButtons)
             {

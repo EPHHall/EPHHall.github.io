@@ -33,6 +33,12 @@ namespace SS.GameController
         //Flags
         public bool OnlyOneTurnTaker { get; private set; }
 
+        [Space(10)]
+        [Header("Debug")]
+        public int turnTakersCount;
+        public string stateName;
+        public GameObject D_CurrentTurnTakerObject;
+
         public void Start()
         {
             if (instance == null)
@@ -43,6 +49,9 @@ namespace SS.GameController
             {
                 Destroy(gameObject);
             }
+
+            State = TurnManagerState.Standby;
+            TurnTakers = new List<TurnTaker>();
         }
 
         public void Update()
@@ -66,6 +75,15 @@ namespace SS.GameController
             {
                 Standby();
             }
+
+            HandleDebug();
+        }
+
+        private void HandleDebug()
+        {
+            turnTakersCount = TurnTakers.Count;
+            stateName = State.ToString();
+            D_CurrentTurnTakerObject = CurrentTurnTaker.gameObject;
         }
 
         /// <summary>
@@ -78,6 +96,10 @@ namespace SS.GameController
             if (TurnTakers.Count <= 1)
             {
                 State = TurnManagerState.Standby;
+
+                CurrentTurnTaker = player;
+                player.State = TurnTaker.TurnTakerState.TurnBeginning;
+                player.TurnTakerUpdate();
             }
             else
             {
@@ -91,6 +113,7 @@ namespace SS.GameController
 
             CurrentTurnTaker = TurnTakers[0];
             _turnTakersIndex = 0;
+            CurrentTurnTaker.StartTurn();
 
             State = TurnManagerState.RoundMain;
         }
@@ -110,6 +133,7 @@ namespace SS.GameController
                 else
                 {
                     CurrentTurnTaker = GetNextTurnTaker();
+                    CurrentTurnTaker.StartTurn();
                 }
             }
         }
@@ -178,6 +202,11 @@ namespace SS.GameController
             }
 
             return toReturn;
+        }
+
+        public void ProgressRound()
+        {
+            CurrentTurnTaker.EndTurn();
         }
     }
 }

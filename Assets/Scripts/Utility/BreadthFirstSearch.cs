@@ -23,7 +23,7 @@ namespace SS.Util
 
                 foreach(Vector2 position in positionsToCheck)
                 {
-                    if (previousPositions.Contains(position)) continue;
+                    if (previousPositions.Contains(position) || emptyPositions.Contains(position)) continue;
 
                     Collider2D collider2D = Physics2D.OverlapCircle(position, .1f, whatIsWall);
                     if(collider2D == null)

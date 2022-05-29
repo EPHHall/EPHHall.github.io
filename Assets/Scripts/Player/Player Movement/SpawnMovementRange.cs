@@ -23,27 +23,43 @@ namespace SS.CharacterMovement
 
         public void Spawn(Vector2 initialPosition, int range)
         {
-            foreach(Tile tile in GameObject.FindObjectsOfType<Tile>())
-            {
-                tile.gameObject.SetActive(false);
-            }
+            Despawn();
 
-            List<Vector2> initialPostions = new List<Vector2>();
-            initialPostions.Add(initialPosition);
+            List<Vector2> initialPositions = new List<Vector2>();
+            initialPositions.Add(initialPosition);
 
             List<Vector2> previousPositions = new List<Vector2>();
 
-            initialPostions = Util.BreadthFirstSearch.BFS(initialPostions, previousPositions, _whatCantBeWalkedThrough, range);
+            initialPositions = Util.BreadthFirstSearch.BFS(initialPositions, previousPositions, _whatCantBeWalkedThrough, range);
 
-            foreach(Vector2 position in initialPostions)
+            List<Vector2> takenPositions = new List<Vector2>();
+            foreach(Vector2 position in previousPositions)
             {
+                if (takenPositions.Contains(position)) continue;
+
                 GameObject.Instantiate(_movementTilePrefab, position, Quaternion.identity);
+                takenPositions.Add(position);
+            }
+            foreach(Vector2 position in initialPositions)
+            {
+                if (takenPositions.Contains(position)) continue;
+
+                GameObject.Instantiate(_movementTilePrefab, position, Quaternion.identity);
+                takenPositions.Add(position);
             }
 
-            List<Vector2> wallPositions = Util.BreadthFirstSearch.BFS(initialPostions, previousPositions, _whatIsWall);
+            List<Vector2> wallPositions = Util.BreadthFirstSearch.BFS(initialPositions, previousPositions, _whatIsWall);
             foreach(Vector2 wallPosition in wallPositions)
             {
                 GameObject.Instantiate(_wallTilePrefab, wallPosition, Quaternion.identity);
+            }
+        }
+
+        public void Despawn()
+        {
+            foreach (Tile tile in GameObject.FindObjectsOfType<Tile>())
+            {
+                tile.gameObject.SetActive(false);
             }
         }
     }

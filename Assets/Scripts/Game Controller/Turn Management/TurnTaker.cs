@@ -23,12 +23,27 @@ namespace SS.GameController
 
         public bool dontAutomaticallyAdd = false;
 
+        [Space(10)]
+        [Header("Debug")]
+        public string stateName;
+
         public virtual void Awake()
         {
         }
         
         public virtual void Start()
         {
+            State = TurnTakerState.NotTurn;
+        }
+
+        public virtual void Update()
+        {
+            HandleDebug();
+        }
+
+        public virtual void HandleDebug()
+        {
+            stateName = State.ToString();
         }
 
         public virtual void TurnTakerUpdate()
@@ -45,7 +60,7 @@ namespace SS.GameController
 
             if (State == TurnTakerState.TurnEnd)
             {
-                TurnEnd();
+                TurnEnding();
             }
         }
 
@@ -56,7 +71,7 @@ namespace SS.GameController
 
         public virtual void TurnBeginning()
         {
-            OnTurnStart.Invoke(this, System.EventArgs.Empty);
+            OnTurnStart?.Invoke(this, System.EventArgs.Empty);
         }
 
         public virtual void TurnBody()
@@ -64,14 +79,19 @@ namespace SS.GameController
 
         }
 
-        public virtual void TurnEnd()
+        public virtual void TurnEnding()
         {
-            OnTurnEnd.Invoke(this, System.EventArgs.Empty);
+            OnTurnEnd?.Invoke(this, System.EventArgs.Empty);
         }
 
         public virtual void ResetTurnTaker()
         {
             State = TurnTakerState.NotTurn;
+        }
+
+        public virtual void EndTurn()
+        {
+            State = TurnTakerState.TurnEnd;
         }
     }
 }

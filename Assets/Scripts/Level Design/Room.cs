@@ -182,11 +182,11 @@ namespace SS.LevelDesign
 
         private void LateUpdate()
         {
-            if(updatePlayerRange > 0)
-            {
-                player.GetComponent<SS.PlayerMovement.SS_PlayerMoveRange>().SpawnRange("Room, Late Update");
-                updatePlayerRange--;
-            }
+            //if(updatePlayerRange > 0)
+            //{
+            //    player.GetComponent<SS.PlayerMovement.SS_PlayerMoveRange>().SpawnRange("Room, Late Update");
+            //    updatePlayerRange--;
+            //}
         }
 
         public void ClearRoom()
@@ -235,7 +235,7 @@ namespace SS.LevelDesign
                 doors.SetActive(true);
 
                 turnManager.SetTurnTakerList();
-                player.GetComponent<SS.PlayerMovement.SS_PlayerMoveRange>().ResetMoveRange(player.transform.position, "Room, ActivateRoom");
+                //player.GetComponent<SS.PlayerMovement.SS_PlayerMoveRange>().ResetMoveRange(player.transform.position, "Room, ActivateRoom");
             }
 
             updatePlayerRange = 3;
