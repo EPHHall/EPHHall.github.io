@@ -21,10 +21,10 @@ namespace SS.GameController
         {
             int previousIndex = -1;
 
-            if (TurnManager.tm.turnTakers.Contains(this))
+            if (TurnManager.instance.TurnTakers.Contains(this))
             {
-                previousIndex = TurnManager.tm.turnTakers.IndexOf(this);
-                TurnManager.tm.turnTakers.Remove(this);
+                previousIndex = TurnManager.instance.TurnTakers.IndexOf(this);
+                TurnManager.instance.TurnTakers.Remove(this);
             }
 
 

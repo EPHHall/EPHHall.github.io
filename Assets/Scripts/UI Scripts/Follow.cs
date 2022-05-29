@@ -31,7 +31,7 @@ namespace SS.UI
         {
             if (followTurnTaker)
             {
-                toFollow = SS.GameController.TurnManager.currentTurnTaker.transform;
+                toFollow = SS.GameController.TurnManager.instance.CurrentTurnTaker.transform;
             }
 
             if (toFollow == null)

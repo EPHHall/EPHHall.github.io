@@ -21,7 +21,7 @@ namespace SS.Character
         {
             if (tt != null)
             {
-                if (GameController.TurnManager.currentTurnTaker == tt)
+                if (GameController.TurnManager.instance.CurrentTurnTaker == tt)
                 {
                     wasActive = true;
                 }

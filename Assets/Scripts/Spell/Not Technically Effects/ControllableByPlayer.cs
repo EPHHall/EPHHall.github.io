@@ -38,12 +38,12 @@ namespace SS.Spells
             counter.countDowns.Add(new TurnCounter.CountdownAndEffect(duration));
 
 
-            int indexToInsertAt = FindObjectOfType<TurnManager>().turnTakers.IndexOf(TurnManager.currentTurnTaker) + 1;
-            if (indexToInsertAt >= FindObjectOfType<TurnManager>().turnTakers.Count)
+            int indexToInsertAt = TurnManager.instance.TurnTakers.IndexOf(TurnManager.instance.CurrentTurnTaker) + 1;
+            if (indexToInsertAt >= TurnManager.instance.TurnTakers.Count)
             {
                 indexToInsertAt = 0;
             }
-            FindObjectOfType<TurnManager>().turnTakers.Insert(indexToInsertAt, GetComponent<TurnTakerControlledObject>());
+            TurnManager.instance.TurnTakers.Insert(indexToInsertAt, GetComponent<TurnTakerControlledObject>());
 
             GetComponent<SS_PlayerController>().movementMask = GameObject.FindGameObjectWithTag("Player").GetComponent<SS_PlayerController>().movementMask;
         }
@@ -52,7 +52,7 @@ namespace SS.Spells
         {
             if (GetComponent<TurnCounter>() == null)
             {
-                FindObjectOfType<TurnManager>().turnTakers.Remove(GetComponent<TurnTakerControlledObject>());
+                TurnManager.instance.TurnTakers.Remove(GetComponent<TurnTakerControlledObject>());
 
                 Destroy(GetComponent<SS_PlayerController>());
                 Destroy(GetComponent<TurnTakerControlledObject>());

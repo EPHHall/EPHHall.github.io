@@ -54,8 +54,8 @@ namespace SS.Spells
 
                 HandleDeliveredAndTargeting(targets, newDude);
 
-                int index = turnManager.turnTakers.IndexOf(GameController.TurnManager.currentTurnTaker) + 1;
-                turnManager.turnTakers.Insert(index, newDude.GetComponent<GameController.TurnTaker>());
+                int index = GameController.TurnManager.instance.TurnTakers.IndexOf(GameController.TurnManager.instance.CurrentTurnTaker) + 1;
+                GameController.TurnManager.instance.TurnTakers.Insert(index, newDude.GetComponent<GameController.TurnTaker>());
 
                 EndInvoke();
                 return;
@@ -68,8 +68,8 @@ namespace SS.Spells
 
                 HandleDeliveredAndTargeting(targets, newDude);
 
-                int index = turnManager.turnTakers.IndexOf(GameController.TurnManager.currentTurnTaker) + 1;
-                turnManager.turnTakers.Insert(index, newDude.GetComponent<GameController.TurnTaker>());
+                int index = GameController.TurnManager.instance.TurnTakers.IndexOf(GameController.TurnManager.instance.CurrentTurnTaker) + 1;
+                GameController.TurnManager.instance.TurnTakers.Insert(index, newDude.GetComponent<GameController.TurnTaker>());
 
                 //HandleDeliveredEffects(newDude.GetComponent<Target>(), null);
                 //HandleTargetingEffects(newDude.GetComponent<Target>());
@@ -103,8 +103,8 @@ namespace SS.Spells
 
                     HandleDeliveredAndTargeting(targets, newDude);
 
-                    int index = turnManager.turnTakers.IndexOf(GameController.TurnManager.currentTurnTaker) + 1;
-                    turnManager.turnTakers.Insert(index, newDude.GetComponent<GameController.TurnTaker>());
+                    int index = GameController.TurnManager.instance.TurnTakers.IndexOf(GameController.TurnManager.instance.CurrentTurnTaker) + 1;
+                    GameController.TurnManager.instance.TurnTakers.Insert(index, newDude.GetComponent<GameController.TurnTaker>());
                 }
                 else
                 {

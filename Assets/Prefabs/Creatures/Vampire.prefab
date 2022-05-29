@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: -8333720460282943177}
   - component: {fileID: 129894620914785763}
   - component: {fileID: 4383073176474760888}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Vampire
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -593,6 +593,7 @@ MonoBehaviour:
   timesCastThisRound: 0
   animationManager: {fileID: 0}
   animationObjectManager: {fileID: 0}
+  wand: {fileID: 0}
 --- !u!1 &8172245871557370621
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,6 +662,7 @@ MonoBehaviour:
   timesCastThisRound: 0
   animationManager: {fileID: 0}
   animationObjectManager: {fileID: 0}
+  wand: {fileID: 0}
 --- !u!1 &8172245872027251306
 GameObject:
   m_ObjectHideFlags: 0

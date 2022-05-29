@@ -10,13 +10,13 @@ namespace SS.GameController
     {
         public Button[] buttonsToToggle;
 
-        public override void EndTurn()
-        {
-            base.EndTurn();
+        //public override void EndTurn()
+        //{
+        //    base.EndTurn();
 
-            ToggleButtons(false);
+        //    ToggleButtons(false);
 
-        }
+        //}
 
         public override void StartTurn()
         {

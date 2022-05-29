@@ -25,7 +25,7 @@ namespace SS.Spells
 
             normallyValid = new TargetType(true, true, true, true);
 
-            mainStatus = new Status(Status.StatusName.ArcaneDamage, baseDamage, duration, SS.GameController.TurnManager.currentTurnTaker, radius);
+            mainStatus = new Status(Status.StatusName.ArcaneDamage, baseDamage, duration, SS.GameController.TurnManager.instance.CurrentTurnTaker, radius);
             mainDamage = new Character.Damage(Character.Damage.DamageType.Enchantment, baseDamage);
 
             originalDamageList.Clear();

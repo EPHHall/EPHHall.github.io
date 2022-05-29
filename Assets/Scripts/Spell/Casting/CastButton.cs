@@ -9,7 +9,7 @@ namespace SS.Spells
     {
         void Update()
         {
-            if (SpellManager.activeSpell != null && SS.GameController.TurnManager.currentTurnTaker.tag == "Player")
+            if (SpellManager.activeSpell != null && SS.GameController.TurnManager.instance.CurrentTurnTaker.tag == "Player")
             {
                 GetComponent<Image>().enabled = true;
             }
@@ -18,7 +18,7 @@ namespace SS.Spells
                 GetComponent<Image>().enabled = false;
             }
 
-            //if (SS.GameController.TurnManager.currentTurnTaker.tag == "Player" && Target.selectedTargets.Count > 0)
+            //if (SS.GameController.TurnManager.instance.CurrentTurnTaker.tag == "Player" && Target.selectedTargets.Count > 0)
             //{
             //    GetComponent<Image>().enabled = true;
             //}

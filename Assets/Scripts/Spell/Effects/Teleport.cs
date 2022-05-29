@@ -81,7 +81,7 @@ namespace SS.Spells
 
                 if (teleportee.GetComponent<PlayerMovement.SS_PlayerController>() != null)
                 {
-                    teleportee.GetComponent<PlayerMovement.SS_PlayerMoveRange>().origin = teleportee.transform.position;
+                    //teleportee.GetComponent<PlayerMovement.SS_PlayerMoveRange>().origin = teleportee.transform.position;
                 }
 
                 animationManager.AddAnimation(new Animation.AnimationPlusObject(animationToPlay, teleportee.transform, "Play"));

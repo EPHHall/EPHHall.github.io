@@ -87,7 +87,7 @@ namespace SS.UI
         public void ShowRange(PointerEventData eventData)
         {
 
-            if (eventData.button == PointerEventData.InputButton.Right && GameController.TurnManager.currentTurnTaker.tag == "Player")
+            if (eventData.button == PointerEventData.InputButton.Right && GameController.TurnManager.instance.CurrentTurnTaker.tag == "Player")
             {
                 if (Tutorial.TutorialHandler.rangeWasShown != null)
                 {
@@ -104,7 +104,7 @@ namespace SS.UI
                         {
                             stats.ShowRangeOfAbilities(agent.spells[0]);
 
-                            GameController.TurnManager.currentTurnTaker.GetComponent<PlayerMovement.SS_PlayerController>().PauseMovement_RangeShown();
+                            GameController.TurnManager.instance.CurrentTurnTaker.GetComponent<PlayerMovement.SS_PlayerController>().PauseMovement_RangeShown();
                         }
                         else
                         {
@@ -121,11 +121,11 @@ namespace SS.UI
                 }
                 else
                 {
-                    GameController.TurnManager.currentTurnTaker.GetComponent<PlayerMovement.SS_PlayerController>().UnPauseMovement_RangeShown();
+                    GameController.TurnManager.instance.CurrentTurnTaker.GetComponent<PlayerMovement.SS_PlayerController>().UnPauseMovement_RangeShown();
 
-                    if (GameController.TurnManager.currentTurnTaker.tag == "Player")
+                    if (GameController.TurnManager.instance.CurrentTurnTaker.tag == "Player")
                     {
-                        GameController.TurnManager.currentTurnTaker.GetComponent<PlayerMovement.SS_PlayerMoveRange>().SpawnRange("Character Follower, ShowRange");
+                        GameController.TurnManager.instance.CurrentTurnTaker.GetComponent<PlayerMovement.SS_PlayerMoveRange>().SpawnRange("Character Follower, ShowRange");
                         showing = false;
                     }
                 }

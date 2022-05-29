@@ -84,14 +84,14 @@ namespace SS.AI
                 if(completed)
                 {
                     running = false;
-                    turnManager.ChangeTurnTaker(-1);
+                    //turnManager.ChangeTurnTaker(-1);
                 }
             }
         }
 
         public void FinishedOverride()
         {
-            turnManager.ChangeTurnTaker(-1);
+            //turnManager.ChangeTurnTaker(-1);
         }
 
         public void ResetFactionsAndTargets()
@@ -172,12 +172,7 @@ namespace SS.AI
             }
 
             running = true;
-            EndTurn();
-        }
-
-        public override void EndTurn()
-        {
-            base.EndTurn();
+            //EndTurn();
         }
 
         public void SetPosition(Vector2 newPosition)

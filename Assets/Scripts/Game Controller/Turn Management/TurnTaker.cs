@@ -8,6 +8,18 @@ namespace SS.GameController
     {
         //These damage handling variables and functions should be in Target instead. TODO
         //Also, DamageStuff should probably be in Damage or TargetInterface, that would make more sense.
+        public enum TurnTakerState
+        {
+            NotTurn,
+            TurnBeginning,
+            TurnBody,
+            TurnEnd
+        }
+
+        public event System.EventHandler OnTurnStart;
+        public event System.EventHandler OnTurnEnd;
+
+        public TurnTakerState State { get; set; }
 
         public bool dontAutomaticallyAdd = false;
 
@@ -19,74 +31,47 @@ namespace SS.GameController
         {
         }
 
-        public virtual void EndTurn()
+        public virtual void TurnTakerUpdate()
         {
-            SS.Util.SpawnRange.DespawnRange();
+            if (State == TurnTakerState.TurnBeginning)
+            {
+                TurnBeginning();
+            }
 
-            GetComponent<Spells.Target>().InflictEndOfTurnDamage();
+            if (State == TurnTakerState.TurnBody)
+            {
+                TurnBody();
+            }
+
+            if (State == TurnTakerState.TurnEnd)
+            {
+                TurnEnd();
+            }
         }
 
         public virtual void StartTurn()
         {
-            Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, .1f);
-            bool shouldDestroy = false;
-            foreach (Collider2D col in cols)
-            {
-                if (col.tag == "Pit")
-                {
-                    shouldDestroy = true;
-                }
-            }
-
-            if (shouldDestroy)
-            {
-                foreach(Collider2D col in cols)
-                {
-                    if(col.tag == "Bridge")
-                    {
-                        shouldDestroy = false;
-                    }
-                }
-            }
-
-            if(shouldDestroy)
-            {
-                if (GetComponent<Util.ID>() != null && GameController.DestroyedTracker.instance != null)
-                {
-                    GameController.DestroyedTracker.instance.TrackDestroyedObject(GetComponent<Util.ID>().id);
-                }
-
-                if (GetComponent<Character.CharacterStats>() != null)
-                {
-                    GetComponent<Character.CharacterStats>().hp = 0;
-                }
-
-                return;
-            }
-
-            SS.Util.SpawnRange.DespawnRange();
-
-            SS.Spells.Target target = null;
-            if (TryGetComponent<SS.Spells.Target>(out target))
-            {
-                //target.TurnChange(false);
-            }
+            State = TurnTakerState.TurnBeginning;
         }
 
-        public virtual void OnDestroy()
+        public virtual void TurnBeginning()
         {
-            if (transform.Find("Turn Marker"))
-            {
-                transform.Find("Turn Marker").parent = null;
-            }
+            OnTurnStart.Invoke(this, System.EventArgs.Empty);
+        }
 
-            TurnManager.tm.RemoveTurnTakerFromPlay(this);
+        public virtual void TurnBody()
+        {
 
-            if (GetComponent<Util.ID>() != null)
-            {
-                if(GameController.DestroyedTracker.instance != null)
-                    DestroyedTracker.instance.TrackDestroyedObject(GetComponent<Util.ID>().id);
-            }
+        }
+
+        public virtual void TurnEnd()
+        {
+            OnTurnEnd.Invoke(this, System.EventArgs.Empty);
+        }
+
+        public virtual void ResetTurnTaker()
+        {
+            State = TurnTakerState.NotTurn;
         }
     }
 }

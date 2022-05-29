@@ -24,7 +24,7 @@ namespace SS.Spells
 
             actionPointCost = 2;
 
-            mainStatus = new StatusSpace.Status(StatusSpace.Status.StatusName.Controlled, 1, duration, SS.GameController.TurnManager.currentTurnTaker);
+            mainStatus = new StatusSpace.Status(StatusSpace.Status.StatusName.Controlled, 1, duration, SS.GameController.TurnManager.instance.CurrentTurnTaker);
             originalStatusList.Clear();
             AddToOriginalStatusList(mainStatus);
             ResetMainStatusList();
@@ -57,12 +57,12 @@ namespace SS.Spells
                     if (enemyVersion)
                     {
                         //Debug.Log("enemy version");
-                        newStatus = new StatusSpace.Status(StatusSpace.Status.StatusName.ControlledByEnemy, 1, duration, SS.GameController.TurnManager.currentTurnTaker);
+                        newStatus = new StatusSpace.Status(StatusSpace.Status.StatusName.ControlledByEnemy, 1, duration, SS.GameController.TurnManager.instance.CurrentTurnTaker);
                     }
                     else
                     {
                         //Debug.Log("regular version");
-                        newStatus = new StatusSpace.Status(StatusSpace.Status.StatusName.Controlled, 1, duration, SS.GameController.TurnManager.currentTurnTaker);
+                        newStatus = new StatusSpace.Status(StatusSpace.Status.StatusName.Controlled, 1, duration, SS.GameController.TurnManager.instance.CurrentTurnTaker);
                     }
 
                     target.ApplyStatus(newStatus, this);
@@ -77,7 +77,7 @@ namespace SS.Spells
         {
             base.IfTargetIsWeapon(target);
 
-            target.ApplyStatus(StatusSpace.Status.StatusName.Controlled, 1, duration, SS.GameController.TurnManager.currentTurnTaker, this);
+            target.ApplyStatus(StatusSpace.Status.StatusName.Controlled, 1, duration, SS.GameController.TurnManager.instance.CurrentTurnTaker, this);
         }
     }
 }

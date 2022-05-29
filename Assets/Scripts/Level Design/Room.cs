@@ -130,7 +130,7 @@ namespace SS.LevelDesign
             player.GetComponent<Character.CharacterStats>().ResetMana();
             player.GetComponent<PlayerMovement.SS_PlayerController>().pauseMovementForCutscene = false;
 
-            GameController.TurnManager.tm.ResetTurnManager();
+            //GameController.TurnManager.tm.ResetTurnManager();
 
             MoveToThisRoom();
 
@@ -154,7 +154,7 @@ namespace SS.LevelDesign
 
             if (currentlyActive == this && preventClearing <= 0)
             {
-                if (FindObjectOfType<SS.GameController.TurnManager>().turnTakers.Count == 1 && FindObjectOfType<SS.GameController.TurnManager>().turnTakers.Contains(player.GetComponent<SS.GameController.TurnTaker>()))
+                if (GameController.TurnManager.instance.TurnTakers.Count == 1 && GameController.TurnManager.instance.TurnTakers.Contains(player.GetComponent<SS.GameController.TurnTaker>()))
                 {
                     ClearRoom();
                 }

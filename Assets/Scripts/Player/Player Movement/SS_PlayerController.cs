@@ -56,11 +56,11 @@ namespace SS.PlayerMovement
 
             if (tag == "Player")
             {
-                result = result && SS.GameController.TurnManager.currentTurnTaker == GetComponent<SS.GameController.TurnTaker>();
+                result = result && SS.GameController.TurnManager.instance.CurrentTurnTaker == GetComponent<SS.GameController.TurnTaker>();
             }
             else
             {
-                result = result && SS.GameController.TurnManager.currentTurnTaker == GetComponent<SS.GameController.TurnTakerControlledObject>();
+                result = result && SS.GameController.TurnManager.instance.CurrentTurnTaker == GetComponent<SS.GameController.TurnTakerControlledObject>();
             }
 
             if (result)

@@ -6,136 +6,161 @@ namespace SS.GameController
 {
     public class TurnManager : MonoBehaviour
     {
-        public static TurnTaker currentTurnTaker;
-        public static TurnTaker previousTurnTaker;
-        public static bool staticPrintTurnTaker;
-        public static TurnManager tm;
+        public enum TurnManagerState
+        {
+            RoundStart,
+            RoundMain,
+            RoundEnd,
+            Standby
+        }
 
-        public List<TurnTaker> turnTakers = new List<TurnTaker>();
-        public int turnTakersIndex = 0;
+        public event System.EventHandler OnRoundStart;
+        public event System.EventHandler OnRoundEnd;
 
-        public int turnNumber;
-        public int roundNumber;
+        public static TurnManager instance;
 
-        public bool newRound;
+        public TurnTaker player;
 
-        private Transform marker;
+        public List<TurnTaker> TurnTakers { get; private set; }
+        public TurnTaker CurrentTurnTaker { get; private set; }
+        public TurnManagerState State { get; private set; }
 
-        private TurnTakerPlayer player;
+        private int _turnTakersIndex = 0;
+        private int _turnNumber;
+        private int _roundNumber;
+        private Transform _marker;
 
-        private bool animateTurnIndicator;
-        private float t;
-        private Vector2 markerOGPos;
-        private Vector2 markerOffset;
-        public float turnIndicatorSpeed;
-        public float pauseAfterMarkerAnimation;
-
-        [Space(5)]
-        [Header("Controls")]
-        public bool printTurnTaker;
-
-        [Space(5)]
-        [Header("Moving on if Current Target is null")]
-        public int delay = 5; //in frames
+        //Flags
+        public bool OnlyOneTurnTaker { get; private set; }
 
         public void Start()
         {
-            if (tm == null)
+            if (instance == null)
             {
-                tm = this;
-            }
-
-            player = FindObjectOfType<TurnTakerPlayer>();
-
-            turnTakers.Add(GameObject.Find("Player").GetComponent<TurnTaker>());
-
-            SetTurnTakerList();
-
-            marker = GameObject.Find("Turn Marker").transform;
-
-            ChangeTurnTaker(0);
-
-            markerOffset.y = marker.localPosition.y;
-            markerOffset.x = marker.localPosition.x;
-        }
-
-        int moveOnTimer;
-        public void Update()
-        {
-            if (printTurnTaker || staticPrintTurnTaker)
-            {
-                PrintCurrentTurnTaker();
-                printTurnTaker = false;
-                staticPrintTurnTaker = false;
-            }
-
-            if(animateTurnIndicator && t < 1 + pauseAfterMarkerAnimation)
-            {
-                t += Time.deltaTime * turnIndicatorSpeed;
-
-                marker.transform.position = Vector2.Lerp(markerOGPos, (Vector2)turnTakers[turnTakersIndex].transform.position + markerOffset, t);
-            }
-            else if(animateTurnIndicator)
-            {
-                animateTurnIndicator = false;
-                marker.position = (Vector2)turnTakers[turnTakersIndex].transform.position + markerOffset;
-                FinishChangingTurnTaker();
-            }
-
-            if(currentTurnTaker == null)
-            {
-                moveOnTimer++;
-
-                if (moveOnTimer >= delay)
-                {
-                    //StartTurn(GetNextTurnTaker());
-                    ChangeTurnTaker(-1);
-                }
+                instance = this;
             }
             else
             {
-                moveOnTimer = 0;
+                Destroy(gameObject);
+            }
+        }
+
+        public void Update()
+        {
+            if (State == TurnManagerState.RoundStart)
+            {
+                RoundStart();
+            }
+
+            if (State == TurnManagerState.RoundMain)
+            {
+                RoundMain();
+            }
+
+            if (State == TurnManagerState.RoundEnd)
+            {
+                RoundEnd();
+            }
+
+            if(State == TurnManagerState.Standby)
+            {
+                Standby();
+            }
+        }
+
+        /// <summary>
+        /// Code that runs in-between encounters
+        /// </summary>
+        private void Standby()
+        {
+            SetTurnTakerList();
+
+            if (TurnTakers.Count <= 1)
+            {
+                State = TurnManagerState.Standby;
+            }
+            else
+            {
+                State = TurnManagerState.RoundStart;
+            }
+        }
+
+        private void RoundStart()
+        {
+            OnRoundStart?.Invoke(this, System.EventArgs.Empty);
+
+            CurrentTurnTaker = TurnTakers[0];
+            _turnTakersIndex = 0;
+
+            State = TurnManagerState.RoundMain;
+        }
+
+        private void RoundMain()
+        {
+            CurrentTurnTaker.TurnTakerUpdate();
+
+            if(CurrentTurnTaker.State == TurnTaker.TurnTakerState.TurnEnd)
+            {
+                CurrentTurnTaker.ResetTurnTaker();
+
+                if (_turnTakersIndex == TurnTakers.Count - 1)
+                {
+                    State = TurnManagerState.RoundEnd;
+                }
+                else
+                {
+                    CurrentTurnTaker = GetNextTurnTaker();
+                }
+            }
+        }
+
+        private void RoundEnd()
+        {
+            OnRoundEnd?.Invoke(this, System.EventArgs.Empty);
+
+            if(TurnTakers.Count <= 1)
+            {
+                State = TurnManagerState.Standby;
+            }
+            else
+            {
+                State = TurnManagerState.RoundStart;
             }
         }
 
         public void SetTurnTakerList()
         {
-            turnTakers.Clear();
+            TurnTakers.Clear();
 
             foreach (TurnTaker turnTaker in GameObject.FindObjectsOfType<TurnTaker>())
             {
-                if (turnTaker == player as TurnTaker)
+                if (turnTaker == player)
                 {
                     continue;
                 }
 
-                if (!turnTakers.Contains(turnTaker) && (turnTaker as TurnTakerControlledObject) == null && !turnTaker.dontAutomaticallyAdd)
+                if (!TurnTakers.Contains(turnTaker) && (turnTaker as TurnTakerControlledObject) == null && !turnTaker.dontAutomaticallyAdd)
                 {
-                    turnTakers.Add(turnTaker);
+                    TurnTakers.Add(turnTaker);
                 }
             }
 
-            turnTakers.Insert(0, player);
-            turnTakersIndex = 0;
+            TurnTakers.Insert(0, player);
+            _turnTakersIndex = 0;
         }
 
         public void AddNextTurnTaker(TurnTaker nextTurnTaker)
         {
-            if (turnTakers.Contains(nextTurnTaker))
+            if (TurnTakers.Contains(nextTurnTaker))
             {
                 TurnTaker temp = GetNextTurnTaker();
-                turnTakers.Remove(nextTurnTaker);
+                TurnTakers.Remove(nextTurnTaker);
 
-                //turnTakers.Insert(turnTakersIndex, nextTurnTaker);
-
-                turnTakers.Insert(turnTakers.IndexOf(temp), nextTurnTaker);
+                TurnTakers.Insert(TurnTakers.IndexOf(temp), nextTurnTaker);
             }
             else
             {
-                //TurnTaker temp = GetNextTurnTaker();
-                //turnTakers.Insert(turnTakers.IndexOf(temp), nextTurnTaker);
-
-                turnTakers.Insert(turnTakersIndex + 1, nextTurnTaker);
+                TurnTakers.Insert(_turnTakersIndex + 1, nextTurnTaker);
             }
         }
 
@@ -143,167 +168,16 @@ namespace SS.GameController
         {
             TurnTaker toReturn = null;
 
-            if (turnTakersIndex < turnTakers.Count - 1)
+            if (_turnTakersIndex < TurnTakers.Count - 1)
             {
-                toReturn = turnTakers[turnTakersIndex + 1];
+                toReturn = TurnTakers[_turnTakersIndex + 1];
             }
             else
             {
-                toReturn = turnTakers[0];
+                toReturn = TurnTakers[0];
             }
 
             return toReturn;
-        }
-
-        private static void PrintCurrentTurnTaker()
-        {
-            Debug.Log(currentTurnTaker.name);
-        }
-
-        bool changingTurnTaker;
-        public void ChangeTurnTaker(int ttIndex)
-        {
-            if (changingTurnTaker) return;
-
-            changingTurnTaker = true;
-
-            newRound = false;
-
-            if (ttIndex == -1)
-            {
-                turnTakersIndex++;
-            }
-            else
-            {
-                turnTakersIndex = ttIndex;
-            }
-
-            if (currentTurnTaker != null)
-            {
-                EndTurn(currentTurnTaker);
-            }
-
-            if (turnTakersIndex >= turnTakers.Count)
-            {
-                turnTakersIndex = 0;
-                roundNumber++;
-
-                foreach (Spells.Spell spell in GameObject.FindObjectsOfType<Spells.Spell>())
-                {
-                    spell.TurnChangeReset();
-                }
-
-                newRound = true;
-            }
-
-            foreach (TurnCounter counter in GameObject.FindObjectsOfType<TurnCounter>())
-            {
-                counter.DecrementCountdowns();
-            }
-
-            foreach (AI.AIPackage package in FindObjectsOfType<AI.AIPackage>())
-            {
-                package.run = false;
-            }
-
-            markerOGPos = marker.transform.position;
-            t = 0;
-
-            animateTurnIndicator = true;
-        }
-
-        public void FinishChangingTurnTaker()
-        {
-            StartTurn(turnTakers[turnTakersIndex]);
-
-            SS.Spells.Target[] targets = FindObjectsOfType<SS.Spells.Target>();
-            for (int i = 0; i < targets.Length; i++)
-            {
-                //The effects applied by the turn taker may disapear; we want them to apply one last time, so that one will be handled right after the loop
-                if (targets[i].GetComponent<TurnTaker>() == currentTurnTaker)
-                    continue;
-
-                targets[i].HandleStatuses(newRound, false);
-            }
-
-            if (currentTurnTaker.GetComponent<SS.Spells.Target>() != null)
-            {
-                currentTurnTaker.GetComponent<SS.Spells.Target>().HandleStatuses(newRound, false);
-            }
-
-            changingTurnTaker = false;
-        }
-
-
-
-        public void EndTurn(TurnTaker turnTaker)
-        {
-            switch (turnTaker.tag)
-            {
-                case "Player":
-                    EndTurn(turnTaker.GetComponent<TurnTakerPlayer>());
-                    break;
-
-                default:
-                    turnTaker.EndTurn();
-                    break;
-            }
-        }
-
-        public void RemoveTurnTakerFromPlay(TurnTaker tt)
-        {
-            turnTakers.Remove(tt);
-            turnTakersIndex--;
-
-            if (turnTakersIndex < 0)
-            {
-                turnTakersIndex = 0;
-            }
-        }
-
-        public void EndTurn(TurnTakerPlayer turnTaker)
-        {
-            GameObject.FindGameObjectWithTag("Next Turn Button").GetComponent<UnityEngine.UI.Button>().interactable = false;
-
-            turnTaker.EndTurn();
-        }
-
-        public void StartTurn(TurnTaker turnTaker)
-        {
-            previousTurnTaker = currentTurnTaker;
-            currentTurnTaker = turnTaker;
-            marker.parent = currentTurnTaker.transform;
-            marker.transform.localPosition = new Vector2(0, .8f);
-
-            switch (turnTaker.tag)
-            {
-                case "Player":
-                    StartTurn(turnTaker.GetComponent<TurnTakerPlayer>());
-                    break;
-
-                default:
-                    turnTaker.StartTurn();
-                    break;
-            }
-
-            if (currentTurnTaker.GetComponent<PlayerMovement.SS_PlayerController>() != null)
-            {
-                GameObject.FindGameObjectWithTag("Next Turn Button").GetComponent<UnityEngine.UI.Button>().interactable = true;
-            }
-            else
-            {
-                GameObject.FindGameObjectWithTag("Next Turn Button").GetComponent<UnityEngine.UI.Button>().interactable = false;
-            }
-        }
-
-        public void StartTurn(TurnTakerPlayer turnTaker)
-        {
-            turnTaker.StartTurn();
-        }
-
-        public void ResetTurnManager()
-        {
-            Start();
         }
     }
 }

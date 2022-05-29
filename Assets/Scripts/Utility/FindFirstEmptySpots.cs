@@ -20,7 +20,7 @@ namespace SS.Util
                 foreach (Vector2 position in positionsToCheck)
                 {
                     Collider2D hit = Physics2D.OverlapCircle(position, .1f, GameController.LayerMaskForObstacleFinding.lmof.layerMask);
-                    if (hit == null || (Vector2)GameController.TurnManager.currentTurnTaker.transform.position == position)
+                    if (hit == null || (Vector2)GameController.TurnManager.instance.CurrentTurnTaker.transform.position == position)
                     {
                         firstEmptySpots.Add(position);
                     }
@@ -31,7 +31,7 @@ namespace SS.Util
                     }
                 }
 
-                positionsToCheck = BreadthFirstSearch.BFS(positionsToCheck, previousPositions);
+                positionsToCheck = BreadthFirstSearch.BFS(positionsToCheck, previousPositions, LayerMask.GetMask("Wall", "Default", "Character"));
             }
 
             return firstEmptySpots;

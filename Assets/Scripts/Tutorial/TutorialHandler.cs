@@ -69,7 +69,7 @@ namespace Tutorial
             }
 
             if (currentScene < scenes.Count && !scenes[currentScene].GetStarted() && 
-                (scenes[currentScene].trigger_MustBeThisTurn == null || scenes[currentScene].trigger_MustBeThisTurn == SS.GameController.TurnManager.currentTurnTaker
+                (scenes[currentScene].trigger_MustBeThisTurn == null || scenes[currentScene].trigger_MustBeThisTurn == SS.GameController.TurnManager.instance.CurrentTurnTaker
                 || scenes[currentScene].trigger_StartASAP))
             {
                 if (Input.GetKeyDown(KeyCode.T))

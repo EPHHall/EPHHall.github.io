@@ -26,7 +26,7 @@ namespace SS.Spells
             normallyValid = new TargetType(true, true, true, true);
 
             mainDamage = new Character.Damage(Character.Damage.DamageType.Arcane, 0);
-            mainStatus = new Status(Status.StatusName.Possessed, 1, duration, SS.GameController.TurnManager.currentTurnTaker, radius);
+            mainStatus = new Status(Status.StatusName.Possessed, 1, duration, SS.GameController.TurnManager.instance.CurrentTurnTaker, radius);
 
             originalDamageList.Clear();
             AddToOriginalDamageList(mainDamage, null);

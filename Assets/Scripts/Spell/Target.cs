@@ -143,7 +143,7 @@ namespace SS.Spells
 
             if (targetType.creature)
             {
-                if (TurnManager.currentTurnTaker == GetComponent<TurnTaker>())
+                if (TurnManager.instance.CurrentTurnTaker == GetComponent<TurnTaker>())
                     behavior = StatusInterpreter.DecrementBehavior.Do;
                 else
                     behavior = StatusInterpreter.DecrementBehavior.Dont;
@@ -189,7 +189,7 @@ namespace SS.Spells
 
             if (targetType.creature)
             {
-                if (TurnManager.currentTurnTaker == GetComponent<TurnTaker>())
+                if (TurnManager.instance.CurrentTurnTaker == GetComponent<TurnTaker>())
                     behavior = StatusInterpreter.DecrementBehavior.Do;
                 else
                     behavior = StatusInterpreter.DecrementBehavior.Dont;

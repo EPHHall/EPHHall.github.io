@@ -193,7 +193,7 @@ namespace SS.Spells
 
         public virtual void CastSpell(bool overrideTileRequirement)
         {
-            caster = SS.GameController.TurnManager.currentTurnTaker.GetComponent<SS.Character.CharacterStats>();
+            caster = SS.GameController.TurnManager.instance.CurrentTurnTaker.GetComponent<SS.Character.CharacterStats>();
 
             animationsToPlay = new List<AnimationObject>();
             foreach (Effect e in deliveredByMain)
@@ -296,7 +296,7 @@ namespace SS.Spells
         public virtual void CastSpell(bool overrideTileRequirement, bool ignoreManaCost, bool ignoreAPCost)
         {
             CastSpell(overrideTileRequirement);
-            SS.Character.CharacterStats character = SS.GameController.TurnManager.currentTurnTaker.GetComponent<SS.Character.CharacterStats>();
+            SS.Character.CharacterStats character = SS.GameController.TurnManager.instance.CurrentTurnTaker.GetComponent<SS.Character.CharacterStats>();
 
             if (ignoreManaCost)
             {

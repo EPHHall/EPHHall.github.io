@@ -52,12 +52,12 @@ namespace SS.StatusSpace
             controlledObjectIndex = -1;
             if (target.targetType.obj)
             {
-                if (target.GetComponent<TurnTakerControlledObject>() != null /*&& TurnManager.tm.turnTakers.Contains(target.GetComponent<TurnTakerControlledObject>())*/)
+                if (target.GetComponent<TurnTakerControlledObject>() != null /*&& TurnManager.instance.CurrentTurnTaker.Contains(target.GetComponent<TurnTakerControlledObject>())*/)
                 {
                     //Debug.Log(1);
 
                     controlledObjectIndex = target.GetComponent<TurnTakerControlledObject>().EndControl();
-                    //TurnManager.tm.turnTakers.Remove(target.GetComponent<TurnTakerControlledObject>());
+                    //TurnManager.instance.CurrentTurnTaker.Remove(target.GetComponent<TurnTakerControlledObject>());
                 }
             }
 
@@ -72,7 +72,7 @@ namespace SS.StatusSpace
                 if (decrementBehavior == DecrementBehavior.CheckApplier)
                 {
                     TurnTaker tt = null;
-                    if (status.applier != null && status.applier.TryGetComponent<TurnTaker>(out tt) && tt == TurnManager.currentTurnTaker)
+                    if (status.applier != null && status.applier.TryGetComponent<TurnTaker>(out tt) && tt == TurnManager.instance.CurrentTurnTaker)
                     {
                         decrementBehavior = DecrementBehavior.Do;
                     }
@@ -125,7 +125,7 @@ namespace SS.StatusSpace
                     if (decrementBehavior == DecrementBehavior.CheckApplier)
                     {
                         TurnTaker tt = null;
-                        if (status.applier.TryGetComponent<TurnTaker>(out tt) && tt == TurnManager.currentTurnTaker)
+                        if (status.applier.TryGetComponent<TurnTaker>(out tt) && tt == TurnManager.instance.CurrentTurnTaker)
                         {
                             decrementBehavior = DecrementBehavior.Do;
                             status.duration--;
@@ -166,8 +166,8 @@ namespace SS.StatusSpace
                 //Debug.Log("Ow ", target.gameObject);
                 //Debug.Log(characterStatsPresent);
                 //Debug.Log(turnTakerPresent);
-                //Debug.Log(GameController.TurnManager.currentTurnTaker == turnTaker);
-                if (characterStatsPresent && turnTakerPresent && GameController.TurnManager.currentTurnTaker == turnTaker)
+                //Debug.Log(GameController.TurnManager.instance.CurrentTurnTaker == turnTaker);
+                if (characterStatsPresent && turnTakerPresent && GameController.TurnManager.instance.CurrentTurnTaker == turnTaker)
                 {
                     //TODO: I think these damages should probably be flagged as temporary but im not sure. If it gets to be an issue ill come back to it.
                     SS.Util.TargetInterface.DamageTargetAtEndOfTurn(target, new Damage(Damage.DamageType.Fire, status.magnitude, false), status.applyingEffect);
@@ -186,7 +186,7 @@ namespace SS.StatusSpace
             }
             else if (status.statusName == Status.StatusName.ArcaneDamage)
             {
-                if (characterStatsPresent && turnTakerPresent && GameController.TurnManager.currentTurnTaker == turnTaker)
+                if (characterStatsPresent && turnTakerPresent && GameController.TurnManager.instance.CurrentTurnTaker == turnTaker)
                 {
                     SS.Util.TargetInterface.DamageTargetAtEndOfTurn(target, new Damage(Damage.DamageType.Arcane, status.magnitude, false), status.applyingEffect);
                 }
@@ -205,10 +205,10 @@ namespace SS.StatusSpace
                 foreach (Target t in targets)
                 {
                     TurnTaker turnTaker = null;
-                    if (t.TryGetComponent<TurnTaker>(out turnTaker) && turnTaker == TurnManager.previousTurnTaker)
-                    {
-                        Util.TargetInterface.DamageTarget(t, new Damage(Damage.DamageType.Fire, status.magnitude, false), status.applyingEffect);
-                    }
+                    //if (t.TryGetComponent<TurnTaker>(out turnTaker) && turnTaker == TurnManager.)
+                    //{
+                    //    Util.TargetInterface.DamageTarget(t, new Damage(Damage.DamageType.Fire, status.magnitude, false), status.applyingEffect);
+                    //}
                 }
             }
             else if (status.statusName == Status.StatusName.Possessed)
@@ -225,10 +225,10 @@ namespace SS.StatusSpace
                 foreach (Target t in targets)
                 {
                     TurnTaker turnTaker = null;
-                    if (t.TryGetComponent<TurnTaker>(out turnTaker) && turnTaker == TurnManager.previousTurnTaker)
-                    {
-                        Util.TargetInterface.DamageTarget(t, new Damage(Damage.DamageType.Arcane, status.magnitude, false), status.applyingEffect);
-                    }
+                    //if (t.TryGetComponent<TurnTaker>(out turnTaker) && turnTaker == TurnManager.previousTurnTaker)
+                    //{
+                    //    Util.TargetInterface.DamageTarget(t, new Damage(Damage.DamageType.Arcane, status.magnitude, false), status.applyingEffect);
+                    //}
                 }
             }
             else if (status.statusName == Status.StatusName.Controlled)
@@ -241,19 +241,19 @@ namespace SS.StatusSpace
 
                 target.GetComponent<TurnTakerControlledObject>().Initialize(false);
 
-                if (!TurnManager.tm.turnTakers.Contains(target.GetComponent<GameController.TurnTakerControlledObject>()))
-                {
-                    if (controlledObjectIndex != -1)
-                    {
-                        TurnManager.tm.turnTakers.Insert(controlledObjectIndex, target.GetComponent<GameController.TurnTakerControlledObject>());
-                        Debug.Log(TurnManager.tm.turnTakers.IndexOf(target.GetComponent<GameController.TurnTakerControlledObject>()), target.gameObject);
-                    }
-                    else
-                    {
-                        TurnManager.tm.AddNextTurnTaker(target.GetComponent<GameController.TurnTakerControlledObject>());
-                        Debug.Log(TurnManager.tm.turnTakers.IndexOf(target.GetComponent<GameController.TurnTakerControlledObject>()), target.gameObject);
-                    }
-                }
+                //if (!TurnManager.instance.CurrentTurnTaker.Contains(target.GetComponent<GameController.TurnTakerControlledObject>()))
+                //{
+                //    if (controlledObjectIndex != -1)
+                //    {
+                //        TurnManager.instance.CurrentTurnTaker.Insert(controlledObjectIndex, target.GetComponent<GameController.TurnTakerControlledObject>());
+                //        Debug.Log(TurnManager.instance.CurrentTurnTaker.IndexOf(target.GetComponent<GameController.TurnTakerControlledObject>()), target.gameObject);
+                //    }
+                //    else
+                //    {
+                //        TurnManager.tm.AddNextTurnTaker(target.GetComponent<GameController.TurnTakerControlledObject>());
+                //        Debug.Log(TurnManager.instance.CurrentTurnTaker.IndexOf(target.GetComponent<GameController.TurnTakerControlledObject>()), target.gameObject);
+                //    }
+                //}
             }
             else if (status.statusName == Status.StatusName.ControlledByEnemy)
             {
@@ -264,19 +264,19 @@ namespace SS.StatusSpace
 
                 target.GetComponent<TurnTakerControlledObject>().Initialize(true);
 
-                if (!TurnManager.tm.turnTakers.Contains(target.GetComponent<GameController.TurnTakerControlledObject>()))
-                {
-                    if (controlledObjectIndex != -1)
-                    {
-                        TurnManager.tm.turnTakers.Insert(controlledObjectIndex, target.GetComponent<GameController.TurnTakerControlledObject>());
-                        //Debug.Log(TurnManager.tm.turnTakers.IndexOf(target.GetComponent<GameController.TurnTakerControlledObject>()), target.gameObject);
-                    }
-                    else
-                    {
-                        TurnManager.tm.AddNextTurnTaker(target.GetComponent<GameController.TurnTakerControlledObject>());
-                        //Debug.Log(TurnManager.tm.turnTakers.IndexOf(target.GetComponent<GameController.TurnTakerControlledObject>()), target.gameObject);
-                    }
-                }
+                //if (!TurnManager.instance.CurrentTurnTaker.Contains(target.GetComponent<GameController.TurnTakerControlledObject>()))
+                //{
+                //    if (controlledObjectIndex != -1)
+                //    {
+                //        TurnManager.instance.CurrentTurnTaker.Insert(controlledObjectIndex, target.GetComponent<GameController.TurnTakerControlledObject>());
+                //        //Debug.Log(TurnManager.instance.CurrentTurnTaker.IndexOf(target.GetComponent<GameController.TurnTakerControlledObject>()), target.gameObject);
+                //    }
+                //    else
+                //    {
+                //        TurnManager.tm.AddNextTurnTaker(target.GetComponent<GameController.TurnTakerControlledObject>());
+                //        //Debug.Log(TurnManager.instance.CurrentTurnTaker.IndexOf(target.GetComponent<GameController.TurnTakerControlledObject>()), target.gameObject);
+                //    }
+                //}
             }
         }
 
