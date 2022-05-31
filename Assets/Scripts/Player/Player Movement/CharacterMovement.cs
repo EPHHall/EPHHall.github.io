@@ -14,7 +14,7 @@ namespace SS.CharacterMovement
         public bool Left { get; private set; }
         public bool Right { get; private set; }
 
-        private int _movementUsed;
+        public int MovementUsed { get; private set; }
 
         [Space(10)]
         [Header("Debug")]
@@ -25,7 +25,7 @@ namespace SS.CharacterMovement
 
         public void ResetMovement()
         {
-            _movementUsed = 0;
+            MovementUsed = 0;
         }
 
         private void Update()
@@ -48,10 +48,10 @@ namespace SS.CharacterMovement
         /// <returns></returns>
         public bool Move(Vector2 direction)
         {
-            if (_movementUsed >= speed) return false;
+            if (MovementUsed >= speed) return false;
 
             transform.Translate(direction);
-            _movementUsed++;
+            MovementUsed++;
 
             return true;
         }

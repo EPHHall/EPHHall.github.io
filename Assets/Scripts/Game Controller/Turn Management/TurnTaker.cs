@@ -20,6 +20,7 @@ namespace SS.GameController
         public event System.EventHandler OnTurnEnd;
 
         public TurnTakerState State { get; set; }
+        public float DeltaTime { get; set; }
 
         public bool dontAutomaticallyAdd = false;
 

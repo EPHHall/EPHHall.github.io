@@ -87,7 +87,7 @@ namespace SS.GameController
         }
 
         /// <summary>
-        /// Code that runs in-between encounters
+        /// Code that runs in-between encounters. Makes sure the player can still move.
         /// </summary>
         private void Standby()
         {
@@ -120,18 +120,24 @@ namespace SS.GameController
 
         private void RoundMain()
         {
+            _turnTakersIndex = TurnTakers.IndexOf(CurrentTurnTaker);
+            CurrentTurnTaker.DeltaTime = Time.deltaTime;
             CurrentTurnTaker.TurnTakerUpdate();
 
             if(CurrentTurnTaker.State == TurnTaker.TurnTakerState.TurnEnd)
             {
                 CurrentTurnTaker.ResetTurnTaker();
 
-                if (_turnTakersIndex == TurnTakers.Count - 1)
+                Debug.Log("TurnTaker.TurnTakerState.TurnEnd");
+
+                if (_turnTakersIndex >= TurnTakers.Count - 1)
                 {
+                    Debug.Log("No More Turn takers Detected");
                     State = TurnManagerState.RoundEnd;
                 }
                 else
                 {
+                    Debug.Log("More Turn takers Detected. index = " + _turnTakersIndex + " and TurnTakers Count = " + TurnTakers.Count);
                     CurrentTurnTaker = GetNextTurnTaker();
                     CurrentTurnTaker.StartTurn();
                 }
@@ -144,10 +150,12 @@ namespace SS.GameController
 
             if(TurnTakers.Count <= 1)
             {
+                Debug.Log("Only Player Remains Detected");
                 State = TurnManagerState.Standby;
             }
             else
             {
+                Debug.Log("Multiple Turn Takers Remaining Detected");
                 State = TurnManagerState.RoundStart;
             }
         }

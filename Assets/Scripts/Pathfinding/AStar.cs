@@ -6,16 +6,29 @@ namespace SS.Pathfinding
 {
     public class AStar : MonoBehaviour
     {
-        Grid grid;
+        public static AStar instance;
+
+        private Grid _grid;
+
+        [Space(10)]
+        [Header("Debug")]
         public Transform startPos;
         public Transform targetPos;
-
         public bool findPath;
         public bool alwaysFindPath;
 
         private void Awake()
         {
-            grid = GetComponent<Grid>();
+            if(instance == null)
+            {
+                instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+
+            _grid = GetComponent<Grid>();
         }
 
         private void Update()
@@ -29,13 +42,13 @@ namespace SS.Pathfinding
 
         public List<Node> FindPath(Vector2 start, Vector2 end)
         {
-            grid.visited.Clear();
+            _grid.visited.Clear();
 
             start -= (Vector2)transform.position;
             end -= (Vector2)transform.position;
 
-            Node startNode = grid.NodeFromWorldPosition(start);
-            Node endNode = grid.NodeFromWorldPosition(end);
+            Node startNode = _grid.NodeFromWorldPosition(start);
+            Node endNode = _grid.NodeFromWorldPosition(end);
 
             List < Node > openList = new List<Node>();
             HashSet<Node> closedList = new HashSet<Node>();
@@ -46,7 +59,7 @@ namespace SS.Pathfinding
             {
                 Node currentNode = openList[0];
 
-                grid.visited.Add(currentNode);
+                _grid.visited.Add(currentNode);
 
                 for (int i = 1; i < openList.Count; i++)
                 {
@@ -65,9 +78,9 @@ namespace SS.Pathfinding
                     return GetFinalPath(startNode, endNode, end);
                 }
 
-                foreach (Node neighborNode in grid.GetNeighboringNodes(currentNode))
+                foreach (Node neighborNode in _grid.GetNeighboringNodes(currentNode))
                 {
-                    grid.ReevaluateWallStatus(neighborNode);
+                    _grid.ReevaluateWallStatus(neighborNode);
 
                     if (neighborNode.isWall)
                     {
@@ -124,7 +137,7 @@ namespace SS.Pathfinding
 
             finalPath.Reverse();
 
-            grid.path = finalPath;
+            _grid.path = finalPath;
 
             return finalPath;
         }
